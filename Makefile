@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+         #
+#    By: casteria <casteria@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/16 01:48:02 by casteria          #+#    #+#              #
-#    Updated: 2020/11/16 02:09:01 by casteria         ###   ########.fr        #
+#    Updated: 2020/11/16 17:52:39 by casteria         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,8 @@ SOURCES =			main.cpp ServerClass.cpp
 SOURCES_REL = 		$(addprefix $(SOURCES_F)/, $(SOURCES))
 
 COMPILER =			clang++
-FLAGS = 			-Wall -Wextra -Werror
+STD_FLAG = 			-std=c++98
+FLAGS = 			-Wall -Wextra -Werror $(STD_FLAG)
 
 all: $(NAME)
 
