@@ -6,7 +6,7 @@
 /*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/17 10:14:48 by casteria          #+#    #+#             */
-/*   Updated: 2020/11/17 12:29:02 by casteria         ###   ########.fr       */
+/*   Updated: 2020/11/17 17:33:59 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ static socket_info		createSocket(const char *port)
 	adress.sin_port = htons(atoi(port));
 	if (bind(socket_fd, (struct sockaddr *)&adress, sizeof(sockaddr)) == FAIL)
 		throw BadSockAddrException();
-//	if (listen(socket_fd, QUEUE_LEN_MAX) == FAIL)
-//		throw ListenException();
+	if (listen(socket_fd, QUEUE_LEN_MAX) == FAIL)
+		throw ListenException();
 	sock.socket_fd = socket_fd;
 	sock.addr = adress;
 	return (sock);
@@ -35,7 +35,12 @@ static socket_info		createSocket(const char *port)
 
 void					createOwnNetwork(char **argv, Server &serv)
 {
+	sockaddr_in		new_connection;
+	socklen_t	new_connetion_socklen;
+
 	serv.setSocket(createSocket(argv[2]));
+	accept(serv.getSocket().socket_fd, (sockaddr *)&new_connection, &new_connetion_socklen);
+	std::cout << "Signal accepted!" << std::endl;
 	(void)serv;
 	(void)argv;
 }

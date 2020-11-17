@@ -6,7 +6,7 @@
 /*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 01:58:30 by casteria          #+#    #+#             */
-/*   Updated: 2020/11/17 12:25:35 by casteria         ###   ########.fr       */
+/*   Updated: 2020/11/17 17:00:46 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,4 +40,9 @@ void	Server::setSocket(socket_info socket)
 {
 	this->socket.socket_fd = socket.socket_fd;
 	this->socket.addr = socket.addr;
+}
+
+socket_info Server::getSocket() const
+{
+	return (this->socket);
 }

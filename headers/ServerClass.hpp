@@ -6,7 +6,7 @@
 /*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 01:55:39 by casteria          #+#    #+#             */
-/*   Updated: 2020/11/17 12:34:20 by casteria         ###   ########.fr       */
+/*   Updated: 2020/11/17 16:59:50 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ public:
 	Server &operator=(const Server&);
 
 	// _functions
-	void	setSocket(socket_info);
+	void			setSocket(socket_info);
+	socket_info		getSocket() const;
 };
 
 #endif
