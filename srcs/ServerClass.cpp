@@ -6,7 +6,7 @@
 /*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 01:58:30 by casteria          #+#    #+#             */
-/*   Updated: 2020/11/17 10:47:12 by casteria         ###   ########.fr       */
+/*   Updated: 2020/11/17 12:25:35 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,4 +33,11 @@ Server &Server::operator=(const Server &other)
 {
 	(void)other;
 	return (*this);
+}
+
+// __FUCNTIONS
+void	Server::setSocket(socket_info socket)
+{
+	this->socket.socket_fd = socket.socket_fd;
+	this->socket.addr = socket.addr;
 }

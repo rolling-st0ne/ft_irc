@@ -6,14 +6,14 @@
 /*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 02:02:32 by casteria          #+#    #+#             */
-/*   Updated: 2020/11/17 10:48:09 by casteria         ###   ########.fr       */
+/*   Updated: 2020/11/17 12:11:21 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef IRC_HPP
 # define IRC_HPP
 
-// __standart includes
+// ___standart includes
 # include <iostream>
 # include <string>
 # include <vector>
@@ -23,14 +23,23 @@
 # include <map>
 # include <algorithm>
 
-// __our classes
+// _networking
+# include <sys/socket.h>
+# include <netinet/in.h>
+# include <arpa/inet.h>
+
+// ___our classes
 # include "ServerClass.hpp"
 # include "ExceptionsClasses.hpp"
 
-// __defines
+// ___defines
 # define SUCCESS 0
+# define FAIL -1
 
-// __functions
+// ___constants
+const int QUEUE_LEN_MAX = 16;
+
+// ___functions
 void					init(int argc, char **argv, Server&);
 void					createOwnNetwork(char **argv, Server&);
 void					joinNetwork(char **argv, Server&);
