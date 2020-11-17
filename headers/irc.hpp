@@ -6,7 +6,7 @@
 /*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 02:02:32 by casteria          #+#    #+#             */
-/*   Updated: 2020/11/17 10:31:51 by casteria         ###   ########.fr       */
+/*   Updated: 2020/11/17 10:48:09 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@
 # define SUCCESS 0
 
 // __functions
-void					init(int argc, char **argv);
-void					createOwnNetwork(char **argv);
-void					joinNetwork(char **argv);
+void					init(int argc, char **argv, Server&);
+void					createOwnNetwork(char **argv, Server&);
+void					joinNetwork(char **argv, Server&);
 
 #endif
