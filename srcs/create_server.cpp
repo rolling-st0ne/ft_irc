@@ -6,7 +6,7 @@
 /*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/17 10:14:48 by casteria          #+#    #+#             */
-/*   Updated: 2020/11/17 17:33:59 by casteria         ###   ########.fr       */
+/*   Updated: 2020/11/17 20:23:29 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,14 @@ static socket_info		createSocket(const char *port)
 
 	socket_fd = socket(AF_INET, SOCK_STREAM, 0);
 	if (socket_fd == FAIL)
-		throw SocketCreateFailedException();
+		throw IrcException(errno);
 	adress.sin_family = AF_INET;
 	adress.sin_addr.s_addr = htonl(INADDR_ANY);
 	adress.sin_port = htons(atoi(port));
 	if (bind(socket_fd, (struct sockaddr *)&adress, sizeof(sockaddr)) == FAIL)
-		throw BadSockAddrException();
+		throw IrcException(errno);
 	if (listen(socket_fd, QUEUE_LEN_MAX) == FAIL)
-		throw ListenException();
+		throw IrcException(errno);
 	sock.socket_fd = socket_fd;
 	sock.addr = adress;
 	return (sock);

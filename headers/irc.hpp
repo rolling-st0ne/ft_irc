@@ -6,7 +6,7 @@
 /*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 02:02:32 by casteria          #+#    #+#             */
-/*   Updated: 2020/11/17 12:11:21 by casteria         ###   ########.fr       */
+/*   Updated: 2020/11/17 20:13:01 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 # include <stack>
 # include <map>
 # include <algorithm>
+
+# include <cerrno>
 
 // _networking
 # include <sys/socket.h>

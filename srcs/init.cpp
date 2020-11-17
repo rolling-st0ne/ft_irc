@@ -6,7 +6,7 @@
 /*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/17 08:40:36 by casteria          #+#    #+#             */
-/*   Updated: 2020/11/17 10:47:36 by casteria         ###   ########.fr       */
+/*   Updated: 2020/11/17 20:26:28 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,5 +19,5 @@ void					init(int argc, char **argv, Server& serv)
 	else if (argc == 4)
 		joinNetwork(argv, serv);
 	else
-		throw BadArgsException();
+		throw IrcException("Bad amount of arguments");
 }

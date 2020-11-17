@@ -6,7 +6,7 @@
 /*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/17 10:27:53 by casteria          #+#    #+#             */
-/*   Updated: 2020/11/17 12:15:37 by casteria         ###   ########.fr       */
+/*   Updated: 2020/11/17 20:37:46 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,37 +14,28 @@
 # define EXCEPTIONCLASSES_HPP
 
 # include <exception>
+# include <string>
+# include <iostream>
+# include <errno.h>
 
-class BadArgsException : public std::exception
+class IrcException : public std::exception
 {
-	virtual const char *what() const throw()
+private:
+	std::string		err_message;
+public:
+	IrcException(const std::string &str)
 	{
-		return ("Bad amount of arguments");
+		err_message += "Error: " + str;
 	}
-};
-
-class SocketCreateFailedException : public std::exception
-{
-	virtual const char *what() const throw()
+	IrcException(const int &err)
 	{
-		return ("Couldn't create socket");
+		err_message += "Error: " + std::string(strerror(err));
 	}
-};
-
-class BadSockAddrException : public std::exception
-{
-	virtual const char *what() const throw()
+	virtual const char* what() const throw()
 	{
-		return ("Bad port adress");
+		return (err_message.c_str());
 	}
-};
-
-class ListenException : public std::exception
-{
-	virtual const char *what() const throw()
-	{
-		return ("Listen failed");
-	}
+	~IrcException() throw () { return ; }
 };
 
 #endif
