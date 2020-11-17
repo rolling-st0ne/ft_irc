@@ -1,30 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   ExceptionsClasses.hpp                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/16 02:00:11 by casteria          #+#    #+#             */
-/*   Updated: 2020/11/17 10:00:40 by casteria         ###   ########.fr       */
+/*   Created: 2020/11/17 10:27:53 by casteria          #+#    #+#             */
+/*   Updated: 2020/11/17 10:34:01 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "irc.hpp"
+#ifndef EXCEPTIONCLASSES_HPP
+# define EXCEPTIONCLASSES_HPP
 
-Server		server;
+# include <exception>
 
-int			main(int argc, char **argv)
+class BadArgsException : public std::exception
 {
-	try
+	virtual const char *what() const throw()
 	{
-		(void)argc;
-		(void)argv;
-		init(argc, argv);
+		return ("Bad amount of arguments");
 	}
-	catch(const std::exception& e)
-	{
-		std::cerr << e.what() << '\n';
-	}
-	return (SUCCESS);
-}
+};
+
+#endif

@@ -1,30 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   init.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/16 02:00:11 by casteria          #+#    #+#             */
-/*   Updated: 2020/11/17 10:00:40 by casteria         ###   ########.fr       */
+/*   Created: 2020/11/17 08:40:36 by casteria          #+#    #+#             */
+/*   Updated: 2020/11/17 10:37:15 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "irc.hpp"
 
-Server		server;
-
-int			main(int argc, char **argv)
+void					init(int argc, char **argv)
 {
-	try
-	{
-		(void)argc;
-		(void)argv;
-		init(argc, argv);
-	}
-	catch(const std::exception& e)
-	{
-		std::cerr << e.what() << '\n';
-	}
-	return (SUCCESS);
+	if (argc == 3)
+		createOwnNetwork(argv);
+	else if (argc == 4)
+		joinNetwork(argv);
+	else
+		throw BadArgsException();
 }

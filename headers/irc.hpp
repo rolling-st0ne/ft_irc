@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   irc.hpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
+/*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 02:02:32 by casteria          #+#    #+#             */
-/*   Updated: 2020/11/16 02:05:58 by casteria         ###   ########.fr       */
+/*   Updated: 2020/11/17 10:31:51 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,14 @@
 
 // __our classes
 # include "ServerClass.hpp"
+# include "ExceptionsClasses.hpp"
 
 // __defines
 # define SUCCESS 0
 
 // __functions
-
+void					init(int argc, char **argv);
+void					createOwnNetwork(char **argv);
+void					joinNetwork(char **argv);
 
 #endif
