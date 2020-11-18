@@ -6,7 +6,7 @@
 /*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/17 10:14:48 by casteria          #+#    #+#             */
-/*   Updated: 2020/11/17 20:23:29 by casteria         ###   ########.fr       */
+/*   Updated: 2020/11/18 16:16:02 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,6 @@ void					createOwnNetwork(char **argv, Server &serv)
 	serv.setSocket(createSocket(argv[2]));
 	accept(serv.getSocket().socket_fd, (sockaddr *)&new_connection, &new_connetion_socklen);
 	std::cout << "Signal accepted!" << std::endl;
-	(void)serv;
-	(void)argv;
 }
 
 void					joinNetwork(char **argv, Server &serv)

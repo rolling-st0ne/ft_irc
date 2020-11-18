@@ -6,7 +6,7 @@
 /*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 01:58:30 by casteria          #+#    #+#             */
-/*   Updated: 2020/11/17 17:00:46 by casteria         ###   ########.fr       */
+/*   Updated: 2020/11/18 16:11:39 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,4 +45,12 @@ void	Server::setSocket(socket_info socket)
 socket_info Server::getSocket() const
 {
 	return (this->socket);
+}
+
+void	Server::start()
+{
+	while (true)
+	{
+		
+	}
 }

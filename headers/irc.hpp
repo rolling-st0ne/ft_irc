@@ -6,12 +6,14 @@
 /*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 02:02:32 by casteria          #+#    #+#             */
-/*   Updated: 2020/11/17 20:13:01 by casteria         ###   ########.fr       */
+/*   Updated: 2020/11/18 16:15:04 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef IRC_HPP
 # define IRC_HPP
+
+class Server;
 
 // ___standart includes
 # include <iostream>
