@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ServerClass.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 01:58:30 by casteria          #+#    #+#             */
-/*   Updated: 2020/11/19 14:32:48 by casteria         ###   ########.fr       */
+/*   Updated: 2020/11/20 00:33:00 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	Server::server_loop()
 			FD_SET(it->socket_fd, &writefds);
 			if (it->socket_fd > max_d)
 				max_d = it->socket_fd;
-		};
+		}
 		timeval timeout;
 		timeout.tv_sec = 5;
 		timeout.tv_usec = 0;
@@ -96,9 +96,9 @@ void	Server::server_loop()
 		{
 			std::cout << i++ << std::endl;
 			if (FD_ISSET(it->socket_fd, &readfds))
-				std::cout << "Recieved data from the client" << std::endl;
+				std::cout << "Received data from the client" << std::endl;
 			if (FD_ISSET(it->socket_fd, &writefds))
-				std::cout << "Send data to the client" << std::endl;
+				std::cout << "Sent data to the client" << std::endl;
 		}
 	}
 }

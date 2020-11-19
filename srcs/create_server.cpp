@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_server.cpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/17 10:14:48 by casteria          #+#    #+#             */
-/*   Updated: 2020/11/19 12:52:06 by casteria         ###   ########.fr       */
+/*   Updated: 2020/11/20 00:27:15 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,21 @@
 static socket_info		createSocket(const char *port)
 {
 	int					socket_fd;
-	struct sockaddr_in	adress;
+	struct sockaddr_in	address;
 	socket_info			sock;
 
 	socket_fd = socket(AF_INET, SOCK_STREAM, 0);
 	if (socket_fd == FAIL)
 		throw IrcException(errno);
-	adress.sin_family = AF_INET;
-	adress.sin_addr.s_addr = htonl(INADDR_ANY);
-	adress.sin_port = htons(atoi(port));
-	if (bind(socket_fd, (struct sockaddr *)&adress, sizeof(sockaddr)) == FAIL)
+	address.sin_family = AF_INET;
+	address.sin_addr.s_addr = htonl(INADDR_ANY);
+	address.sin_port = htons(atoi(port));
+	if (bind(socket_fd, (struct sockaddr *)&address, sizeof(sockaddr)) == FAIL)
 		throw IrcException(errno);
 	if (listen(socket_fd, QUEUE_LEN_MAX) == FAIL)
 		throw IrcException(errno);
 	sock.socket_fd = socket_fd;
-	sock.addr = adress;
+	sock.addr = address;
 	return (sock);
 }
 
