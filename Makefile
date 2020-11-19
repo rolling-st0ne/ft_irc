@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: casteria <casteria@student.42.fr>          +#+  +:+       +#+         #
+#    By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/16 01:48:02 by casteria          #+#    #+#              #
-#    Updated: 2020/11/17 10:35:36 by casteria         ###   ########.fr        #
+#    Updated: 2020/11/20 00:05:59 by gwynton          ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,19 +19,25 @@ HEADERS = 			ExceptionsClasses.hpp irc.hpp ServerClass.hpp
 SOURCES =			main.cpp ServerClass.cpp init.cpp create_server.cpp
 SOURCES_REL = 		$(addprefix $(SOURCES_F)/, $(SOURCES))
 HEADERS_REL = 		$(addprefix $(HEADER_F)/, $(HEADERS))
+OBJECTS_REL =		$(SOURCES_REL:.cpp=.o)
 
 COMPILER =			clang++
 STD_FLAG = 			-std=c++98
-FLAGS = 			-Wall -Wextra -Werror $(STD_FLAG)
+FLAGS = 			-Wall -Wextra -Werror $(STD_FLAG) -I $(HEADER_F)
 
 all: $(NAME)
 
-$(NAME): $(SOURCES_REL) $(HEADERS_REL)
-	$(COMPILER) $(FLAGS) -I $(HEADER_F) $(SOURCES_REL) -o $(NAME)
+$(NAME): $(OBJECTS_REL)
+	$(COMPILER) $(FLAGS) $(OBJECTS_REL) -o $(NAME)
+
+%.o: %.cpp $(HEADERS_REL)
+	$(COMPILER) $(FLAGS) -c $< -o $@
 
 clean:
+	rm -f $(OBJECTS_REL)
 
 fclean: clean
+	rm -f $(NAME)
 
 re: fclean all
 
