@@ -6,7 +6,7 @@
 /*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 01:58:30 by casteria          #+#    #+#             */
-/*   Updated: 2020/11/18 22:20:49 by casteria         ###   ########.fr       */
+/*   Updated: 2020/11/19 14:32:48 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,8 @@ void	Server::server_loop()
 		FD_SET(this->socket.socket_fd, &readfds);
 		for (std::vector<socket_info>::const_iterator it = clients.begin(); it != clients.end(); it++)
 		{
-			 FD_SET(it->socket_fd, &readfds);
-			 FD_SET(it->socket_fd, &writefds);
-			 // ... data to send?
+			FD_SET(it->socket_fd, &readfds);
+			FD_SET(it->socket_fd, &writefds);
 			if (it->socket_fd > max_d)
 				max_d = it->socket_fd;
 		};
@@ -75,15 +74,32 @@ void	Server::server_loop()
 		timeout.tv_sec = 5;
 		timeout.tv_usec = 0;
 		select_result = select(max_d + 1, &readfds, &writefds, NULL, &timeout);
-		if (select_result < 1)
-			throw IrcException(errno); // need signal handle (errno: EINTR)
 		if (select_result == 0) // time out
 			continue ;
+		if (select_result < 0)
+		{
+			std::cout << select_result << std::endl;
+			throw IrcException(errno); // need signal handle (errno: EINTR)
+		}
 		if (FD_ISSET(socket.socket_fd, &readfds)) // if a new client tries to connect to server
 		{
+			socket_info		new_client;
 
+			accept(socket.socket_fd, (sockaddr *)&new_client.addr, &new_client.socklen);
+			std::cout << "Signal accepted!" << std::endl;
+			int flags = fcntl(new_client.socket_fd, F_GETFL);
+			fcntl(new_client.socket_fd, F_SETFL, flags | O_NONBLOCK);
+			clients.push_back(new_client);
 		}
-
+		size_t i = 0;
+		for (std::vector<socket_info>::const_iterator it = clients.begin(); it != clients.end(); it++)
+		{
+			std::cout << i++ << std::endl;
+			if (FD_ISSET(it->socket_fd, &readfds))
+				std::cout << "Recieved data from the client" << std::endl;
+			if (FD_ISSET(it->socket_fd, &writefds))
+				std::cout << "Send data to the client" << std::endl;
+		}
 	}
 }
 

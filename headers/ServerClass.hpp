@@ -6,7 +6,7 @@
 /*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 01:55:39 by casteria          #+#    #+#             */
-/*   Updated: 2020/11/18 17:31:22 by casteria         ###   ########.fr       */
+/*   Updated: 2020/11/19 12:11:11 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ typedef struct	s_socket_info
 {
 	int					socket_fd;
 	struct sockaddr_in	addr;
+	socklen_t			socklen;
 }				socket_info;			
 
 class		Server

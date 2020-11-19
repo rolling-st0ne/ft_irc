@@ -6,7 +6,7 @@
 /*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 02:02:32 by casteria          #+#    #+#             */
-/*   Updated: 2020/11/18 22:05:52 by casteria         ###   ########.fr       */
+/*   Updated: 2020/11/19 12:36:32 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ class Server;
 # include <netinet/in.h>
 # include <arpa/inet.h>
 # include <sys/select.h>
+# include <fcntl.h>
 
 // ___our classes
 # include "ServerClass.hpp"

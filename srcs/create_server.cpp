@@ -6,7 +6,7 @@
 /*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/17 10:14:48 by casteria          #+#    #+#             */
-/*   Updated: 2020/11/18 16:16:02 by casteria         ###   ########.fr       */
+/*   Updated: 2020/11/19 12:52:06 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,17 +35,14 @@ static socket_info		createSocket(const char *port)
 
 void					createOwnNetwork(char **argv, Server &serv)
 {
-	sockaddr_in		new_connection;
-	socklen_t	new_connetion_socklen;
-
 	serv.setSocket(createSocket(argv[2]));
-	accept(serv.getSocket().socket_fd, (sockaddr *)&new_connection, &new_connetion_socklen);
-	std::cout << "Signal accepted!" << std::endl;
+	serv.start();
 }
 
 void					joinNetwork(char **argv, Server &serv)
 {
 	serv.setSocket(createSocket(argv[1]));
+	serv.start();
 	(void)serv;
 	(void)argv;
 }
