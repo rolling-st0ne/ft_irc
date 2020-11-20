@@ -6,7 +6,7 @@
 /*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 01:58:30 by casteria          #+#    #+#             */
-/*   Updated: 2020/11/20 14:53:24 by casteria         ###   ########.fr       */
+/*   Updated: 2020/11/20 19:00:17 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void							Server::initFds(int& max_d, fd_set& readfds, fd_set& writefds)
 	for (std::vector<socket_info>::const_iterator it = clients.begin(); it != clients.end(); it++)
 	{
 		FD_SET(it->socket_fd, &readfds);
-		FD_SET(it->socket_fd, &writefds);
+	//	FD_SET(it->socket_fd, &writefds); // to add later
 		if (it->socket_fd > max_d)
 			max_d = it->socket_fd;
 	}
@@ -94,11 +94,9 @@ void							Server::acceptNewClient()
 	new_client.socket_fd = accept(socket.socket_fd, (sockaddr *)&new_client.addr, &new_client.socklen);
 	if (new_client.socket_fd < 0)
 		throw IrcException(errno);
-	int flags = fcntl(new_client.socket_fd, F_GETFL);
-	fcntl(new_client.socket_fd, F_SETFL, flags | O_NONBLOCK);
-	std::cout << clients.size() << std::endl;
+	int flags = fcntl(new_client.socket_fd, F_GETFL); 			// i don't quite understand what it is for
+	fcntl(new_client.socket_fd, F_SETFL, flags | O_NONBLOCK);	// 
 	addClient(new_client);
-	std::cout << clients.size() << std::endl;
 }
 
 void							Server::processClients(fd_set &readfds, fd_set &writefds)
@@ -106,20 +104,42 @@ void							Server::processClients(fd_set &readfds, fd_set &writefds)
 	for (std::vector<socket_info>::const_iterator it = clients.begin(); it != clients.end(); it++)
 	{
 		if (FD_ISSET(it->socket_fd, &readfds))
-			receiveDataFromClient();
+			processClientRequest(it->socket_fd);
 		if (FD_ISSET(it->socket_fd, &writefds))
-			sendDataToClient();
+			sendDataToClient(it->socket_fd);
 	}
 }
 
-void							Server::receiveDataFromClient()
+void							Server::processClientRequest(const int &socket_fd)
 {
-	std::cout << "Received data from the client" << std::endl;
+	char		buffer[BUFFER_SIZE];
+	int			recv_length;
+	t_message	received_message;
+
+	recv_length = recv(socket_fd, buffer, BUFFER_SIZE, 0);
+	if (recv_length < 0)
+		throw IrcException(errno);
+	received_message = parseRequest(buffer);
+	std::cout << buffer;
+	bzero(buffer, BUFFER_SIZE);
 }
 
-void							Server::sendDataToClient()
+t_message							Server::parseRequest(const char *buffer)
 {
-	std::cout << "Sent data to the client" << std::endl;
+	t_message			result;
+	std::istringstream	strstream(buffer);
+	strstream >> result.command;
+	strstream >> result.content;
+	return (result);
+}
+
+void							Server::sendDataToClient(const int &socket_fd)
+{
+//	char buffer[BUFFER_SIZE];
+	(void)socket_fd;
+//	strcpy(buffer, "Hello from server!");
+//	std::cout << "Sent data to the client" << std::endl;
+//	send(socket_fd, buffer, 20, 0);
 }
 
 const std::vector<socket_info>	&Server::getClients() const

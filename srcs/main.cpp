@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
+/*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 02:00:11 by casteria          #+#    #+#             */
-/*   Updated: 2020/11/18 16:12:16 by casteria         ###   ########.fr       */
+/*   Updated: 2020/11/20 15:38:41 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@ int				main(int argc, char **argv)
 	Server		server;
 	try
 	{
-		(void)argc;
-		(void)argv;
 		init(argc, argv, server);
 		server.start();
 	}

@@ -6,14 +6,14 @@
 /*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 02:02:32 by casteria          #+#    #+#             */
-/*   Updated: 2020/11/20 14:34:20 by casteria         ###   ########.fr       */
+/*   Updated: 2020/11/20 17:33:14 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef IRC_HPP
 # define IRC_HPP
 
-// __classes
+// __classes declarations
 class Server;
 
 // ___standart includes
@@ -31,6 +31,7 @@ class Server;
 # include <algorithm>
 # include <iterator>
 # include <sys/time.h>
+# include <sstream>
 
 // _networking
 # include <sys/socket.h>
@@ -38,6 +39,26 @@ class Server;
 # include <arpa/inet.h>
 # include <sys/select.h>
 # include <fcntl.h>
+
+// ___structs
+typedef struct	s_socket_info
+{
+	int					socket_fd;
+	struct sockaddr_in	addr;
+	socklen_t			socklen;
+}				socket_info;
+
+typedef struct	s_message
+{
+	std::string	command;
+	std::string content;
+}				t_message;
+
+typedef struct	s_user
+{
+	socket_info *socket;
+	std::string	name;
+}				t_user;
 
 // ___our classes
 # include "ServerClass.hpp"
