@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ServerClass.hpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
+/*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 01:55:39 by casteria          #+#    #+#             */
-/*   Updated: 2020/11/19 12:11:11 by casteria         ###   ########.fr       */
+/*   Updated: 2020/11/20 14:37:48 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,15 @@ private:
 	socket_info						socket;
 	std::vector<socket_info>		clients;
 
+	timeval							timeout;
+
+	void							initFds(int &, fd_set&, fd_set&);
 	void							server_loop();
+	void							acceptNewClient();
+	void							processClients(fd_set &, fd_set&);
+	void							receiveDataFromClient();
+	void							sendDataToClient();
+	void							addClient(socket_info client);
 public:
 	Server();
 	Server(const Server&);
@@ -41,7 +49,6 @@ public:
 	void							setSocket(socket_info);
 	socket_info						getSocket() const;
 	const std::vector<socket_info>	&getClients() const;
-	void							addClient(socket_info &client);
 	void							start();
 };
 

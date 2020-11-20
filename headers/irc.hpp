@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   irc.hpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
+/*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 02:02:32 by casteria          #+#    #+#             */
-/*   Updated: 2020/11/19 12:36:32 by casteria         ###   ########.fr       */
+/*   Updated: 2020/11/20 14:34:20 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,10 @@ class Server;
 # include <algorithm>
 
 # include <cerrno>
+# include <cstring>
 # include <algorithm>
 # include <iterator>
+# include <sys/time.h>
 
 // _networking
 # include <sys/socket.h>
@@ -44,6 +46,7 @@ class Server;
 // ___defines
 # define SUCCESS 0
 # define FAIL -1
+# define SERVER_RUNS 1
 
 // ___constants
 const int QUEUE_LEN_MAX = 16;
