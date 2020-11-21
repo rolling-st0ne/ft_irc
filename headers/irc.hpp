@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   irc.hpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
+/*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 02:02:32 by casteria          #+#    #+#             */
-/*   Updated: 2020/11/21 15:46:15 by casteria         ###   ########.fr       */
+/*   Updated: 2020/11/22 01:21:53 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 // __classes declarations
 class Server;
+class Client;
+class User;
 
 // ___standart includes
 # include <iostream>
@@ -54,23 +56,10 @@ typedef struct	s_message
 	std::string content;
 }				t_message;
 
-typedef struct  s_client
-{
-    socket_info socket;
-    bool        is_user;
-}               t_client;
-
-typedef struct	s_user
-{
-	t_client    *client;
-	std::string	nickname[9];
-    std::string login;
-    std::string password;
-    std::vector<t_message> buffer;
-}				t_user;
-
 // ___our classes
 # include "ServerClass.hpp"
+# include "ClientClass.hpp"
+# include "UserClass.hpp"
 # include "ExceptionsClasses.hpp"
 
 // ___defines

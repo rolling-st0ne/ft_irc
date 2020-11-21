@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ServerClass.hpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
+/*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 01:55:39 by casteria          #+#    #+#             */
-/*   Updated: 2020/11/21 15:17:57 by casteria         ###   ########.fr       */
+/*   Updated: 2020/11/22 01:24:05 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ class		Server // to establish connetion between servers
 private:
 	socket_info						socket;
 	std::string						password;
-	std::vector<t_client>			clients;
-	std::vector<t_user>				users;
+	std::vector<Client>				clients;
+	std::vector<User>				users;
 
 	timeval							timeout;
 	static const int				BUFFER_SIZE = 1024;
@@ -32,7 +32,7 @@ private:
 	void							processClients(fd_set &, fd_set&);
 	void							processClientRequest(const int&);
 	void							sendDataToClient(const int&);
-	void							addClient(t_client client);
+	void							addClient(Client &);
 	t_message						parseRequest(const char *);
 public:
 	Server();
@@ -45,7 +45,7 @@ public:
 	// _functions
 	void							setSocket(socket_info);
 	socket_info						getSocket() const;
-	const std::vector<t_client>		&getClients() const;
+	const std::vector<Client>		&getClients() const;
 	void							start();
 };
 

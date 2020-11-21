@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+         #
+#    By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/16 01:48:02 by casteria          #+#    #+#              #
-#    Updated: 2020/11/20 00:09:44 by gwynton          ###   ########.fr        #
+#    Updated: 2020/11/22 01:19:22 by casteria         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,8 @@ HEADER_F =			headers
 SOURCES_F =			srcs
 
 HEADERS = 			ExceptionsClasses.hpp irc.hpp ServerClass.hpp
-SOURCES =			main.cpp ServerClass.cpp init.cpp create_server.cpp
+SOURCES =			main.cpp ServerClass.cpp init.cpp create_server.cpp \
+					ClientClass.cpp UserClass.cpp
 SOURCES_REL = 		$(addprefix $(SOURCES_F)/, $(SOURCES))
 HEADERS_REL = 		$(addprefix $(HEADER_F)/, $(HEADERS))
 OBJECTS_REL =		$(SOURCES_REL:.cpp=.o)

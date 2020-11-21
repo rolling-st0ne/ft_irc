@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ServerClass.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
+/*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 01:58:30 by casteria          #+#    #+#             */
-/*   Updated: 2020/11/21 15:21:00 by casteria         ###   ########.fr       */
+/*   Updated: 2020/11/22 01:25:44 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void							Server::initFds(int& max_d, fd_set& readfds, fd_set& writefds)
 	FD_ZERO(&readfds);
 	FD_ZERO(&writefds);
 	FD_SET(this->socket.socket_fd, &readfds);
-	for (std::vector<t_client>::const_iterator it = clients.begin(); it != clients.end(); it++)
+	for (std::vector<Client>::const_iterator it = clients.begin(); it != clients.end(); it++)
 	{
 		FD_SET(it->socket.socket_fd, &readfds);
 	//	FD_SET(it->socket_fd, &writefds); // to add later
@@ -89,7 +89,7 @@ void							Server::initFds(int& max_d, fd_set& readfds, fd_set& writefds)
 
 void							Server::acceptNewClient()
 {
-	t_client					new_client;
+	Client						new_client;
 
 	new_client.socket.socket_fd = accept(socket.socket_fd, (sockaddr *)&new_client.socket.addr, &new_client.socket.socklen);
 	if (new_client.socket.socket_fd < 0)
@@ -101,7 +101,7 @@ void							Server::acceptNewClient()
 
 void							Server::processClients(fd_set &readfds, fd_set &writefds)
 {
-	for (std::vector<t_client>::const_iterator it = clients.begin(); it != clients.end(); it++)
+	for (std::vector<Client>::const_iterator it = clients.begin(); it != clients.end(); it++)
 	{
 		if (FD_ISSET(it->socket.socket_fd, &readfds))
 			processClientRequest(it->socket.socket_fd);
@@ -143,12 +143,12 @@ void							Server::sendDataToClient(const int &socket_fd)
 //	send(socket_fd, buffer, 20, 0);
 }
 
-const std::vector<t_client>	&Server::getClients() const
+const std::vector<Client>		&Server::getClients() const
 {
 	return (this->clients);
 }
 
-void							Server::addClient(t_client client)
+void							Server::addClient(Client &client)
 {
 	clients.push_back(client);
 }
