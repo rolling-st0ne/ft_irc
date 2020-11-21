@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   irc.hpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
+/*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 02:02:32 by casteria          #+#    #+#             */
-/*   Updated: 2020/11/20 17:33:14 by casteria         ###   ########.fr       */
+/*   Updated: 2020/11/21 15:46:15 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,19 @@ typedef struct	s_message
 	std::string content;
 }				t_message;
 
+typedef struct  s_client
+{
+    socket_info socket;
+    bool        is_user;
+}               t_client;
+
 typedef struct	s_user
 {
-	socket_info *socket;
-	std::string	name;
+	t_client    *client;
+	std::string	nickname[9];
+    std::string login;
+    std::string password;
+    std::vector<t_message> buffer;
 }				t_user;
 
 // ___our classes
