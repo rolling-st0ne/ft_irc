@@ -6,7 +6,7 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/17 10:14:48 by casteria          #+#    #+#             */
-/*   Updated: 2020/11/20 00:27:15 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/11/22 19:52:51 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ static socket_info		createSocket(const char *port)
 	int					socket_fd;
 	struct sockaddr_in	address;
 	socket_info			sock;
+	int					option = 1;
 
 	socket_fd = socket(AF_INET, SOCK_STREAM, 0);
 	if (socket_fd == FAIL)
@@ -24,6 +25,7 @@ static socket_info		createSocket(const char *port)
 	address.sin_family = AF_INET;
 	address.sin_addr.s_addr = htonl(INADDR_ANY);
 	address.sin_port = htons(atoi(port));
+	setsockopt(socket_fd, SOL_SOCKET, SO_REUSEADDR, &option, sizeof(option));
 	if (bind(socket_fd, (struct sockaddr *)&address, sizeof(sockaddr)) == FAIL)
 		throw IrcException(errno);
 	if (listen(socket_fd, QUEUE_LEN_MAX) == FAIL)
