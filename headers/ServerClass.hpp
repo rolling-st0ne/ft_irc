@@ -6,7 +6,7 @@
 /*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 01:55:39 by casteria          #+#    #+#             */
-/*   Updated: 2020/11/22 01:24:05 by casteria         ###   ########.fr       */
+/*   Updated: 2020/11/22 04:59:43 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,10 @@ private:
 	void							server_loop();
 	void							acceptNewClient();
 	void							processClients(fd_set &, fd_set&);
-	void							processClientRequest(const int&);
-	void							sendDataToClient(const int&);
+	void							processClientRequest(Client &);
+	void							sendDataToClient(Client &);
 	void							addClient(Client &);
+	void							rmClient(Client &);
 	t_message						parseRequest(const char *);
 public:
 	Server();

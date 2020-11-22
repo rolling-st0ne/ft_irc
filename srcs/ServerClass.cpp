@@ -6,7 +6,7 @@
 /*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 01:58:30 by casteria          #+#    #+#             */
-/*   Updated: 2020/11/22 01:25:44 by casteria         ###   ########.fr       */
+/*   Updated: 2020/11/22 05:33:11 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,13 +63,18 @@ void	Server::server_loop()
 		int	select_result;
 
 		initFds(max_d, readfds, writefds);
-		select_result = select(max_d + 1, &readfds, &writefds, NULL, &this->timeout);
-		if (select_result == 0); // time out
+		timeval timeout = this->timeout;
+		select_result = select(max_d + 1, &readfds, &writefds, NULL, &timeout);
+#ifdef DEBUG_MODE
+		if (select_result == 0)
+			DEBUG_MES("TIMEOUT\n")
+#endif
 		else if (select_result < 0)
 			throw IrcException(errno); // need signal handle (errno: EINTR)
 		if (FD_ISSET(socket.socket_fd, &readfds))
 			acceptNewClient();
 		processClients(readfds, writefds);
+		FD_ZERO(&readfds); FD_ZERO(&writefds);
 	}
 }
 
@@ -78,10 +83,11 @@ void							Server::initFds(int& max_d, fd_set& readfds, fd_set& writefds)
 	FD_ZERO(&readfds);
 	FD_ZERO(&writefds);
 	FD_SET(this->socket.socket_fd, &readfds);
-	for (std::vector<Client>::const_iterator it = clients.begin(); it != clients.end(); it++)
+	for (std::vector<Client>::iterator it = clients.begin(); it != clients.end(); it++)
 	{
 		FD_SET(it->socket.socket_fd, &readfds);
-	//	FD_SET(it->socket_fd, &writefds); // to add later
+		if (!it->buffer.isEmpty())
+			FD_SET(it->socket.socket_fd, &writefds);
 		if (it->socket.socket_fd > max_d)
 			max_d = it->socket.socket_fd;
 	}
@@ -101,26 +107,38 @@ void							Server::acceptNewClient()
 
 void							Server::processClients(fd_set &readfds, fd_set &writefds)
 {
-	for (std::vector<Client>::const_iterator it = clients.begin(); it != clients.end(); it++)
+	for (size_t i = 0; i < clients.size(); i++)
 	{
-		if (FD_ISSET(it->socket.socket_fd, &readfds))
-			processClientRequest(it->socket.socket_fd);
-		if (FD_ISSET(it->socket.socket_fd, &writefds))
-			sendDataToClient(it->socket.socket_fd);
+		if (FD_ISSET(clients[i].socket.socket_fd, &readfds))
+			processClientRequest(clients[i]);
+		if (FD_ISSET(clients[i].socket.socket_fd, &writefds))
+			sendDataToClient(clients[i]);
 	}
 }
 
-void							Server::processClientRequest(const int &socket_fd)
+void							Server::processClientRequest(Client &client)
 {
 	char		buffer[BUFFER_SIZE];
-	int			recv_length;
+	int			recv_ret;
 	t_message	received_message;
 
-	recv_length = recv(socket_fd, buffer, BUFFER_SIZE, 0);
-	if (recv_length < 0)
+	recv_ret = recv(client.socket.socket_fd, buffer, BUFFER_SIZE, 0);
+	if (recv_ret < 0)
 		throw IrcException(errno);
+	else if (recv_ret == 0)
+		rmClient(client);
+#ifdef DEBUG_MODE
+	DEBUG_MES("SOMEONE SAYS: " << buffer)
+#endif
+
+#ifdef DEBUG_MODE
+	for (size_t i = 0; i < clients.size(); i++)
+	{
+		if (clients[i].socket.socket_fd != client.socket.socket_fd && clients[i].socket.socket_fd != socket.socket_fd)
+			clients[i].buffer.response = std::string(buffer);
+	}
+#endif
 	received_message = parseRequest(buffer);
-	std::cout << buffer;
 	bzero(buffer, BUFFER_SIZE);
 }
 
@@ -134,13 +152,11 @@ t_message							Server::parseRequest(const char *buffer)
 	return (result);
 }
 
-void							Server::sendDataToClient(const int &socket_fd)
+void							Server::sendDataToClient(Client &client)
 {
-//	char buffer[BUFFER_SIZE];
-	(void)socket_fd;
-//	strcpy(buffer, "Hello from server!");
-//	std::cout << "Sent data to the client" << std::endl;
-//	send(socket_fd, buffer, 20, 0);
+	std::string		response = client.buffer.response;
+	send(client.socket.socket_fd, response.c_str(), response.size(), 0);
+	client.buffer.clear();
 }
 
 const std::vector<Client>		&Server::getClients() const
@@ -151,4 +167,16 @@ const std::vector<Client>		&Server::getClients() const
 void							Server::addClient(Client &client)
 {
 	clients.push_back(client);
+}
+
+void							Server::rmClient(Client &client)
+{
+	for (std::vector<Client>::iterator it = clients.begin(); it != clients.end(); it++)
+	{
+		if (it->socket.socket_fd == client.socket.socket_fd)
+		{
+			clients.erase(it);
+			break;
+		}
+	}
 }
