@@ -6,7 +6,7 @@
 /*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 02:02:32 by casteria          #+#    #+#             */
-/*   Updated: 2020/11/22 03:04:29 by casteria         ###   ########.fr       */
+/*   Updated: 2020/11/23 23:40:11 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 // __classes declarations
 class Server;
+class IrcAPI;
 class Client;
 class User;
 
@@ -61,6 +62,7 @@ typedef struct	s_message
 # include "ClientClass.hpp"
 # include "UserClass.hpp"
 # include "ExceptionsClasses.hpp"
+# include "IrcApiClass.hpp"
 
 // ___defines
 # define SUCCESS 0

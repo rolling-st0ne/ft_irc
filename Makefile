@@ -6,7 +6,7 @@
 #    By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/16 01:48:02 by casteria          #+#    #+#              #
-#    Updated: 2020/11/22 03:04:07 by casteria         ###   ########.fr        #
+#    Updated: 2020/11/23 23:40:44 by casteria         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ SOURCES_F =			srcs
 
 HEADERS = 			ExceptionsClasses.hpp irc.hpp ServerClass.hpp
 SOURCES =			main.cpp ServerClass.cpp init.cpp create_server.cpp \
-					ClientClass.cpp UserClass.cpp
+					ClientClass.cpp UserClass.cpp IrcApiClass.cpp
 SOURCES_REL = 		$(addprefix $(SOURCES_F)/, $(SOURCES))
 HEADERS_REL = 		$(addprefix $(HEADER_F)/, $(HEADERS))
 OBJECTS_REL =		$(SOURCES_REL:.cpp=.o)
