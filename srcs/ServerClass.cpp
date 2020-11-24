@@ -6,7 +6,7 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 01:58:30 by casteria          #+#    #+#             */
-/*   Updated: 2020/11/24 22:45:41 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/11/25 01:23:09 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ void	Server::server_loop()
 		if (FD_ISSET(socket.socket_fd, &readfds))
 			acceptNewClient();
 		processClients(readfds, writefds);
-		processClients(readfds, writefds);
 		FD_ZERO(&readfds); FD_ZERO(&writefds);
 	}
 }
@@ -111,7 +110,10 @@ void							Server::processClients(fd_set &readfds, fd_set &writefds)
 	for (size_t i = 0; i < clients.size(); i++)
 	{
 		if (FD_ISSET(clients[i].socket.socket_fd, &readfds))
+		{
 			processClientRequest(clients[i]);
+			FD_CLR(clients[i].socket.socket_fd, &readfds);
+		}
 		if (FD_ISSET(clients[i].socket.socket_fd, &writefds))
 			sendDataToClient(clients[i]);
 	}
@@ -140,7 +142,6 @@ void							Server::processClientRequest(Client &client)
 	}
 #endif
 	IrcAPI::run_query(buffer);
-	bzero(buffer, BUFFER_SIZE);
 }
 
 void							Server::sendDataToClient(Client &client)

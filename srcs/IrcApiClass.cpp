@@ -6,7 +6,7 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 17:01:13 by gwynton           #+#    #+#             */
-/*   Updated: 2020/11/24 22:19:37 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/11/25 01:20:05 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_map IrcAPI::commands = create_map();
 void test_parse(std::string input)
 {
     //(void)input;
-	std::cout << input;
+	std::cerr << input;
 }
 
 void IrcAPI::run_query(const std::string& query)
