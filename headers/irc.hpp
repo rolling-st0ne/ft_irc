@@ -6,7 +6,7 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 02:02:32 by casteria          #+#    #+#             */
-/*   Updated: 2020/11/24 17:39:16 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/11/24 22:17:20 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ typedef struct	s_message // to_delete
 # define FAIL -1
 # define SERVER_RUNS 1
 # define DEBUG_MODE
-# define DEBUG_MES(str) std::cout << "\x1b[1;31m" << str << "\x1b[0m";
+# define DEBUG_MES(str) std::cerr << "\x1b[1;31m" << str << "\x1b[0m";
 
 // ___constants
 const int QUEUE_LEN_MAX = 16;

@@ -6,7 +6,7 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 01:58:30 by casteria          #+#    #+#             */
-/*   Updated: 2020/11/24 18:34:38 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/11/24 22:45:41 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ void	Server::server_loop()
 		if (FD_ISSET(socket.socket_fd, &readfds))
 			acceptNewClient();
 		processClients(readfds, writefds);
+		processClients(readfds, writefds);
 		FD_ZERO(&readfds); FD_ZERO(&writefds);
 	}
 }
@@ -122,6 +123,7 @@ void							Server::processClientRequest(Client &client)
 	int			recv_ret;
 	std::string	received_message;
 
+	bzero(buffer, BUFFER_SIZE);
 	recv_ret = recv(client.socket.socket_fd, buffer, BUFFER_SIZE, 0);
 	if (recv_ret < 0)
 		throw IrcException(errno);
@@ -130,7 +132,6 @@ void							Server::processClientRequest(Client &client)
 #ifdef DEBUG_MODE
 	DEBUG_MES("SOMEONE SAYS: " << buffer)
 #endif
-
 #ifdef DEBUG_MODE
 	for (size_t i = 0; i < clients.size(); i++)
 	{

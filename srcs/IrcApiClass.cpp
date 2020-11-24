@@ -6,20 +6,26 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 17:01:13 by gwynton           #+#    #+#             */
-/*   Updated: 2020/11/24 19:27:49 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/11/24 22:19:37 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "irc.hpp"
 
-const std::map<std::string, parse_function> IrcAPI::commands
+t_map IrcAPI::create_map()
 {
-    std::make_pair("NICK", &test_parse)
-};
+	t_map	res;
+
+	res["NICK"] = test_parse;
+	return (res);
+}
+
+t_map IrcAPI::commands = create_map();
 
 void test_parse(std::string input)
 {
-    
+    //(void)input;
+	std::cout << input;
 }
 
 void IrcAPI::run_query(const std::string& query)
@@ -31,7 +37,7 @@ void IrcAPI::run_query(const std::string& query)
     }
     catch (const char* str)
     {
-        std::cout << str;
+        std::cerr << str;
     }
     process_query(command);
 }
@@ -52,6 +58,7 @@ t_command IrcAPI::parse_query(const std::string& query)
 
 void IrcAPI::process_query(const t_command& command)
 {
-    commands.find("NICK")->second("OK");
-    //commands["NICK"]("OK");
+	commands["NICK"]("OK");
+//    commands.find("NICK")->second("OK");
+    (void)command;
 }

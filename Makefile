@@ -6,7 +6,7 @@
 #    By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/16 01:48:02 by casteria          #+#    #+#              #
-#    Updated: 2020/11/24 17:41:14 by gwynton          ###   ########.fr        #
+#    Updated: 2020/11/24 21:10:45 by gwynton          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,8 @@ NAME =				ircserv
 HEADER_F =			headers
 SOURCES_F =			srcs
 
-HEADERS = 			ExceptionsClasses.hpp irc.hpp ServerClass.hpp
+HEADERS = 			ExceptionsClasses.hpp irc.hpp ServerClass.hpp IrcApiClass.hpp \
+					UserClass.hpp utils.hpp
 SOURCES =			main.cpp ServerClass.cpp init.cpp create_server.cpp \
 					ClientClass.cpp UserClass.cpp IrcApiClass.cpp \
 					utils.cpp
