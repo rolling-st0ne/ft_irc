@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ServerClass.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
+/*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 01:58:30 by casteria          #+#    #+#             */
-/*   Updated: 2020/11/22 05:33:11 by casteria         ###   ########.fr       */
+/*   Updated: 2020/11/24 18:34:38 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ Server &Server::operator=(const Server &other)
 	return (*this);
 }
 
-// __FUCNTIONS
+// __FUNCTIONS
 void	Server::setSocket(socket_info socket)
 {
 	this->socket.socket_fd = socket.socket_fd;
@@ -120,7 +120,7 @@ void							Server::processClientRequest(Client &client)
 {
 	char		buffer[BUFFER_SIZE];
 	int			recv_ret;
-	t_message	received_message;
+	std::string	received_message;
 
 	recv_ret = recv(client.socket.socket_fd, buffer, BUFFER_SIZE, 0);
 	if (recv_ret < 0)
@@ -138,18 +138,8 @@ void							Server::processClientRequest(Client &client)
 			clients[i].buffer.response = std::string(buffer);
 	}
 #endif
-	received_message = parseRequest(buffer);
+	IrcAPI::run_query(buffer);
 	bzero(buffer, BUFFER_SIZE);
-}
-
-t_message							Server::parseRequest(const char *buffer)
-{
-	t_message			result;
-	std::istringstream	strstream(buffer);
-	strstream >> result.command;
-	strstream >> result.content;
-
-	return (result);
 }
 
 void							Server::sendDataToClient(Client &client)

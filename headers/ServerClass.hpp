@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ServerClass.hpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
+/*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 01:55:39 by casteria          #+#    #+#             */
-/*   Updated: 2020/11/22 04:59:43 by casteria         ###   ########.fr       */
+/*   Updated: 2020/11/24 18:08:01 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 
 class		Server // to establish connetion between servers
 {
+	friend class IrcAPI;
 private:
 	socket_info						socket;
 	std::string						password;
@@ -34,7 +35,6 @@ private:
 	void							sendDataToClient(Client &);
 	void							addClient(Client &);
 	void							rmClient(Client &);
-	t_message						parseRequest(const char *);
 public:
 	Server();
 	Server(const Server&);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   irc.hpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
+/*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 02:02:32 by casteria          #+#    #+#             */
-/*   Updated: 2020/11/23 23:40:11 by casteria         ###   ########.fr       */
+/*   Updated: 2020/11/24 17:39:16 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ class IrcAPI;
 class Client;
 class User;
 
-// ___standart includes
+// ___standard includes
 # include <iostream>
 # include <string>
 # include <vector>
@@ -51,7 +51,7 @@ typedef struct	s_socket_info
 	socklen_t			socklen;
 }				socket_info;
 
-typedef struct	s_message
+typedef struct	s_message // to_delete
 {
 	std::string	command;
 	std::string content;
@@ -63,6 +63,7 @@ typedef struct	s_message
 # include "UserClass.hpp"
 # include "ExceptionsClasses.hpp"
 # include "IrcApiClass.hpp"
+# include "utils.hpp"
 
 // ___defines
 # define SUCCESS 0

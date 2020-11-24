@@ -1,27 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   UserClass.hpp                                      :+:      :+:    :+:   */
+/*   utils.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/22 01:15:28 by casteria          #+#    #+#             */
-/*   Updated: 2020/11/24 18:40:33 by gwynton          ###   ########.fr       */
+/*   Created: 2020/11/24 17:41:24 by gwynton           #+#    #+#             */
+/*   Updated: 2020/11/24 18:33:05 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef USERCLASS_HPP
-# define USERCLASS_HPP
+#include "irc.hpp"
 
-# include "irc.hpp"
-
-class		User : public Client
+std::vector<std::string> strsplit(const std::string& input, char del)
 {
-private:
-	std::string	nickname[9];
-    std::vector<t_message> buffer;
-public:
-    User(const Client &);
-};
-
-#endif
+    std::vector<std::string> result;
+	std::istringstream   strstream(input);
+	std::string	buffer;
+	
+	(void)del;
+	while (strstream >> buffer)
+		result.push_back(buffer);
+	return (result);
+}

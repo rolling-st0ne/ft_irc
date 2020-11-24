@@ -1,27 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   UserClass.hpp                                      :+:      :+:    :+:   */
+/*   utils.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/22 01:15:28 by casteria          #+#    #+#             */
-/*   Updated: 2020/11/24 18:40:33 by gwynton          ###   ########.fr       */
+/*   Created: 2020/11/24 17:39:39 by gwynton           #+#    #+#             */
+/*   Updated: 2020/11/24 17:43:14 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef USERCLASS_HPP
-# define USERCLASS_HPP
+#ifndef UTILS_HPP
+# define UTILS_HPP
 
 # include "irc.hpp"
 
-class		User : public Client
-{
-private:
-	std::string	nickname[9];
-    std::vector<t_message> buffer;
-public:
-    User(const Client &);
-};
+std::vector<std::string> strsplit(const std::string&, char);
 
 #endif
