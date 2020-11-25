@@ -6,7 +6,7 @@
 #    By: casteria <casteria@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/16 01:48:02 by casteria          #+#    #+#              #
-#    Updated: 2020/11/25 20:44:26 by casteria         ###   ########.fr        #
+#    Updated: 2020/11/25 22:05:50 by casteria         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ HEADERS = 			ExceptionsClasses.hpp irc.hpp ServerClass.hpp IrcApiClass.hpp \
 					UserClass.hpp utils.hpp
 
 COMMANDS_F = 		commands
-COMMANDS_SRCS = 	nick.cpp
+COMMANDS_SRCS = 	nick.cpp pass.cpp user.cpp
 COMMANDS_SRCS_REL =	$(addprefix $(COMMANDS_F)/, $(COMMANDS_SRCS))
 
 MAIN_SOURCES = 		main.cpp ServerClass.cpp ClientClass.cpp \

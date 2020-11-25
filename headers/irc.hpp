@@ -6,7 +6,7 @@
 /*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 02:02:32 by casteria          #+#    #+#             */
-/*   Updated: 2020/11/25 20:43:51 by casteria         ###   ########.fr       */
+/*   Updated: 2020/11/25 21:58:41 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,10 @@ typedef struct	s_message // to_delete
 # define SERVER_RUNS 1
 # define DEBUG_MODE
 # define DEBUG_MES(str) std::cerr << "\x1b[1;31m" << str << "\x1b[0m";
+
+# define UNKNOWN 0
+# define USER 1
+# define SERVER 2
 
 // ___constants
 const int QUEUE_LEN_MAX = 16;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   UserClass.hpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
+/*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/22 01:15:28 by casteria          #+#    #+#             */
-/*   Updated: 2020/11/24 18:40:33 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/11/25 21:54:58 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 class		User : public Client
 {
 private:
-	std::string	nickname[9];
     std::vector<t_message> buffer;
 public:
     User(const Client &);

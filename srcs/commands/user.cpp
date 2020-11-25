@@ -1,22 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   nick.cpp                                           :+:      :+:    :+:   */
+/*   user.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/25 18:10:11 by casteria          #+#    #+#             */
-/*   Updated: 2020/11/25 22:38:27 by casteria         ###   ########.fr       */
+/*   Created: 2020/11/25 22:06:19 by casteria          #+#    #+#             */
+/*   Updated: 2020/11/25 22:37:54 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "IrcApiClass.hpp"
 
-void        IrcAPI::nick(Server *server, Client* client, const t_command& command)
+void            IrcAPI::user(Server* server, Client* client, const t_command&)
 {
-    if (command.params.size() == 1 && command.params[0].size() <= 9)
-        client->nickname = command.params[0];
+    if (client->authenticated && !client->nickname.empty())
+    {
+		server->addUser(client);
+		std::cerr << "User " << client->nickname << " has been added";
+	}
     else
-        throw IrcException("nick command is bad");
-    (void)server;
+        throw IrcException("bad user");
+
 }

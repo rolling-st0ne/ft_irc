@@ -3,14 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   ClientClass.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
+/*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/22 01:18:00 by casteria          #+#    #+#             */
-/*   Updated: 2020/11/22 05:08:19 by casteria         ###   ########.fr       */
+/*   Updated: 2020/11/25 21:58:52 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "irc.hpp"
+
+Client::Client()
+	:	authenticated(false),
+		nickname(),
+		status(UNKNOWN)
+{
+}
 
 void		Client::Buffer::clear()
 {

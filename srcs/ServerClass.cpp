@@ -6,7 +6,7 @@
 /*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 01:58:30 by casteria          #+#    #+#             */
-/*   Updated: 2020/11/25 20:40:13 by casteria         ###   ########.fr       */
+/*   Updated: 2020/11/25 22:22:43 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,7 +175,7 @@ void							Server::processClientRequest(Client &client)
 			clients[i].buffer.response = std::string(buffer);
 	}
 #endif
-	IrcAPI::run_query(this, buffer);
+	IrcAPI::run_query(this, &client, buffer);
 }
 
 void							Server::sendDataToClient(Client &client)
@@ -193,6 +193,11 @@ const std::vector<Client>		&Server::getClients() const
 void							Server::addClient(Client &client)
 {
 	clients.push_back(client);
+}
+
+void							Server::addUser(Client* client)
+{
+	users.push_back(client);
 }
 
 void							Server::rmClient(Client &client)

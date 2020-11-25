@@ -6,7 +6,7 @@
 /*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 17:01:13 by gwynton           #+#    #+#             */
-/*   Updated: 2020/11/25 20:42:43 by casteria         ###   ########.fr       */
+/*   Updated: 2020/11/25 22:33:19 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,14 @@ t_map IrcAPI::create_map()
 	t_map	res;
 
 	res["NICK"] = nick;
+    res["PASS"] = pass;
+    res["USER"] = user;
 	return (res);
 }
 
 t_map IrcAPI::commands = create_map();
 
-void IrcAPI::run_query(Server *server, const std::string& query)
+void IrcAPI::run_query(Server *server, Client *client, const std::string& query)
 {
     t_command command;
     try
@@ -33,7 +35,7 @@ void IrcAPI::run_query(Server *server, const std::string& query)
     {
         std::cerr << str;
     }
-    process_query(server, command);
+    process_query(server, client, command);
 }
 
 t_command IrcAPI::parse_query(const std::string& query)
@@ -57,11 +59,11 @@ t_command IrcAPI::parse_query(const std::string& query)
     return result;
 }
 
-void IrcAPI::process_query(Server *server, const t_command& command)
+void IrcAPI::process_query(Server *server, Client* client, const t_command& command)
 {
     t_map::iterator it = commands.find(command.command);
     if (it != commands.end())
-        commands[command.command](server, command);
+        commands[command.command](server, client, command);
 //    commands.find("NICK")->second("OK");
     (void)command;
 }

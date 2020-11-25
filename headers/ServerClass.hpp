@@ -6,14 +6,14 @@
 /*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 01:55:39 by casteria          #+#    #+#             */
-/*   Updated: 2020/11/25 20:09:14 by casteria         ###   ########.fr       */
+/*   Updated: 2020/11/25 22:22:09 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SERVERCLASS_HPP
 # define SERVERCLASS_HPP
 
-# include "irc.hpp"			
+# include "irc.hpp"
 
 class		Server // to establish connetion between servers
 {
@@ -22,7 +22,7 @@ private:
 	socket_info						server_socket;
 	std::string						password;
 	std::vector<Client>				clients;
-	std::vector<User>				users;
+	std::vector<Client*>			users;
 
 	timeval							timeout;
 	static const int				BUFFER_SIZE = 1024;
@@ -35,6 +35,7 @@ private:
 	void							sendDataToClient(Client &);
 	void							addClient(Client &);
 	void							rmClient(Client &);
+	void							addUser(Client *);
 public:
 	Server();
 	Server(const Server&);
