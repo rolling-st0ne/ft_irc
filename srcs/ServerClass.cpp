@@ -6,7 +6,7 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 01:58:30 by casteria          #+#    #+#             */
-/*   Updated: 2020/11/25 01:23:09 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/11/25 16:50:03 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,8 +100,8 @@ void							Server::acceptNewClient()
 	new_client.socket.socket_fd = accept(socket.socket_fd, (sockaddr *)&new_client.socket.addr, &new_client.socket.socklen);
 	if (new_client.socket.socket_fd < 0)
 		throw IrcException(errno);
-	int flags = fcntl(new_client.socket.socket_fd, F_GETFL); 			// i don't quite understand what it is for
-	fcntl(new_client.socket.socket_fd, F_SETFL, flags | O_NONBLOCK);	// 
+	//int flags = fcntl(new_client.socket.socket_fd, F_GETFL); 			// i don't quite understand what it is for
+	fcntl(new_client.socket.socket_fd, F_SETFL, O_NONBLOCK);	// 
 	addClient(new_client);
 }
 
