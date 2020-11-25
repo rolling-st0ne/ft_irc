@@ -6,7 +6,7 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 17:01:13 by gwynton           #+#    #+#             */
-/*   Updated: 2020/11/25 01:20:05 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/11/25 18:33:44 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,20 +45,29 @@ void IrcAPI::run_query(const std::string& query)
 t_command IrcAPI::parse_query(const std::string& query)
 {
     t_command result;
-    std::vector<std::string> after_split = strsplit(query, ' ');
+    std::vector<std::string> after_split = strsplit(query);
     if (after_split.size() < 2)
     {
         result.command = "BAD";
         return result;
     }
-    result.prefix = after_split[0];
-    result.command = after_split[1];
+    if (after_split[0][0] == ':')
+    {
+        result.prefix = after_split[0];
+        result.command = after_split[1];
+    }
+    else
+    {
+        result.command = after_split[0];   
+    }
     return result;
 }
 
 void IrcAPI::process_query(const t_command& command)
 {
-	commands["NICK"]("OK");
+    t_map::iterator it = commands.find(command.command);
+    if (it != commands.end())
+        commands[command.command]("OK");
 //    commands.find("NICK")->second("OK");
     (void)command;
 }
