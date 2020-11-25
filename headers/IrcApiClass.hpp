@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   IrcApiClass.hpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
+/*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/23 23:36:15 by casteria          #+#    #+#             */
-/*   Updated: 2020/11/24 21:53:56 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/11/25 18:11:58 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,9 @@ private:
     static t_map            create_map();
     static t_command        parse_query(const std::string&);
     static void             process_query(const t_command&);
+
+    // COMMANDS
+    void                    nick(void);
 public:
     static void            run_query(const std::string&);
 

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+         #
+#    By: casteria <casteria@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/16 01:48:02 by casteria          #+#    #+#              #
-#    Updated: 2020/11/24 21:10:45 by gwynton          ###   ########.fr        #
+#    Updated: 2020/11/25 18:15:40 by casteria         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,12 +17,19 @@ SOURCES_F =			srcs
 
 HEADERS = 			ExceptionsClasses.hpp irc.hpp ServerClass.hpp IrcApiClass.hpp \
 					UserClass.hpp utils.hpp
-SOURCES =			main.cpp ServerClass.cpp init.cpp create_server.cpp \
+
+COMMANDS_F = 		commands
+COMMANDS_SRCS = 	nick.cpp
+COMMANDS_SRCS_REL =	$(addprefix $(COMMANDS_F)/, $(COMMANDS_SRCS))
+
+MAIN_SOURCES = 		main.cpp ServerClass.cpp init.cpp create_server.cpp \
 					ClientClass.cpp UserClass.cpp IrcApiClass.cpp \
 					utils.cpp
-SOURCES_REL = 		$(addprefix $(SOURCES_F)/, $(SOURCES))
+
+ALL_SOURCES =		$(MAIN_SOURCES) $(COMMANDS_SRCS_REL)
+ALL_SOURCES_REL = 	$(addprefix $(SOURCES_F)/, $(ALL_SOURCES))
 HEADERS_REL = 		$(addprefix $(HEADER_F)/, $(HEADERS))
-OBJECTS_REL =		$(SOURCES_REL:.cpp=.o)
+OBJECTS_REL =		$(ALL_SOURCES_REL:.cpp=.o)
 
 COMPILER =			clang++
 STD_FLAG = 			-std=c++98
