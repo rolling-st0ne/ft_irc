@@ -6,7 +6,7 @@
 /*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 02:02:32 by casteria          #+#    #+#             */
-/*   Updated: 2020/11/25 19:58:43 by casteria         ###   ########.fr       */
+/*   Updated: 2020/11/25 20:43:51 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,5 @@ typedef struct	s_message // to_delete
 const int QUEUE_LEN_MAX = 16;
 
 // ___functions
-void					init(int argc, char **argv, Server&);
-void					createOwnNetwork(char **argv, Server&);
-void					joinNetwork(char **argv, Server&);
 
 #endif

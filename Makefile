@@ -6,7 +6,7 @@
 #    By: casteria <casteria@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/16 01:48:02 by casteria          #+#    #+#              #
-#    Updated: 2020/11/25 20:25:55 by casteria         ###   ########.fr        #
+#    Updated: 2020/11/25 20:44:26 by casteria         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ COMMANDS_F = 		commands
 COMMANDS_SRCS = 	nick.cpp
 COMMANDS_SRCS_REL =	$(addprefix $(COMMANDS_F)/, $(COMMANDS_SRCS))
 
-MAIN_SOURCES = 		main.cpp ServerClass.cpp init.cpp ClientClass.cpp \
+MAIN_SOURCES = 		main.cpp ServerClass.cpp ClientClass.cpp \
 					UserClass.cpp IrcApiClass.cpp utils.cpp
 
 ALL_SOURCES =		$(MAIN_SOURCES) $(COMMANDS_SRCS_REL)

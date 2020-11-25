@@ -6,7 +6,7 @@
 /*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 01:58:30 by casteria          #+#    #+#             */
-/*   Updated: 2020/11/25 20:27:30 by casteria         ###   ########.fr       */
+/*   Updated: 2020/11/25 20:40:13 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,7 +175,7 @@ void							Server::processClientRequest(Client &client)
 			clients[i].buffer.response = std::string(buffer);
 	}
 #endif
-	IrcAPI::run_query(buffer);
+	IrcAPI::run_query(this, buffer);
 }
 
 void							Server::sendDataToClient(Client &client)
