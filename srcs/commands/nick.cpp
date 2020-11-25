@@ -6,13 +6,14 @@
 /*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 18:10:11 by casteria          #+#    #+#             */
-/*   Updated: 2020/11/25 18:12:37 by casteria         ###   ########.fr       */
+/*   Updated: 2020/11/25 19:07:16 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "IrcApiClass.hpp"
 
-void        nick()
+void        IrcAPI::nick(const t_command& command)
 {
-
+    (void)command;
+    
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ServerClass.hpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
+/*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 01:55:39 by casteria          #+#    #+#             */
-/*   Updated: 2020/11/24 18:08:01 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/11/25 20:09:14 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ class		Server // to establish connetion between servers
 {
 	friend class IrcAPI;
 private:
-	socket_info						socket;
+	socket_info						server_socket;
 	std::string						password;
 	std::vector<Client>				clients;
 	std::vector<User>				users;
@@ -38,12 +38,15 @@ private:
 public:
 	Server();
 	Server(const Server&);
+	Server(const int&, const std::string&);
+	Server(const int&, const std::string&, const int&, const std::string&);
 	~Server();
 
 	// _operators
 	Server &operator=(const Server&);
 
 	// _functions
+	void							create_server(const int&, const std::string&);
 	void							setSocket(socket_info);
 	socket_info						getSocket() const;
 	const std::vector<Client>		&getClients() const;

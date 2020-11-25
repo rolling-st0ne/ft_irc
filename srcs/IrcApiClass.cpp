@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   IrcApiClass.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
+/*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 17:01:13 by gwynton           #+#    #+#             */
-/*   Updated: 2020/11/25 18:33:44 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/11/25 18:47:55 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,11 @@ t_map IrcAPI::create_map()
 {
 	t_map	res;
 
-	res["NICK"] = test_parse;
+	res["NICK"] = nick;
 	return (res);
 }
 
 t_map IrcAPI::commands = create_map();
-
-void test_parse(std::string input)
-{
-    //(void)input;
-	std::cerr << input;
-}
 
 void IrcAPI::run_query(const std::string& query)
 {
@@ -67,7 +61,7 @@ void IrcAPI::process_query(const t_command& command)
 {
     t_map::iterator it = commands.find(command.command);
     if (it != commands.end())
-        commands[command.command]("OK");
+        commands[command.command](command);
 //    commands.find("NICK")->second("OK");
     (void)command;
 }

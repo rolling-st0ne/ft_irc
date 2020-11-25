@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ClientClass.hpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
+/*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/22 01:18:18 by casteria          #+#    #+#             */
-/*   Updated: 2020/11/22 05:08:26 by casteria         ###   ########.fr       */
+/*   Updated: 2020/11/25 20:14:53 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 class		Client
 {
 public:
-	socket_info		socket;
+	socket_info		sock;
 	class	Buffer ////////////// ugly
 	{
 	public:

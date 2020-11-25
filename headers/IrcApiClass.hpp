@@ -6,7 +6,7 @@
 /*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/23 23:36:15 by casteria          #+#    #+#             */
-/*   Updated: 2020/11/25 18:11:58 by casteria         ###   ########.fr       */
+/*   Updated: 2020/11/25 20:36:44 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,9 @@ typedef struct  s_command
     std::vector<std::string> params;
 }               t_command;
 
-typedef void (*parse_function)(std::string);
+typedef void (*process_function)(const t_command&);
 
-typedef std::map<std::string, parse_function> t_map;
-
-void test_parse(std::string);
+typedef std::map<std::string, process_function> t_map;
 
 class		IrcAPI
 {
@@ -39,7 +37,9 @@ private:
     static void             process_query(const t_command&);
 
     // COMMANDS
-    void                    nick(void);
+    static void				pass(const t_command&);		
+    static void				nick(const t_command&);
+	static void				user(const t_command&);
 public:
     static void            run_query(const std::string&);
 
