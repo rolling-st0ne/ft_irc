@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   irc.hpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 02:02:32 by casteria          #+#    #+#             */
-/*   Updated: 2020/11/25 21:58:41 by casteria         ###   ########.fr       */
+/*   Updated: 2020/11/26 19:02:34 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ class Server;
 class IrcAPI;
 class Client;
 class User;
+class Channel;
 
 // ___standard includes
 # include <iostream>
@@ -62,6 +63,7 @@ typedef struct	s_message // to_delete
 # include "ServerClass.hpp"
 # include "ClientClass.hpp"
 # include "UserClass.hpp"
+# include "ChannelClass.hpp"
 # include "ExceptionsClasses.hpp"
 # include "IrcApiClass.hpp"
 # include "utils.hpp"

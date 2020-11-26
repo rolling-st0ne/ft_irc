@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   IrcApiClass.hpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/23 23:36:15 by casteria          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2020/11/26 21:17:15 by casteria         ###   ########.fr       */
+=======
+/*   Updated: 2020/11/26 19:06:02 by gwynton          ###   ########.fr       */
+>>>>>>> 38f061a3b46c0589e079a79e52080f216c5e346b
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +48,10 @@ private:
     static void             process_query(Server*, Client*, const t_command&);
 
     // COMMANDS
-    static void				pass(Server*, Client*, const t_command&);		
-    static void				nick(Server*, Client*, const t_command&);
-	static void				user(Server*, Client*, const t_command&);
+    static void				cmd_pass(Server*, Client*, const t_command&);		
+    static void				cmd_nick(Server*, Client*, const t_command&);
+	static void				cmd_user(Server*, Client*, const t_command&);
+    static void             cmd_server(Server *, Client*, const t_command&);
 public:
     static void            run_query(Server*, Client*, const std::string&);
 
