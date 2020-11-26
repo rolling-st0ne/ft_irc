@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   IrcApiClass.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
+/*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 17:01:13 by gwynton           #+#    #+#             */
-/*   Updated: 2020/11/26 00:40:15 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/11/26 03:50:17 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,12 @@ void IrcAPI::run_query(Server *server, Client *client, const std::string& query)
     try
     {
         command = parse_query(query);
+        process_query(server, client, command);
     }
-    catch (const char* str)
+    catch (const IrcException& ex)
     {
-        std::cerr << str;
+        client->buffer.response = std::string(ex.what()).append("\n");
     }
-    process_query(server, client, command);
 }
 
 t_command IrcAPI::parse_query(const std::string& query)
@@ -71,10 +71,7 @@ t_command IrcAPI::parse_query(const std::string& query)
 
 void IrcAPI::process_query(Server *server, Client* client, const t_command& command)
 {
-    //t_map::iterator it = commands.find(command.command);
-    if (command.command != "BAD")
-        commands[command.command](server, client, command);
-	else
-		std::cerr << "Invalid command\n";
-//    commands.find("NICK")->second("OK");
+	if (command.command == "BAD")
+		throw IrcException("Invalid command");
+    commands[command.command](server, client, command);
 }
