@@ -6,7 +6,7 @@
 /*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 17:01:13 by gwynton           #+#    #+#             */
-/*   Updated: 2020/11/26 03:50:17 by casteria         ###   ########.fr       */
+/*   Updated: 2020/11/26 03:52:36 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void IrcAPI::run_query(Server *server, Client *client, const std::string& query)
         command = parse_query(query);
         process_query(server, client, command);
     }
-    catch (const IrcException& ex)
+    catch (const std::exception& ex)
     {
         client->buffer.response = std::string(ex.what()).append("\n");
     }

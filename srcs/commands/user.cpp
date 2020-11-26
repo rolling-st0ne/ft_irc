@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   user.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
+/*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 22:06:19 by casteria          #+#    #+#             */
-/*   Updated: 2020/11/25 22:37:54 by casteria         ###   ########.fr       */
+/*   Updated: 2020/11/26 04:00:44 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,8 @@
 
 void            IrcAPI::user(Server* server, Client* client, const t_command&)
 {
-    if (client->authenticated && !client->nickname.empty())
-    {
-		server->addUser(client);
-		std::cerr << "User " << client->nickname << " has been added";
-	}
-    else
-        throw IrcException("bad user");
-
+    if (!client->authenticated || client->nickname.empty())
+		throw IrcException("Command \'USER\' failed");
+	server->addUser(client);
+	std::cerr << "User " << client->nickname << " has been added" << std::endl;
 }
