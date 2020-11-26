@@ -6,7 +6,7 @@
 /*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/23 23:36:15 by casteria          #+#    #+#             */
-/*   Updated: 2020/11/25 21:53:00 by casteria         ###   ########.fr       */
+/*   Updated: 2020/11/26 21:17:15 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,19 @@
 
 # include "irc.hpp"
 
+typedef		enum CMD_TYPE
+{
+	SERVER,
+	USER,
+	CHANNEL
+};
+
 typedef struct  s_command
 {
     std::string prefix;
     std::string command;
     std::vector<std::string> params;
+    short int				belongs_to;
 }               t_command;
 
 typedef void (*process_function)(Server*, Client*, const t_command&);
@@ -30,7 +38,6 @@ class		IrcAPI
 {
 private:
     static t_map      commands;
-
 
     static t_map            create_map();
     static t_command        parse_query(const std::string&);
