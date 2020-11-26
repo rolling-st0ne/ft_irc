@@ -6,7 +6,7 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 17:01:13 by gwynton           #+#    #+#             */
-/*   Updated: 2020/11/26 19:06:46 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/11/26 22:03:42 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void IrcAPI::run_query(Server *server, Client *client, const std::string& query)
 t_command IrcAPI::parse_query(const std::string& query)
 {
     t_command result;
-    std::vector<std::string> after_split = strsplit(query);
+    std::vector<std::string> after_split = strsplit(query, ' ');
 	int size = after_split.size();
 	int command_index = 0;
     if (size < 1)
