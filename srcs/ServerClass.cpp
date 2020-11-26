@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ServerClass.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
+/*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 01:58:30 by casteria          #+#    #+#             */
-/*   Updated: 2020/11/26 03:46:18 by casteria         ###   ########.fr       */
+/*   Updated: 2020/11/26 18:34:45 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,8 @@ void	Server::server_loop()
 		if (FD_ISSET(server_socket.socket_fd, &readfds))
 			acceptNewClient();
 		processClients(readfds, writefds);
-		FD_ZERO(&readfds); FD_ZERO(&writefds);
+		FD_ZERO(&readfds);
+		FD_ZERO(&writefds);
 	}
 }
 
@@ -134,8 +135,7 @@ void							Server::acceptNewClient()
 	new_client.sock.socket_fd = accept(server_socket.socket_fd, (sockaddr *)&new_client.sock.addr, &new_client.sock.socklen);
 	if (new_client.sock.socket_fd < 0)
 		throw IrcException(errno);
-	//int flags = fcntl(new_client.socket.socket_fd, F_GETFL); 			// i don't quite understand what it is for
-	fcntl(new_client.sock.socket_fd, F_SETFL, O_NONBLOCK);	// 
+	fcntl(new_client.sock.socket_fd, F_SETFL, O_NONBLOCK);
 	addClient(new_client);
 }
 
@@ -146,7 +146,6 @@ void							Server::processClients(fd_set &readfds, fd_set &writefds)
 		if (FD_ISSET(clients[i].sock.socket_fd, &readfds))
 		{
 			processClientRequest(clients[i]);
-			FD_CLR(clients[i].sock.socket_fd, &readfds);
 		}
 		if (FD_ISSET(clients[i].sock.socket_fd, &writefds))
 			sendDataToClient(clients[i]);
