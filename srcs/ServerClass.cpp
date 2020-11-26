@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ServerClass.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 01:58:30 by casteria          #+#    #+#             */
-/*   Updated: 2020/11/26 21:56:54 by casteria         ###   ########.fr       */
+/*   Updated: 2020/11/27 00:42:30 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ Server::Server(const char *another_server, const int& port, const std::string& p
 	create_server(port, password);
 	(void)another_server;
 	// . . .
-	// here will be implemented connection to host (ohter server)
+	// here will be implemented connection to host (other server)
 }
 
 // __DESTRUCTOR
