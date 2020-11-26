@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ServerClass.hpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 01:55:39 by casteria          #+#    #+#             */
-/*   Updated: 2020/11/25 22:22:09 by casteria         ###   ########.fr       */
+/*   Updated: 2020/11/26 18:55:51 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ private:
 	std::string						password;
 	std::vector<Client>				clients;
 	std::vector<Client*>			users;
+	std::vector<Channel>			channels;
+	std::vector<socket_info>		connected_servers;
 
 	timeval							timeout;
 	static const int				BUFFER_SIZE = 1024;
@@ -36,6 +38,7 @@ private:
 	void							addClient(Client &);
 	void							rmClient(Client &);
 	void							addUser(Client *);
+	void							connectToServer(const socket_info&);
 public:
 	Server();
 	Server(const Server&);

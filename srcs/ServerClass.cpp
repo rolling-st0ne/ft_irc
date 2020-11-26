@@ -6,7 +6,7 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 01:58:30 by casteria          #+#    #+#             */
-/*   Updated: 2020/11/26 18:34:45 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/11/26 18:56:38 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,4 +202,10 @@ void							Server::rmClient(Client &client)
 			break;
 		}
 	}
+}
+
+void							Server::connectToServer(const socket_info& other)
+{
+	connect(other.socket_fd, (sockaddr *)&other.addr, other.socklen);
+	connected_servers.push_back(other);
 }

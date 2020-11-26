@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   IrcApiClass.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
+/*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 17:01:13 by gwynton           #+#    #+#             */
-/*   Updated: 2020/11/26 03:52:36 by casteria         ###   ########.fr       */
+/*   Updated: 2020/11/26 19:06:46 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,10 @@ t_map IrcAPI::create_map()
 {
 	t_map	res;
 
-	res["NICK"] = nick;
-    res["PASS"] = pass;
-    res["USER"] = user;
+	res["NICK"] = cmd_nick;
+    res["PASS"] = cmd_pass;
+    res["USER"] = cmd_user;
+    res["SERVER"] = cmd_server;
 	return (res);
 }
 
