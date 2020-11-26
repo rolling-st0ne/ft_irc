@@ -6,7 +6,7 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 17:39:39 by gwynton           #+#    #+#             */
-/*   Updated: 2020/11/25 18:26:11 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/11/26 22:00:42 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,6 @@
 
 # include "irc.hpp"
 
-std::vector<std::string> strsplit(const std::string&);
+std::vector<std::string> strsplit(const std::string&, char);
 
 #endif
