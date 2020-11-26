@@ -6,7 +6,7 @@
 /*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 02:00:11 by casteria          #+#    #+#             */
-/*   Updated: 2020/11/25 20:16:23 by casteria         ###   ########.fr       */
+/*   Updated: 2020/11/26 21:57:48 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ int				main(int argc, char **argv)
 	{
 		if (argc == 3)
 			server = new Server(atoi(argv[1]), argv[2]);
-		else if (argc == 5)
-			server = new Server(atoi(argv[1]), argv[2], atoi(argv[3]), argv[4]);
+		else if (argc == 4)
+			server = new Server(argv[1], atoi(argv[2]), argv[3]);
 		else
 			throw IrcException("Bad amount of argumntes");
 		server->start();

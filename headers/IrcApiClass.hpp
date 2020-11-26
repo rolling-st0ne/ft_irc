@@ -6,7 +6,7 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/23 23:36:15 by casteria          #+#    #+#             */
-/*   Updated: 2020/11/26 21:38:08 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/11/26 22:01:52 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,6 @@
 # define IRCAPICLASS_HPP
 
 # include "irc.hpp"
-
-typedef		enum CMD_TYPE
-{
-	SERVER,
-	USER,
-	CHANNEL
-};
 
 typedef struct  s_command
 {
