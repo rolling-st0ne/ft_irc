@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
+/*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 19:07:05 by gwynton           #+#    #+#             */
-/*   Updated: 2020/11/26 19:39:28 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/11/26 21:41:39 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,4 +15,7 @@
 void            IrcAPI::cmd_server(Server* server, Client* client, const t_command& command)
 {
     //acceptServer();
+    (void)server;
+    (void)client;
+    (void)command;
 }

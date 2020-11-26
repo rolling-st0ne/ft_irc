@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   IrcApiClass.hpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
+/*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/23 23:36:15 by casteria          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2020/11/26 21:17:15 by casteria         ###   ########.fr       */
-=======
-/*   Updated: 2020/11/26 19:06:02 by gwynton          ###   ########.fr       */
->>>>>>> 38f061a3b46c0589e079a79e52080f216c5e346b
+/*   Updated: 2020/11/26 21:38:46 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +14,6 @@
 # define IRCAPICLASS_HPP
 
 # include "irc.hpp"
-
-typedef		enum CMD_TYPE
-{
-	SERVER,
-	USER,
-	CHANNEL
-};
 
 typedef struct  s_command
 {

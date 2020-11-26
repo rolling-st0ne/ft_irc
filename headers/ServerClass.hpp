@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ServerClass.hpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
+/*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 01:55:39 by casteria          #+#    #+#             */
-/*   Updated: 2020/11/26 18:55:51 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/11/26 21:37:14 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ private:
 	void							rmClient(Client &);
 	void							addUser(Client *);
 	void							connectToServer(const socket_info&);
+	void							create_server(const int&, const std::string&);
 public:
 	Server();
 	Server(const Server&);
@@ -50,7 +51,6 @@ public:
 	Server &operator=(const Server&);
 
 	// _functions
-	void							create_server(const int&, const std::string&);
 	void							setSocket(socket_info);
 	socket_info						getSocket() const;
 	const std::vector<Client>		&getClients() const;
