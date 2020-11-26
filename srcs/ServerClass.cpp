@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ServerClass.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
+/*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 01:58:30 by casteria          #+#    #+#             */
-/*   Updated: 2020/11/26 18:56:38 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/11/26 21:56:54 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,10 @@ Server::Server(const int& port, const std::string& password) // creation of serv
 	create_server(port, password);
 }
 
-Server::Server(const int& host_port, const std::string& host_password, const int& port, const std::string& password)
+Server::Server(const char *another_server, const int& port, const std::string& password)
 {
 	create_server(port, password);
-	(void)host_port;
-	(void)host_password;
+	(void)another_server;
 	// . . .
 	// here will be implemented connection to host (ohter server)
 }

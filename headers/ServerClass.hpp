@@ -6,7 +6,7 @@
 /*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 01:55:39 by casteria          #+#    #+#             */
-/*   Updated: 2020/11/26 21:37:14 by casteria         ###   ########.fr       */
+/*   Updated: 2020/11/26 21:56:16 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ public:
 	Server();
 	Server(const Server&);
 	Server(const int&, const std::string&);
-	Server(const int&, const std::string&, const int&, const std::string&);
+	Server(const char *, const int&, const std::string&);
 	~Server();
 
 	// _operators
