@@ -6,7 +6,7 @@
 /*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/22 01:18:18 by casteria          #+#    #+#             */
-/*   Updated: 2020/11/25 22:01:23 by casteria         ###   ########.fr       */
+/*   Updated: 2020/11/27 20:12:35 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,6 @@ class		Client
 {
 public:
 	socket_info		sock;
-	bool			authenticated;
-	std::string		nickname;
-	short int		status;					// make enum
 	class	Buffer ////////////// ugly
 	{
 	public:
@@ -32,6 +29,7 @@ public:
 		bool 		isEmpty() const;
 	};
 	Client();
+	virtual ~Client();
 	Buffer			buffer;
 };
 

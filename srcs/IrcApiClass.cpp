@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   IrcApiClass.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
+/*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 17:01:13 by gwynton           #+#    #+#             */
-/*   Updated: 2020/11/26 22:03:42 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/11/28 00:00:09 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,5 +74,20 @@ void IrcAPI::process_query(Server *server, Client* client, const t_command& comm
 {
 	if (command.command == "BAD")
 		throw IrcException("Invalid command");
+	if (command.command != "SERVER")
+	{
+		size_t i = 0;
+		if (dynamic_cast<User*>(client))
+		{
+			for (i = 0; i < server->users.size(); i++)
+			{
+				if (server->users[i].nickname == (dynamic_cast<User *>(client))->nickname)
+					break;
+			}
+			if (i == server->users.size())
+				server->addClient(client);
+		}
+	}
+	else; // to add server if needed
     commands[command.command](server, client, command);
 }

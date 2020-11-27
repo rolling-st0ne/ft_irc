@@ -6,7 +6,7 @@
 /*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/22 01:15:28 by casteria          #+#    #+#             */
-/*   Updated: 2020/11/25 21:54:58 by casteria         ###   ########.fr       */
+/*   Updated: 2020/11/27 21:40:10 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,14 @@
 
 # include "irc.hpp"
 
-class		User : public Client
+# define CLIENT_NAME_LENGTH 9
+
+class		User : private Client
 {
-private:
+public:
+    std::string		nickname;
+    bool			authenticated;
+	bool			registered;
     std::vector<t_message> buffer;
 public:
     User(const Client &);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ServerClass.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
+/*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 01:58:30 by casteria          #+#    #+#             */
-/*   Updated: 2020/11/27 00:42:30 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/11/28 00:00:47 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,28 +58,28 @@ void	Server::create_server(const int& port, const std::string& password)
 
 	timeout.tv_sec = 5;
 	this->password = password;
-	server_socket.socket_fd = socket(AF_INET, SOCK_STREAM, 0);
-	if (server_socket.socket_fd == FAIL)
+	sock.socket_fd = socket(AF_INET, SOCK_STREAM, 0);
+	if (sock.socket_fd == FAIL)
 		throw IrcException(errno);
-	server_socket.addr.sin_family = AF_INET;
-	server_socket.addr.sin_addr.s_addr = htonl(INADDR_ANY);
-	server_socket.addr.sin_port = htons(port);
-	setsockopt(server_socket.socket_fd, SOL_SOCKET, SO_REUSEADDR, &option, sizeof(option));
-	if (bind(server_socket.socket_fd, (struct sockaddr *)&server_socket.addr, sizeof(sockaddr)) == FAIL)
+	sock.addr.sin_family = AF_INET;
+	sock.addr.sin_addr.s_addr = htonl(INADDR_ANY);
+	sock.addr.sin_port = htons(port);
+	setsockopt(sock.socket_fd, SOL_SOCKET, SO_REUSEADDR, &option, sizeof(option));
+	if (bind(sock.socket_fd, (struct sockaddr *)&sock.addr, sizeof(sockaddr)) == FAIL)
 		throw IrcException(errno);
-	if (listen(server_socket.socket_fd, QUEUE_LEN_MAX) == FAIL)
+	if (listen(sock.socket_fd, QUEUE_LEN_MAX) == FAIL)
 		throw IrcException(errno);
 }
 
 void	Server::setSocket(socket_info socket)
 {
-	this->server_socket.socket_fd = socket.socket_fd;
-	this->server_socket.addr = socket.addr;
+	this->sock.socket_fd = socket.socket_fd;
+	this->sock.addr = socket.addr;
 }
 
 socket_info Server::getSocket() const
 {
-	return (this->server_socket);
+	return (this->sock);
 }
 
 void	Server::start()
@@ -92,7 +92,7 @@ void	Server::server_loop()
 	while (SERVER_RUNS)
 	{
 		fd_set readfds, writefds;
-		int max_d = this->server_socket.socket_fd;
+		int max_d = this->sock.socket_fd;
 		int	select_result;
 
 		initFds(max_d, readfds, writefds);
@@ -104,7 +104,7 @@ void	Server::server_loop()
 #endif
 		else if (select_result < 0)
 			throw IrcException(errno); // need signal handle (errno: EINTR)
-		if (FD_ISSET(server_socket.socket_fd, &readfds))
+		if (FD_ISSET(sock.socket_fd, &readfds))
 			acceptNewClient();
 		processClients(readfds, writefds);
 		FD_ZERO(&readfds);
@@ -116,7 +116,7 @@ void							Server::initFds(int& max_d, fd_set& readfds, fd_set& writefds)
 {
 	FD_ZERO(&readfds);
 	FD_ZERO(&writefds);
-	FD_SET(this->server_socket.socket_fd, &readfds);
+	FD_SET(this->sock.socket_fd, &readfds);
 	for (std::vector<Client>::iterator it = clients.begin(); it != clients.end(); it++)
 	{
 		FD_SET(it->sock.socket_fd, &readfds);
@@ -131,11 +131,11 @@ void							Server::acceptNewClient()
 {
 	Client						new_client;
 
-	new_client.sock.socket_fd = accept(server_socket.socket_fd, (sockaddr *)&new_client.sock.addr, &new_client.sock.socklen);
+	new_client.sock.socket_fd = accept(sock.socket_fd, (sockaddr *)&new_client.sock.addr, &new_client.sock.socklen);
 	if (new_client.sock.socket_fd < 0)
 		throw IrcException(errno);
 	fcntl(new_client.sock.socket_fd, F_SETFL, O_NONBLOCK);
-	addClient(new_client);
+	addClient(*new_client);
 }
 
 void							Server::processClients(fd_set &readfds, fd_set &writefds)
@@ -181,14 +181,14 @@ const std::vector<Client>		&Server::getClients() const
 	return (this->clients);
 }
 
-void							Server::addClient(Client &client)
+void							Server::addClient(Client *client)
 {
-	clients.push_back(client);
+	clients.push_back(*client);
 }
 
-void							Server::addUser(Client* client)
+void							Server::addUser(User* client)
 {
-	users.push_back(client);
+	users.push_back(*client);
 }
 
 void							Server::rmClient(Client &client)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ServerClass.hpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
+/*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 01:55:39 by casteria          #+#    #+#             */
-/*   Updated: 2020/11/27 00:42:40 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/11/27 22:57:18 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,17 @@
 
 # include "irc.hpp"
 
-class		Server // to establish connection between servers
+# define SERVER_NAME_LENGTH 63
+
+class		Server : private Client
 {
 	friend class IrcAPI;
 private:
-	socket_info						server_socket;
+	std::string						name[SERVER_NAME_LENGTH];
 	std::string						password;
 	std::vector<Client>				clients;
-	std::vector<Client*>			users;
+	std::vector<User>				users;
+	std::vector<Server>				servers;
 	std::vector<Channel>			channels;
 	std::vector<socket_info>		connected_servers;
 
@@ -35,9 +38,9 @@ private:
 	void							processClients(fd_set &, fd_set&);
 	void							processClientRequest(Client &);
 	void							sendDataToClient(Client &);
-	void							addClient(Client &);
+	void							addClient(Client *);
 	void							rmClient(Client &);
-	void							addUser(Client *);
+	void							addUser(User *);
 	void							connectToServer(const socket_info&);
 	void							create_server(const int&, const std::string&);
 public:

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   irc.hpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
+/*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 02:02:32 by casteria          #+#    #+#             */
-/*   Updated: 2020/11/26 19:02:34 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/11/27 19:59:30 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,8 @@ typedef struct	s_message // to_delete
 }				t_message;
 
 // ___our classes
-# include "ServerClass.hpp"
 # include "ClientClass.hpp"
+# include "ServerClass.hpp"
 # include "UserClass.hpp"
 # include "ChannelClass.hpp"
 # include "ExceptionsClasses.hpp"
