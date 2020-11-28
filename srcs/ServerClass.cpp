@@ -6,7 +6,7 @@
 /*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 01:58:30 by casteria          #+#    #+#             */
-/*   Updated: 2020/11/28 18:10:24 by casteria         ###   ########.fr       */
+/*   Updated: 2020/11/28 20:52:19 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,24 +117,24 @@ void							Server::initFds(int& max_d, fd_set& readfds, fd_set& writefds)
 	FD_ZERO(&readfds);
 	FD_ZERO(&writefds);
 	FD_SET(this->sock.socket_fd, &readfds);
-	for (std::vector<Client>::iterator it = clients.begin(); it != clients.end(); it++)
+	for (std::vector<Client*>::iterator it = clients.begin(); it != clients.end(); it++)
 	{
-		FD_SET(it->sock.socket_fd, &readfds);
-		if (!it->buffer.isEmpty())
-			FD_SET(it->sock.socket_fd, &writefds);
-		if (it->sock.socket_fd > max_d)
-			max_d = it->sock.socket_fd;
+		FD_SET((*it)->sock.socket_fd, &readfds);
+		if (!(*it)->buffer.isEmpty())
+			FD_SET((*it)->sock.socket_fd, &writefds);
+		if ((*it)->sock.socket_fd > max_d)
+			max_d = (*it)->sock.socket_fd;
 	}
 }
 
 void							Server::acceptNewClient()
 {
-	Client						new_client;
+	Client						*new_client = new Client;
 
-	new_client.sock.socket_fd = accept(sock.socket_fd, (sockaddr *)&new_client.sock.addr, &new_client.sock.socklen);
-	if (new_client.sock.socket_fd < 0)
+	new_client->sock.socket_fd = accept(sock.socket_fd, (sockaddr *)&new_client->sock.addr, &new_client->sock.socklen);
+	if (new_client->sock.socket_fd < 0)
 		throw IrcException(errno);
-	fcntl(new_client.sock.socket_fd, F_SETFL, O_NONBLOCK);
+	fcntl(new_client->sock.socket_fd, F_SETFL, O_NONBLOCK);
 	addClient(new_client);
 }
 
@@ -142,12 +142,12 @@ void							Server::processClients(fd_set &readfds, fd_set &writefds)
 {
 	for (size_t i = 0; i < clients.size(); i++)
 	{
-		if (FD_ISSET(clients[i].sock.socket_fd, &readfds))
+		if (FD_ISSET(clients[i]->sock.socket_fd, &readfds))
 		{
-			processClientRequest(clients[i]);
+			processClientRequest(*clients[i]);
 		}
-		if (FD_ISSET(clients[i].sock.socket_fd, &writefds))
-			sendDataToClient(clients[i]);
+		if (FD_ISSET(clients[i]->sock.socket_fd, &writefds))
+			sendDataToClient(*clients[i]);
 	}
 }
 
@@ -176,12 +176,12 @@ void							Server::sendDataToClient(Client &client)
 	client.buffer.clear();
 }
 
-const std::vector<Client>		&Server::getClients() const
+const std::vector<Client *>		&Server::getClients() const
 {
 	return (this->clients);
 }
 
-void							Server::addClient(Client client)
+void							Server::addClient(Client *client)
 {
 	clients.push_back(client);
 }
@@ -189,6 +189,7 @@ void							Server::addClient(Client client)
 void							Server::addUser(Client *client)
 {
 	users.push_back(static_cast<User *>(client));
+	//*client = static_cast<User>(*client);
 }
 
 void							Server::rmClient(Client &client)

@@ -6,7 +6,7 @@
 /*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 17:01:13 by gwynton           #+#    #+#             */
-/*   Updated: 2020/11/28 18:16:25 by casteria         ###   ########.fr       */
+/*   Updated: 2020/11/28 18:25:09 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void IrcAPI::process_query(Server *server, Client* client, const t_command& comm
     std::cerr << server->users.size();
 	if (command.command == "BAD")
 		throw IrcException("Invalid command");
-	if (command.command != "SERVER" && (static_cast<User *>(client)) == nullptr)
+	if (command.command != "SERVER" && (dynamic_cast<User *>(client)) == nullptr)
 	{
 		server->addUser(client);
 	//	client_to_work_with = (dynamic_cast<Client *>(&*(server->users.end() - 1)));

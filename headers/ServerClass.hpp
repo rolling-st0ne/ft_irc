@@ -6,7 +6,7 @@
 /*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 01:55:39 by casteria          #+#    #+#             */
-/*   Updated: 2020/11/28 18:08:45 by casteria         ###   ########.fr       */
+/*   Updated: 2020/11/28 20:52:17 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ class		Server : private Client
 private:
 	std::string						name[SERVER_NAME_LENGTH];
 	std::string						password;
-	std::vector<Client>				clients;
-	std::vector<User *>				users;
+	std::vector<Client*>			clients;
+	std::vector<User>				users;
 	std::vector<Server>				servers;
 	std::vector<Channel>			channels;
 	std::vector<socket_info>		connected_servers;
@@ -38,7 +38,7 @@ private:
 	void							processClients(fd_set &, fd_set&);
 	void							processClientRequest(Client &);
 	void							sendDataToClient(Client &);
-	void							addClient(Client);
+	void							addClient(Client *);
 	void							rmClient(Client &);
 	void							addUser(Client *);
 	void							connectToServer(const socket_info&);
@@ -56,7 +56,7 @@ public:
 	// _functions
 	void							setSocket(socket_info);
 	socket_info						getSocket() const;
-	const std::vector<Client>		&getClients() const;
+	const std::vector<Client *>		&getClients() const;
 	void							start();
 };
 
