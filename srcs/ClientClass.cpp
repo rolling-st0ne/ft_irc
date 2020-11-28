@@ -6,7 +6,7 @@
 /*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/22 01:18:00 by casteria          #+#    #+#             */
-/*   Updated: 2020/11/27 20:08:42 by casteria         ###   ########.fr       */
+/*   Updated: 2020/11/28 15:40:23 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,18 @@ Client::Client()
 {
 }
 
+Client::Client(const Client& other)
+	:	sock(other.sock),
+		buffer(other.buffer)
+{
+}
+
 Client::~Client()
 {
 }
 
 void		Client::Buffer::clear()
 {
-	this->received.command.clear();
-	this->received.content.clear();
 	this->response.clear();
 }
 

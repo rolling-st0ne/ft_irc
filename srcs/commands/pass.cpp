@@ -6,7 +6,7 @@
 /*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 21:50:57 by casteria          #+#    #+#             */
-/*   Updated: 2020/11/27 21:26:31 by casteria         ###   ########.fr       */
+/*   Updated: 2020/11/28 18:13:52 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,6 @@ void        IrcAPI::cmd_pass(Server *server, Client* client, const t_command& co
 {
 	if (command.params.size() != 1 || command.params[0] != server->password)
 		throw (IrcException("The password is incorrect"));
-	(dynamic_cast<User *>(client))->authenticated = true;
+	(static_cast<User *>(client))->authenticated = true;
 	(void)client;
 }

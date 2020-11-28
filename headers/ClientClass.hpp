@@ -6,7 +6,7 @@
 /*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/22 01:18:18 by casteria          #+#    #+#             */
-/*   Updated: 2020/11/27 20:12:35 by casteria         ###   ########.fr       */
+/*   Updated: 2020/11/28 15:40:00 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,13 @@ public:
 	class	Buffer ////////////// ugly
 	{
 	public:
-		t_message	received;
 		std::string	response;
 		
 		void 		clear();
 		bool 		isEmpty() const;
 	};
 	Client();
+	Client(const Client&);
 	virtual ~Client();
 	Buffer			buffer;
 };

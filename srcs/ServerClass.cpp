@@ -6,7 +6,7 @@
 /*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 01:58:30 by casteria          #+#    #+#             */
-/*   Updated: 2020/11/28 00:00:47 by casteria         ###   ########.fr       */
+/*   Updated: 2020/11/28 18:10:24 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ void							Server::acceptNewClient()
 	if (new_client.sock.socket_fd < 0)
 		throw IrcException(errno);
 	fcntl(new_client.sock.socket_fd, F_SETFL, O_NONBLOCK);
-	addClient(*new_client);
+	addClient(new_client);
 }
 
 void							Server::processClients(fd_set &readfds, fd_set &writefds)
@@ -181,14 +181,14 @@ const std::vector<Client>		&Server::getClients() const
 	return (this->clients);
 }
 
-void							Server::addClient(Client *client)
+void							Server::addClient(Client client)
 {
-	clients.push_back(*client);
+	clients.push_back(client);
 }
 
-void							Server::addUser(User* client)
+void							Server::addUser(Client *client)
 {
-	users.push_back(*client);
+	users.push_back(static_cast<User *>(client));
 }
 
 void							Server::rmClient(Client &client)

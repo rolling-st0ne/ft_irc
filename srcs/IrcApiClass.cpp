@@ -6,7 +6,7 @@
 /*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 17:01:13 by gwynton           #+#    #+#             */
-/*   Updated: 2020/11/28 00:00:09 by casteria         ###   ########.fr       */
+/*   Updated: 2020/11/28 18:16:25 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,22 +72,15 @@ t_command IrcAPI::parse_query(const std::string& query)
 
 void IrcAPI::process_query(Server *server, Client* client, const t_command& command)
 {
+	Client		*client_to_work_with = client;
+    std::cerr << server->users.size();
 	if (command.command == "BAD")
 		throw IrcException("Invalid command");
-	if (command.command != "SERVER")
+	if (command.command != "SERVER" && (static_cast<User *>(client)) == nullptr)
 	{
-		size_t i = 0;
-		if (dynamic_cast<User*>(client))
-		{
-			for (i = 0; i < server->users.size(); i++)
-			{
-				if (server->users[i].nickname == (dynamic_cast<User *>(client))->nickname)
-					break;
-			}
-			if (i == server->users.size())
-				server->addClient(client);
-		}
+		server->addUser(client);
+	//	client_to_work_with = (dynamic_cast<Client *>(&*(server->users.end() - 1)));
+        client_to_work_with = server->users[server->users.size() - 1];
 	}
-	else; // to add server if needed
-    commands[command.command](server, client, command);
+    commands[command.command](server, client_to_work_with, command);
 }

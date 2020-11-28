@@ -3,12 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   UserClass.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
+/*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/22 01:15:11 by casteria          #+#    #+#             */
-/*   Updated: 2020/11/22 01:15:24 by casteria         ###   ########.fr       */
+/*   Updated: 2020/11/28 15:37:40 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "irc.hpp"
+#include "UserClass.hpp"
 
+User::User(const Client &other)
+	:	Client(other)
+{
+}
