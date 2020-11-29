@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ServerClass.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
+/*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 01:58:30 by casteria          #+#    #+#             */
-/*   Updated: 2020/11/29 15:35:16 by casteria         ###   ########.fr       */
+/*   Updated: 2020/11/29 18:01:32 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,21 +144,21 @@ void							Server::processClients(fd_set &readfds, fd_set &writefds)
 	{
 		if (FD_ISSET(clients[i]->sock.socket_fd, &readfds))
 		{
-			processClientRequest(clients[i]);
+			processClientRequest(&clients[i]);
 		}
 		if (FD_ISSET(clients[i]->sock.socket_fd, &writefds))
 			sendDataToClient(clients[i]);
 	}
 }
 
-void							Server::processClientRequest(Client *client)
+void							Server::processClientRequest(Client **client)
 {
 	char		buffer[BUFFER_SIZE];
 	int			recv_ret;
 	std::string	received_message;
 
 	bzero(buffer, BUFFER_SIZE);
-	recv_ret = recv(client->sock.socket_fd, buffer, BUFFER_SIZE, 0);
+	recv_ret = recv((*client)->sock.socket_fd, buffer, BUFFER_SIZE, 0);
 	if (recv_ret < 0)
 		throw IrcException(errno);
 	else if (recv_ret == 0)
@@ -166,8 +166,7 @@ void							Server::processClientRequest(Client *client)
 #ifdef DEBUG_MODE
 	DEBUG_MES("SOMEONE SAYS: " << buffer)
 #endif
-	IrcAPI::run_query(this, &client, buffer);
-//	std::cerr << dynamic_cast<User*>(client) << std::endl;
+	IrcAPI::run_query(this, client, buffer);
 }
 
 void							Server::sendDataToClient(Client *client)
@@ -197,11 +196,11 @@ void							Server::addUser(Client **client)
 	users.push_back(dynamic_cast<User*>(*client));
 }
 
-void							Server::rmClient(Client &client) // to finalize;
+void							Server::rmClient(Client *client) // to finalize;
 {
 	for (std::vector<Client *>::iterator it = clients.begin(); it != clients.end(); it++)
 	{
-		if ((*it)->sock.socket_fd == client.sock.socket_fd)
+		if ((*it)->sock.socket_fd == (*client).sock.socket_fd)
 		{
 			clients.erase(it);
 			break;

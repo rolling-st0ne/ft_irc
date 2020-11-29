@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ServerClass.hpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
+/*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 01:55:39 by casteria          #+#    #+#             */
-/*   Updated: 2020/11/29 15:19:03 by casteria         ###   ########.fr       */
+/*   Updated: 2020/11/29 17:52:28 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,10 @@ private:
 	void							server_loop();
 	void							acceptNewClient();
 	void							processClients(fd_set &, fd_set&);
-	void							processClientRequest(Client *);
+	void							processClientRequest(Client **);
 	void							sendDataToClient(Client *);
 	void							addClient(Client *);
-	void							rmClient(Client &);
+	void							rmClient(Client *);
 	void							addUser(Client **);
 	void							connectToServer(const socket_info&);
 	void							create_server(const int&, const std::string&);

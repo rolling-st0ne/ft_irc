@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   IrcApiClass.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
+/*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 17:01:13 by gwynton           #+#    #+#             */
-/*   Updated: 2020/11/29 15:37:17 by casteria         ###   ########.fr       */
+/*   Updated: 2020/11/29 17:57:19 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,12 +72,9 @@ t_command IrcAPI::parse_query(const std::string& query)
 
 void IrcAPI::process_query(Server *server, Client** client, const t_command& command)
 {
-    std::cerr << server->users.size();
 	if (command.command == "BAD")
 		throw IrcException("Invalid command");
-	std::cerr << "check: " << dynamic_cast<User*>(*client) << std::endl;
 	if (command.command != "SERVER" && (dynamic_cast<User *>(*client)) == NULL)
 		server->addUser(client);
     commands[command.command](server, *client, command);
-//	std::cerr << dynamic_cast<User*>(*client) << std::endl;
 }
