@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   IrcApiClass.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
+/*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 17:01:13 by gwynton           #+#    #+#             */
-/*   Updated: 2020/11/28 18:25:09 by casteria         ###   ########.fr       */
+/*   Updated: 2020/11/29 15:37:17 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_map IrcAPI::create_map()
 
 t_map IrcAPI::commands = create_map();
 
-void IrcAPI::run_query(Server *server, Client *client, const std::string& query)
+void IrcAPI::run_query(Server *server, Client **client, const std::string& query)
 {
     t_command command;
     try
@@ -35,7 +35,7 @@ void IrcAPI::run_query(Server *server, Client *client, const std::string& query)
     }
     catch (const std::exception& ex)
     {
-        client->buffer.response = std::string(ex.what()).append("\n");
+        (*client)->buffer.response = std::string(ex.what()).append("\n");
     }
 }
 
@@ -70,17 +70,14 @@ t_command IrcAPI::parse_query(const std::string& query)
     return result;
 }
 
-void IrcAPI::process_query(Server *server, Client* client, const t_command& command)
+void IrcAPI::process_query(Server *server, Client** client, const t_command& command)
 {
-	Client		*client_to_work_with = client;
     std::cerr << server->users.size();
 	if (command.command == "BAD")
 		throw IrcException("Invalid command");
-	if (command.command != "SERVER" && (dynamic_cast<User *>(client)) == nullptr)
-	{
+	std::cerr << "check: " << dynamic_cast<User*>(*client) << std::endl;
+	if (command.command != "SERVER" && (dynamic_cast<User *>(*client)) == NULL)
 		server->addUser(client);
-	//	client_to_work_with = (dynamic_cast<Client *>(&*(server->users.end() - 1)));
-        client_to_work_with = server->users[server->users.size() - 1];
-	}
-    commands[command.command](server, client_to_work_with, command);
+    commands[command.command](server, *client, command);
+//	std::cerr << dynamic_cast<User*>(*client) << std::endl;
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   IrcApiClass.hpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
+/*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/23 23:36:15 by casteria          #+#    #+#             */
-/*   Updated: 2020/11/27 22:54:51 by casteria         ###   ########.fr       */
+/*   Updated: 2020/11/29 15:31:39 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ private:
 
     static t_map            create_map();
     static t_command        parse_query(const std::string&);
-    static void             process_query(Server*, Client*, const t_command&);
+    static void             process_query(Server*, Client**, const t_command&);
 
     // COMMANDS
     static void				cmd_pass(Server*, Client*, const t_command&);		
@@ -42,7 +42,7 @@ private:
 	static void				cmd_user(Server*, Client*, const t_command&);
     static void             cmd_server(Server *, Client*, const t_command&);
 public:
-    static void            run_query(Server*, Client*, const std::string&);
+    static void            run_query(Server*, Client**, const std::string&);
 
 };
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   user.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
+/*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 22:06:19 by casteria          #+#    #+#             */
-/*   Updated: 2020/11/28 18:24:43 by casteria         ###   ########.fr       */
+/*   Updated: 2020/11/29 15:12:05 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void            IrcAPI::cmd_user(Server* server, Client* client, const t_command&)
 {
-	std::cerr << "|" << (dynamic_cast<User*>(client))->nickname << "|";
     if ((dynamic_cast<User*>(client))->nickname.empty())
 		throw IrcException("Command \'USER\' failed");
-	server->addUser(dynamic_cast<User *>(client));
-	std::cerr << "User " << (dynamic_cast<User*>(client))->nickname << " has been added" << std::endl;
+	(dynamic_cast<User*>(client))->registered = true;
+	std::cerr << "User " << (dynamic_cast<User*>(client))->nickname << " has been registered" << std::endl;
+	(void)server;
 }

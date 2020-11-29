@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ServerClass.hpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
+/*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 01:55:39 by casteria          #+#    #+#             */
-/*   Updated: 2020/11/28 20:52:17 by casteria         ###   ########.fr       */
+/*   Updated: 2020/11/29 15:19:03 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ private:
 	std::string						name[SERVER_NAME_LENGTH];
 	std::string						password;
 	std::vector<Client*>			clients;
-	std::vector<User>				users;
-	std::vector<Server>				servers;
+	std::vector<User*>				users;
+	std::vector<Server*>				servers;
 	std::vector<Channel>			channels;
 	std::vector<socket_info>		connected_servers;
 
@@ -36,11 +36,11 @@ private:
 	void							server_loop();
 	void							acceptNewClient();
 	void							processClients(fd_set &, fd_set&);
-	void							processClientRequest(Client &);
-	void							sendDataToClient(Client &);
+	void							processClientRequest(Client *);
+	void							sendDataToClient(Client *);
 	void							addClient(Client *);
 	void							rmClient(Client &);
-	void							addUser(Client *);
+	void							addUser(Client **);
 	void							connectToServer(const socket_info&);
 	void							create_server(const int&, const std::string&);
 public:
