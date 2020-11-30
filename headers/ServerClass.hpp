@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ServerClass.hpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
+/*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 01:55:39 by casteria          #+#    #+#             */
-/*   Updated: 2020/11/30 20:07:39 by casteria         ###   ########.fr       */
+/*   Updated: 2020/12/01 01:13:07 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ private:
 	void							server_loop();
 	void							acceptNewClient();
 	void							processClients(fd_set&, fd_set&);
-	void							processClientRequest(Client);
+	void							processClientRequest(Client&);
 	void							sendDataToClient(Client);
 	void							addClient(Client);
 	void							rmClient(Client);

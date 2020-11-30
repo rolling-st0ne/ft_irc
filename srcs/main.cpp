@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
+/*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 02:00:11 by casteria          #+#    #+#             */
-/*   Updated: 2020/11/27 00:41:18 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/01 01:10:07 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,11 @@ int				main(int argc, char **argv)
 		else
 			throw IrcException("Bad amount of arguments");
 		server->start();
+		delete server;
 	}
 	catch(const std::exception& e)
 	{
 		std::cerr << e.what() << '\n';
 	}
-	delete server;
 	return (SUCCESS);
 }

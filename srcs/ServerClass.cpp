@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ServerClass.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
+/*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 01:58:30 by casteria          #+#    #+#             */
-/*   Updated: 2020/11/30 22:16:52 by casteria         ###   ########.fr       */
+/*   Updated: 2020/12/01 01:13:21 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,7 @@ void							Server::processClients(fd_set &readfds, fd_set &writefds)
 	}
 }
 
-void							Server::processClientRequest(Client client)
+void							Server::processClientRequest(Client &client)
 {
 	char		buffer[BUFFER_SIZE];
 	int			recv_ret;
