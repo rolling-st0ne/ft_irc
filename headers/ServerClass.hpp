@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ServerClass.hpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
+/*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 01:55:39 by casteria          #+#    #+#             */
-/*   Updated: 2020/11/29 17:52:28 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/11/30 20:07:39 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,16 @@
 
 # define SERVER_NAME_LENGTH 63
 
-class		Server : private Client
+class		Server
 {
 	friend class IrcAPI;
 private:
-	std::string						name[SERVER_NAME_LENGTH];
+	socket_info						sock;
+	std::string						name[SERVER_NAME_LENGTH];	
 	std::string						password;
-	std::vector<Client*>			clients;
-	std::vector<User*>				users;
-	std::vector<Server*>				servers;
+	std::vector<Client>				clients;
+	std::vector<User>				users;
+	std::vector<Server>				servers;
 	std::vector<Channel>			channels;
 	std::vector<socket_info>		connected_servers;
 
@@ -35,13 +36,11 @@ private:
 	void							initFds(int &, fd_set&, fd_set&);
 	void							server_loop();
 	void							acceptNewClient();
-	void							processClients(fd_set &, fd_set&);
-	void							processClientRequest(Client **);
-	void							sendDataToClient(Client *);
-	void							addClient(Client *);
-	void							rmClient(Client *);
-	void							addUser(Client **);
-	void							connectToServer(const socket_info&);
+	void							processClients(fd_set&, fd_set&);
+	void							processClientRequest(Client);
+	void							sendDataToClient(Client);
+	void							addClient(Client);
+	void							rmClient(Client);
 	void							create_server(const int&, const std::string&);
 public:
 	Server();
@@ -54,9 +53,6 @@ public:
 	Server &operator=(const Server&);
 
 	// _functions
-	void							setSocket(socket_info);
-	socket_info						getSocket() const;
-	const std::vector<Client *>		&getClients() const;
 	void							start();
 };
 

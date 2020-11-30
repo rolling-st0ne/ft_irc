@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ServerClass.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
+/*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 01:58:30 by casteria          #+#    #+#             */
-/*   Updated: 2020/11/29 18:01:32 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/11/30 22:16:52 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,17 +71,6 @@ void	Server::create_server(const int& port, const std::string& password)
 		throw IrcException(errno);
 }
 
-void	Server::setSocket(socket_info socket)
-{
-	this->sock.socket_fd = socket.socket_fd;
-	this->sock.addr = socket.addr;
-}
-
-socket_info Server::getSocket() const
-{
-	return (this->sock);
-}
-
 void	Server::start()
 {
 	server_loop();
@@ -117,24 +106,24 @@ void							Server::initFds(int& max_d, fd_set& readfds, fd_set& writefds)
 	FD_ZERO(&readfds);
 	FD_ZERO(&writefds);
 	FD_SET(this->sock.socket_fd, &readfds);
-	for (std::vector<Client*>::iterator it = clients.begin(); it != clients.end(); it++)
+	for (std::vector<Client>::iterator it = clients.begin(); it != clients.end(); it++)
 	{
-		FD_SET((*it)->sock.socket_fd, &readfds);
-		if (!(*it)->buffer.isEmpty())
-			FD_SET((*it)->sock.socket_fd, &writefds);
-		if ((*it)->sock.socket_fd > max_d)
-			max_d = (*it)->sock.socket_fd;
+		FD_SET(it->sock.socket_fd, &readfds);
+		if (it->buffer.isEmpty())
+			FD_SET(it->sock.socket_fd, &writefds);
+		if (it->sock.socket_fd > max_d)
+			max_d = it->sock.socket_fd;
 	}
 }
 
 void							Server::acceptNewClient()
 {
-	Client						*new_client = new Client;
+	Client						new_client;
 
-	new_client->sock.socket_fd = accept(sock.socket_fd, (sockaddr *)&new_client->sock.addr, &new_client->sock.socklen);
-	if (new_client->sock.socket_fd < 0)
+	new_client.sock.socket_fd = accept(sock.socket_fd, (sockaddr *)&new_client.sock.addr, &new_client.sock.socklen);
+	if (new_client.sock.socket_fd < 0)
 		throw IrcException(errno);
-	fcntl(new_client->sock.socket_fd, F_SETFL, O_NONBLOCK);
+	fcntl(new_client.sock.socket_fd, F_SETFL, O_NONBLOCK);
 	addClient(new_client);
 }
 
@@ -142,74 +131,53 @@ void							Server::processClients(fd_set &readfds, fd_set &writefds)
 {
 	for (size_t i = 0; i < clients.size(); i++)
 	{
-		if (FD_ISSET(clients[i]->sock.socket_fd, &readfds))
+		if (FD_ISSET(clients[i].sock.socket_fd, &readfds))
 		{
-			processClientRequest(&clients[i]);
+			processClientRequest(clients[i]);
 		}
-		if (FD_ISSET(clients[i]->sock.socket_fd, &writefds))
+		if (FD_ISSET(clients[i].sock.socket_fd, &writefds))
 			sendDataToClient(clients[i]);
 	}
 }
 
-void							Server::processClientRequest(Client **client)
+void							Server::processClientRequest(Client client)
 {
 	char		buffer[BUFFER_SIZE];
 	int			recv_ret;
 	std::string	received_message;
 
 	bzero(buffer, BUFFER_SIZE);
-	recv_ret = recv((*client)->sock.socket_fd, buffer, BUFFER_SIZE, 0);
+	recv_ret = recv(client.sock.socket_fd, buffer, BUFFER_SIZE, 0);
 	if (recv_ret < 0)
 		throw IrcException(errno);
 	else if (recv_ret == 0)
-		rmClient(*client);
+		rmClient(client);
 #ifdef DEBUG_MODE
 	DEBUG_MES("SOMEONE SAYS: " << buffer)
 #endif
-	IrcAPI::run_query(this, client, buffer);
+	IrcAPI::run_query(*this, client, buffer);
 }
 
-void							Server::sendDataToClient(Client *client)
+void							Server::sendDataToClient(Client client)
 {
-	std::string		response = client->buffer.response;
-	send(client->sock.socket_fd, response.c_str(), response.size(), 0);
-	client->buffer.clear();
+	std::string		response = client.buffer.response;
+	send(client.sock.socket_fd, response.c_str(), response.size(), 0);
+	client.buffer.clear();
 }
 
-const std::vector<Client *>		&Server::getClients() const
-{
-	return (this->clients);
-}
-
-void							Server::addClient(Client *client)
+void							Server::addClient(Client client)
 {
 	clients.push_back(client);
 }
 
-void							Server::addUser(Client **client)
+void							Server::rmClient(Client client) // to finalize;
 {
-	Client		*temp = *client;
-
-	User		*new_user = new User(*temp);
-	*client = new_user;
-//	delete temp;
-	users.push_back(dynamic_cast<User*>(*client));
-}
-
-void							Server::rmClient(Client *client) // to finalize;
-{
-	for (std::vector<Client *>::iterator it = clients.begin(); it != clients.end(); it++)
+	for (std::vector<Client>::iterator it = clients.begin(); it != clients.end(); it++)
 	{
-		if ((*it)->sock.socket_fd == (*client).sock.socket_fd)
+		if (it->sock.socket_fd == client.sock.socket_fd)
 		{
 			clients.erase(it);
 			break;
 		}
 	}
-}
-
-void							Server::connectToServer(const socket_info& other)
-{
-	connect(other.socket_fd, (sockaddr *)&other.addr, other.socklen);
-	connected_servers.push_back(other);
 }

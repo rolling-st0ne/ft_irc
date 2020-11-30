@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   IrcApiClass.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
+/*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 17:01:13 by gwynton           #+#    #+#             */
-/*   Updated: 2020/11/29 17:57:19 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/11/30 19:53:02 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_map IrcAPI::create_map()
 
 t_map IrcAPI::commands = create_map();
 
-void IrcAPI::run_query(Server *server, Client **client, const std::string& query)
+void IrcAPI::run_query(Server *server, Client client, const std::string& query)
 {
     t_command command;
     try
@@ -35,7 +35,7 @@ void IrcAPI::run_query(Server *server, Client **client, const std::string& query
     }
     catch (const std::exception& ex)
     {
-        (*client)->buffer.response = std::string(ex.what()).append("\n");
+        client.buffer.response = std::string(ex.what()).append("\n");
     }
 }
 
@@ -70,11 +70,9 @@ t_command IrcAPI::parse_query(const std::string& query)
     return result;
 }
 
-void IrcAPI::process_query(Server *server, Client** client, const t_command& command)
+void IrcAPI::process_query(Server *server, Client client, const t_command& command)
 {
 	if (command.command == "BAD")
 		throw IrcException("Invalid command");
-	if (command.command != "SERVER" && (dynamic_cast<User *>(*client)) == NULL)
-		server->addUser(client);
-    commands[command.command](server, *client, command);
+    commands[command.command](server, client, command);
 }

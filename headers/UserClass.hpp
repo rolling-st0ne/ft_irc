@@ -6,7 +6,7 @@
 /*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/22 01:15:28 by casteria          #+#    #+#             */
-/*   Updated: 2020/11/28 15:41:51 by casteria         ###   ########.fr       */
+/*   Updated: 2020/11/30 18:44:34 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 # define CLIENT_NAME_LENGTH 9
 
-class		User : public Client
+class		User
 {
 public:
     std::string		nickname;

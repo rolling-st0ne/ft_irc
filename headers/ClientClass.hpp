@@ -6,7 +6,7 @@
 /*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/22 01:18:18 by casteria          #+#    #+#             */
-/*   Updated: 2020/11/28 15:40:00 by casteria         ###   ########.fr       */
+/*   Updated: 2020/11/30 21:58:19 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,9 @@ class		Client
 {
 public:
 	socket_info		sock;
+	std::string		name;
+	std::string		password;
+	bool			is_registered;
 	class	Buffer ////////////// ugly
 	{
 	public:

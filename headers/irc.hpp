@@ -6,7 +6,7 @@
 /*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 02:02:32 by casteria          #+#    #+#             */
-/*   Updated: 2020/11/27 19:59:30 by casteria         ###   ########.fr       */
+/*   Updated: 2020/11/30 22:00:19 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ typedef struct	s_message // to_delete
 }				t_message;
 
 // ___our classes
+# include "Errors.hpp"
+# include "Responses.hpp"
 # include "ClientClass.hpp"
 # include "ServerClass.hpp"
 # include "UserClass.hpp"
