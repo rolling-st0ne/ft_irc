@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   UserClass.hpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
+/*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/22 01:15:28 by casteria          #+#    #+#             */
-/*   Updated: 2020/11/30 18:44:34 by casteria         ###   ########.fr       */
+/*   Updated: 2020/12/01 01:03:41 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,6 @@ class		User
 {
 public:
     std::string		nickname;
-    bool			authenticated;
-	bool			registered;
     std::vector<t_message> buffer;
 public:
     User(const Client &);

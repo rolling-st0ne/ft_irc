@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   UserClass.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
+/*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/22 01:15:11 by casteria          #+#    #+#             */
-/*   Updated: 2020/11/28 15:37:40 by casteria         ###   ########.fr       */
+/*   Updated: 2020/12/01 01:03:51 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "UserClass.hpp"
 
 User::User(const Client &other)
-	:	Client(other)
+	:	nickname(other.name)
 {
 }

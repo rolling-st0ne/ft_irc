@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   IrcApiClass.hpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
+/*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/23 23:36:15 by casteria          #+#    #+#             */
-/*   Updated: 2020/11/30 23:08:25 by casteria         ###   ########.fr       */
+/*   Updated: 2020/12/01 00:57:25 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ private:
 
 
     static void				cmd_nick(COMMANDS_PARAM_LIST);
-//	static void				(Server& server, const std::string& nickname);
+	static bool				nick_in_use(Server& server, const std::string& nickname);
 
 
 	static void				cmd_user(COMMANDS_PARAM_LIST);

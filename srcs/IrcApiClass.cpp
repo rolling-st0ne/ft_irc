@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   IrcApiClass.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
+/*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 17:01:13 by gwynton           #+#    #+#             */
-/*   Updated: 2020/11/30 19:53:02 by casteria         ###   ########.fr       */
+/*   Updated: 2020/12/01 00:50:22 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_map IrcAPI::create_map()
 
 t_map IrcAPI::commands = create_map();
 
-void IrcAPI::run_query(Server *server, Client client, const std::string& query)
+void IrcAPI::run_query(Server &server, Client& client, const std::string& query)
 {
     t_command command;
     try
@@ -70,7 +70,7 @@ t_command IrcAPI::parse_query(const std::string& query)
     return result;
 }
 
-void IrcAPI::process_query(Server *server, Client client, const t_command& command)
+void IrcAPI::process_query(Server &server, Client &client, const t_command& command)
 {
 	if (command.command == "BAD")
 		throw IrcException("Invalid command");
