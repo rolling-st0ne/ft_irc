@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ServerClass.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
+/*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 01:58:30 by casteria          #+#    #+#             */
-/*   Updated: 2020/12/01 04:02:25 by casteria         ###   ########.fr       */
+/*   Updated: 2020/12/02 02:17:11 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,7 +156,7 @@ void							Server::processClientRequest(Client& client)
 	DEBUG_MES("SOMEONE SAYS: " << buffer)
 #endif
 	IrcAPI::run_query(*this, client, buffer);
-	std::cerr << clients.size() << ' ' << users.size() << std::endl;
+	//std::cerr << clients.size() << ' ' << users.size() << std::endl;
 }
 
 void							Server::sendDataToClient(Client& client)

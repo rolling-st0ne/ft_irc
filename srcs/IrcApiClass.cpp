@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   IrcApiClass.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
+/*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 17:01:13 by gwynton           #+#    #+#             */
-/*   Updated: 2020/12/01 03:03:51 by casteria         ###   ########.fr       */
+/*   Updated: 2020/12/02 01:58:48 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,23 @@ t_map IrcAPI::commands = create_map();
 void IrcAPI::run_query(Server &server, Client& client, const std::string& query)
 {
     t_command command;
+	std::string message;
+	std::string currentQuery;
     try
     {
-        command = parse_query(query);
-        process_query(server, client, command);
+		if (!client.buffer.input.empty())
+		{
+			message = client.buffer.input;
+			client.buffer.input = "";
+		}
+		message += query;
+		while (getNextQuery(message, currentQuery))
+		{
+			std::cerr << "Current query: " << currentQuery << "\n";
+			command = parse_query(currentQuery);
+			process_query(server, client, command);
+		}
+		client.buffer.input = message;
     }
     catch (const std::exception& ex)
     {
@@ -74,6 +87,7 @@ t_command IrcAPI::parse_query(const std::string& query)
 void IrcAPI::process_query(Server &server, Client &client, const t_command& command)
 {
 	if (command.command == "BAD")
-		throw IrcException("Invalid command");
-    commands[command.command](server, client, command);
+		client.buffer.response = ERR_UNKNOWNCOMMAND;
+	else
+    	commands[command.command](server, client, command);
 }
