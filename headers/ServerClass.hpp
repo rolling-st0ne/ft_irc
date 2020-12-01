@@ -6,7 +6,7 @@
 /*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 01:55:39 by casteria          #+#    #+#             */
-/*   Updated: 2020/12/01 01:13:07 by casteria         ###   ########.fr       */
+/*   Updated: 2020/12/01 03:49:58 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,9 @@ private:
 	void							acceptNewClient();
 	void							processClients(fd_set&, fd_set&);
 	void							processClientRequest(Client&);
-	void							sendDataToClient(Client);
+	void							sendDataToClient(Client&);
 	void							addClient(Client);
+	void							addUser(User); // check with reference
 	void							rmClient(Client);
 	void							create_server(const int&, const std::string&);
 public:

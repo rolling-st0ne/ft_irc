@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   irc.hpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
+/*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 02:02:32 by casteria          #+#    #+#             */
-/*   Updated: 2020/11/30 22:00:19 by casteria         ###   ########.fr       */
+/*   Updated: 2020/12/01 03:47:13 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ class Channel;
 # include <sys/select.h>
 # include <stdlib.h>
 # include <fcntl.h>
+# include <unistd.h>
 
 // ___structs
 typedef struct	s_socket_info
@@ -74,7 +75,6 @@ typedef struct	s_message // to_delete
 # define SUCCESS 0
 # define FAIL -1
 # define SERVER_RUNS 1
-# define DEBUG_MODE
 # define DEBUG_MES(str) std::cerr << "\x1b[1;31m" << str << "\x1b[0m";
 
 # define UNKNOWN 0

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: casteria <casteria@student.42.fr>          +#+  +:+       +#+         #
+#    By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/16 01:48:02 by casteria          #+#    #+#              #
-#    Updated: 2020/11/26 21:41:16 by casteria         ###   ########.fr        #
+#    Updated: 2020/12/01 03:23:59 by casteria         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,7 @@ OBJECTS_REL =		$(ALL_SOURCES_REL:.cpp=.o)
 
 COMPILER =			clang++
 STD_FLAG = 			-std=c++98
-FLAGS = 			-Wall -Wextra -Werror $(STD_FLAG) -I $(HEADER_F)
+FLAGS = 			-Wall -Wextra -Werror $(STD_FLAG) -I $(HEADER_F) -D DEBUG_MODE=1
 
 all: $(NAME)
 

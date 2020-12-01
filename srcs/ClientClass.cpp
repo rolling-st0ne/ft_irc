@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ClientClass.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casteria <casteria@student.42.fr>          +#+  +:+       +#+        */
+/*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/22 01:18:00 by casteria          #+#    #+#             */
-/*   Updated: 2020/11/28 15:40:23 by casteria         ###   ########.fr       */
+/*   Updated: 2020/12/01 03:52:55 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ Client::Client(const Client& other)
 
 Client::~Client()
 {
+//	close(this->sock.socket_fd);
 }
 
 void		Client::Buffer::clear()

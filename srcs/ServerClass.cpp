@@ -6,7 +6,7 @@
 /*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 01:58:30 by casteria          #+#    #+#             */
-/*   Updated: 2020/12/01 01:13:21 by casteria         ###   ########.fr       */
+/*   Updated: 2020/12/01 04:02:25 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,19 +56,19 @@ void	Server::create_server(const int& port, const std::string& password)
 {
 	int					option = 1;
 
-	timeout.tv_sec = 5;
+	timeout.tv_sec = 2;
 	this->password = password;
 	sock.socket_fd = socket(AF_INET, SOCK_STREAM, 0);
 	if (sock.socket_fd == FAIL)
-		throw IrcException(errno);
+		throw ServerException(errno);
 	sock.addr.sin_family = AF_INET;
 	sock.addr.sin_addr.s_addr = htonl(INADDR_ANY);
 	sock.addr.sin_port = htons(port);
 	setsockopt(sock.socket_fd, SOL_SOCKET, SO_REUSEADDR, &option, sizeof(option));
 	if (bind(sock.socket_fd, (struct sockaddr *)&sock.addr, sizeof(sockaddr)) == FAIL)
-		throw IrcException(errno);
+		throw ServerException(errno);
 	if (listen(sock.socket_fd, QUEUE_LEN_MAX) == FAIL)
-		throw IrcException(errno);
+		throw ServerException(errno);
 }
 
 void	Server::start()
@@ -89,10 +89,10 @@ void	Server::server_loop()
 		select_result = select(max_d + 1, &readfds, &writefds, NULL, &timeout);
 #ifdef DEBUG_MODE
 		if (select_result == 0)
-			DEBUG_MES("TIMEOUT\n")
+			DEBUG_MES("TIMEOUT. Clients: " << clients.size() << ", Users: " << users.size() << '\n')
 #endif
-		else if (select_result < 0)
-			throw IrcException(errno); // need signal handle (errno: EINTR)
+		if (select_result < 0)
+			throw ServerException(errno); // need signal handle (errno: EINTR)
 		if (FD_ISSET(sock.socket_fd, &readfds))
 			acceptNewClient();
 		processClients(readfds, writefds);
@@ -109,7 +109,7 @@ void							Server::initFds(int& max_d, fd_set& readfds, fd_set& writefds)
 	for (std::vector<Client>::iterator it = clients.begin(); it != clients.end(); it++)
 	{
 		FD_SET(it->sock.socket_fd, &readfds);
-		if (it->buffer.isEmpty())
+		if (!it->buffer.isEmpty())
 			FD_SET(it->sock.socket_fd, &writefds);
 		if (it->sock.socket_fd > max_d)
 			max_d = it->sock.socket_fd;
@@ -122,7 +122,7 @@ void							Server::acceptNewClient()
 
 	new_client.sock.socket_fd = accept(sock.socket_fd, (sockaddr *)&new_client.sock.addr, &new_client.sock.socklen);
 	if (new_client.sock.socket_fd < 0)
-		throw IrcException(errno);
+		throw ServerException(errno);
 	fcntl(new_client.sock.socket_fd, F_SETFL, O_NONBLOCK);
 	addClient(new_client);
 }
@@ -140,7 +140,7 @@ void							Server::processClients(fd_set &readfds, fd_set &writefds)
 	}
 }
 
-void							Server::processClientRequest(Client &client)
+void							Server::processClientRequest(Client& client)
 {
 	char		buffer[BUFFER_SIZE];
 	int			recv_ret;
@@ -149,16 +149,17 @@ void							Server::processClientRequest(Client &client)
 	bzero(buffer, BUFFER_SIZE);
 	recv_ret = recv(client.sock.socket_fd, buffer, BUFFER_SIZE, 0);
 	if (recv_ret < 0)
-		throw IrcException(errno);
+		throw ServerException(errno);
 	else if (recv_ret == 0)
 		rmClient(client);
 #ifdef DEBUG_MODE
 	DEBUG_MES("SOMEONE SAYS: " << buffer)
 #endif
 	IrcAPI::run_query(*this, client, buffer);
+	std::cerr << clients.size() << ' ' << users.size() << std::endl;
 }
 
-void							Server::sendDataToClient(Client client)
+void							Server::sendDataToClient(Client& client)
 {
 	std::string		response = client.buffer.response;
 	send(client.sock.socket_fd, response.c_str(), response.size(), 0);
