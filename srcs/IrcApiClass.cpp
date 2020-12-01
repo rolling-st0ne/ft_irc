@@ -6,7 +6,7 @@
 /*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 17:01:13 by gwynton           #+#    #+#             */
-/*   Updated: 2020/12/01 00:50:22 by casteria         ###   ########.fr       */
+/*   Updated: 2020/12/01 03:03:51 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ t_command IrcAPI::parse_query(const std::string& query)
 	{
 		result.params.push_back(after_split[i + command_index]);
 	}
+    result.amount_of_params = result.params.size();
     return result;
 }
 

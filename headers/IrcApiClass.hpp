@@ -6,7 +6,7 @@
 /*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/23 23:36:15 by casteria          #+#    #+#             */
-/*   Updated: 2020/12/01 00:57:25 by casteria         ###   ########.fr       */
+/*   Updated: 2020/12/01 03:03:20 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ typedef struct  s_command
     std::string prefix;
     std::string command;
     std::vector<std::string> params;
+    unsigned short int  amount_of_params;
     short int				belongs_to;
 }               t_command;
 
