@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   IrcApiClass.hpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
+/*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/23 23:36:15 by casteria          #+#    #+#             */
-/*   Updated: 2020/12/01 03:03:20 by casteria         ###   ########.fr       */
+/*   Updated: 2020/12/02 05:34:05 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ private:
 
 
 	static void				cmd_user(COMMANDS_PARAM_LIST);
-
+	static void				cmd_join(COMMANDS_PARAM_LIST);
+	static void				cmd_privmsg(COMMANDS_PARAM_LIST);
 
     static void             cmd_server(COMMANDS_PARAM_LIST);
 

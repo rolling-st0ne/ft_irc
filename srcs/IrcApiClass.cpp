@@ -6,7 +6,7 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 17:01:13 by gwynton           #+#    #+#             */
-/*   Updated: 2020/12/02 04:11:34 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/02 06:49:28 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ t_map IrcAPI::create_map()
     res["PASS"] = cmd_pass;
     res["USER"] = cmd_user;
     res["SERVER"] = cmd_server;
+	res["JOIN"] = cmd_join;
+	res["PRIVMSG"] = cmd_privmsg;
 	return (res);
 }
 
@@ -40,7 +42,7 @@ void IrcAPI::run_query(Server &server, Client& client, const std::string& query)
 		message += query;
 		while (getNextQuery(message, currentQuery))
 		{
-			std::cerr << "Current query: " << currentQuery << "\n";
+			//std::cerr << "Current query: " << currentQuery << "\n";
 			command = parse_query(currentQuery);
 			process_query(server, client, command);
 		}
@@ -48,7 +50,7 @@ void IrcAPI::run_query(Server &server, Client& client, const std::string& query)
     }
     catch (const std::exception& ex)
     {
-        client.buffer.response = std::string(ex.what()).append("\n");
+        client.buffer.response = std::string(ex.what()).append("\r\n");
     }
 }
 
@@ -94,7 +96,10 @@ t_command IrcAPI::parse_query(const std::string& query)
 void IrcAPI::process_query(Server &server, Client &client, const t_command& command)
 {
 	if (command.command == "BAD")
+	{
 		client.buffer.response = ERR_UNKNOWNCOMMAND;
+		client.buffer.response += "\r\n";
+	}
 	else
     	commands[command.command](server, client, command);
 }

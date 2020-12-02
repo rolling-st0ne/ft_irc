@@ -6,8 +6,26 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 18:45:07 by gwynton           #+#    #+#             */
-/*   Updated: 2020/11/26 18:45:16 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/02 06:41:46 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ChannelClass.hpp"
+
+Channel::Channel(std::string name, std::string creator)
+	: name(name), creator(creator)
+{
+	members.push_back(creator);
+	std::cerr << "Channel " << name << " created by " << creator << std::endl;
+}
+
+bool	Channel::addUser(std::string user)
+{
+	for (std::vector<std::string>::iterator it = members.begin(); it != members.end(); it++)
+	{
+		if ((*it) == user)
+			return false;
+	}
+	members.push_back(user);
+	return true;
+}
