@@ -6,7 +6,7 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 01:58:30 by casteria          #+#    #+#             */
-/*   Updated: 2020/12/02 02:17:11 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/02 09:42:06 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +88,8 @@ void	Server::server_loop()
 		timeval timeout = this->timeout;
 		select_result = select(max_d + 1, &readfds, &writefds, NULL, &timeout);
 #ifdef DEBUG_MODE
-		if (select_result == 0)
-			DEBUG_MES("TIMEOUT. Clients: " << clients.size() << ", Users: " << users.size() << '\n')
+		//if (select_result == 0)
+		//	DEBUG_MES("TIMEOUT. Clients: " << clients.size() << ", Users: " << users.size() << '\n')
 #endif
 		if (select_result < 0)
 			throw ServerException(errno); // need signal handle (errno: EINTR)
@@ -162,6 +162,7 @@ void							Server::processClientRequest(Client& client)
 void							Server::sendDataToClient(Client& client)
 {
 	std::string		response = client.buffer.response;
+	//std::cerr << "Sending " + response + " to " + client.name << std::endl;
 	send(client.sock.socket_fd, response.c_str(), response.size(), 0);
 	client.buffer.clear();
 }
