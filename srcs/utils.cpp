@@ -6,7 +6,7 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 17:41:24 by gwynton           #+#    #+#             */
-/*   Updated: 2020/12/02 02:27:11 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/02 04:00:08 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@ std::vector<std::string> strsplit(const std::string& input, char del)
 {
     std::vector<std::string> result;
 	std::string temp;
+	std::string	buffer;
 
 	if (input[input.size() - 1] == '\r')
 		temp = input.substr(0, input.size() - 1);
 	else
 		temp = input;
 	std::istringstream   strstream(temp);
-	std::string	buffer;
 
 	while (std::getline(strstream, buffer, del))
 	{

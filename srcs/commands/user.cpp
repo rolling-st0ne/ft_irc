@@ -6,7 +6,7 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 22:06:19 by casteria          #+#    #+#             */
-/*   Updated: 2020/12/02 02:40:46 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/02 04:09:31 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,6 @@ void            IrcAPI::cmd_user(Server& server, Client& client, const t_command
 	server.users.push_back(User(command.params[0], command.params[1], command.params[2], command.params[3]));
 	client.is_registered = true;
 #ifdef DEBUG_MODE
-	std::cerr << "User " << client.name << " has been registered\n";
+	std::cerr << "User " << client.name << " has been registered, real name: " << command.params[3] << std::endl;
 #endif
 }

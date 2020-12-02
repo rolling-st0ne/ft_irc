@@ -6,7 +6,7 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 17:01:13 by gwynton           #+#    #+#             */
-/*   Updated: 2020/12/02 01:58:48 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/02 04:11:34 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,13 @@ t_command IrcAPI::parse_query(const std::string& query)
     }
 	for (int i = 1; i < size - command_index; i++)
 	{
+		if (after_split[i + command_index][0] == ':')
+		{
+			size_t position = query.find_last_of(':');
+			std::string temp = query.substr(position + 1);
+			result.params.push_back(temp);
+			break;
+		}
 		result.params.push_back(after_split[i + command_index]);
 	}
     result.amount_of_params = result.params.size();
