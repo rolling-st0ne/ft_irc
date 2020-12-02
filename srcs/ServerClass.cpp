@@ -6,7 +6,7 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 01:58:30 by casteria          #+#    #+#             */
-/*   Updated: 2020/12/02 09:42:06 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/02 21:59:31 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ void							Server::initFds(int& max_d, fd_set& readfds, fd_set& writefds)
 	for (std::vector<Client>::iterator it = clients.begin(); it != clients.end(); it++)
 	{
 		FD_SET(it->sock.socket_fd, &readfds);
-		if (!it->buffer.isEmpty())
+		if (!it->response.empty())
 			FD_SET(it->sock.socket_fd, &writefds);
 		if (it->sock.socket_fd > max_d)
 			max_d = it->sock.socket_fd;
@@ -124,6 +124,7 @@ void							Server::acceptNewClient()
 	if (new_client.sock.socket_fd < 0)
 		throw ServerException(errno);
 	fcntl(new_client.sock.socket_fd, F_SETFL, O_NONBLOCK);
+	//new_client.name = "<unknown>";
 	addClient(new_client);
 }
 
@@ -161,15 +162,16 @@ void							Server::processClientRequest(Client& client)
 
 void							Server::sendDataToClient(Client& client)
 {
-	std::string		response = client.buffer.response;
-	//std::cerr << "Sending " + response + " to " + client.name << std::endl;
+	std::string		response = client.response;
 	send(client.sock.socket_fd, response.c_str(), response.size(), 0);
-	client.buffer.clear();
+	client.response.clear();
 }
 
 void							Server::addClient(Client client)
 {
 	clients.push_back(client);
+	for (size_t i = 0; i < clients.size(); i++)
+		std::cerr << "Client " << i << ": " << clients[i].name << std::endl;
 }
 
 void							Server::rmClient(Client client) // to finalize;

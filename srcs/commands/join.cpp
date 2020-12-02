@@ -6,7 +6,7 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/02 05:35:28 by gwynton           #+#    #+#             */
-/*   Updated: 2020/12/02 07:48:07 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/02 21:47:05 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void        IrcAPI::cmd_join(Server& server, Client& client, const t_command& co
 		if (it->name == command.params[0])
 		{
 			if (it->addUser(client.name))
-				client.buffer.response += "Welcome to " + it->name + "!\r\n";
+				client.response += "Welcome to " + it->name + "!\r\n";
 			return ;
 		}
 	}

@@ -18,21 +18,11 @@ Client::Client()
 
 Client::Client(const Client& other)
 	:	sock(other.sock),
-		buffer(other.buffer)
+		name(other.name)
 {
 }
 
 Client::~Client()
 {
 //	close(this->sock.socket_fd);
-}
-
-void		Client::Buffer::clear()
-{
-	this->response.clear();
-}
-
-bool		Client::Buffer::isEmpty() const
-{
-	return (response.empty());
 }

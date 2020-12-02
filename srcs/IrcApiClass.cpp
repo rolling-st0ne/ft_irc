@@ -6,7 +6,7 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 17:01:13 by gwynton           #+#    #+#             */
-/*   Updated: 2020/12/02 06:49:28 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/02 21:49:31 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,10 @@ void IrcAPI::run_query(Server &server, Client& client, const std::string& query)
 	std::string currentQuery;
     try
     {
-		if (!client.buffer.input.empty())
+		if (!client.input.empty())
 		{
-			message = client.buffer.input;
-			client.buffer.input = "";
+			message = client.input;
+			client.input = "";
 		}
 		message += query;
 		while (getNextQuery(message, currentQuery))
@@ -46,11 +46,11 @@ void IrcAPI::run_query(Server &server, Client& client, const std::string& query)
 			command = parse_query(currentQuery);
 			process_query(server, client, command);
 		}
-		client.buffer.input = message;
+		client.input = message;
     }
     catch (const std::exception& ex)
     {
-        client.buffer.response = std::string(ex.what()).append("\r\n");
+        client.response = std::string(ex.what()).append("\r\n");
     }
 }
 
@@ -97,8 +97,8 @@ void IrcAPI::process_query(Server &server, Client &client, const t_command& comm
 {
 	if (command.command == "BAD")
 	{
-		client.buffer.response = ERR_UNKNOWNCOMMAND;
-		client.buffer.response += "\r\n";
+		client.response = ERR_UNKNOWNCOMMAND;
+		client.response += "\r\n";
 	}
 	else
     	commands[command.command](server, client, command);
