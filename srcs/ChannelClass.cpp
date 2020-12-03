@@ -6,7 +6,7 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 18:45:07 by gwynton           #+#    #+#             */
-/*   Updated: 2020/12/02 06:41:46 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/03 08:59:15 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,21 @@ bool	Channel::addUser(std::string user)
 {
 	for (std::vector<std::string>::iterator it = members.begin(); it != members.end(); it++)
 	{
-		if ((*it) == user)
+		if (*it == user)
 			return false;
 	}
 	members.push_back(user);
 	return true;
+}
+
+void	Channel::removeUser(std::string user)
+{
+	for (std::vector<std::string>::iterator it = members.begin(); it != members.end(); it++)
+	{
+		if (*it == user)
+		{
+			members.erase(it);
+			return;
+		}
+	}
 }

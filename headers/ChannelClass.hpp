@@ -6,7 +6,7 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 18:43:31 by gwynton           #+#    #+#             */
-/*   Updated: 2020/12/02 06:57:03 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/03 08:56:41 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ public:
 
 	Channel(std::string, std::string);
 	bool						addUser(std::string);
+	void						removeUser(std::string);
 };
 
 #endif

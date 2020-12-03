@@ -6,7 +6,7 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 17:01:13 by gwynton           #+#    #+#             */
-/*   Updated: 2020/12/02 21:49:31 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/03 08:17:10 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ t_map IrcAPI::create_map()
     res["SERVER"] = cmd_server;
 	res["JOIN"] = cmd_join;
 	res["PRIVMSG"] = cmd_privmsg;
+	res["PART"] = cmd_part;
 	return (res);
 }
 
