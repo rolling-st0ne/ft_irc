@@ -6,7 +6,7 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/02 05:37:24 by gwynton           #+#    #+#             */
-/*   Updated: 2020/12/02 22:00:29 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/03 07:45:30 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,20 +30,27 @@ void        IrcAPI::cmd_privmsg(Server& server, Client& client, const t_command&
 {
 	if (command.amount_of_params != 2)
 		return ;
-	std::string target = command.params[0];
 	std::string message = command.params[1];
-	for (std::vector<Channel>::iterator it = server.channels.begin(); it != server.channels.end(); it++)
+	std::vector<std::string> targets = strsplit(command.params[0], ',');
+	
+	for (size_t i = 0; i < targets.size(); i++)
 	{
-		if (it->name == target)
+		bool found = false;
+		for (std::vector<Channel>::iterator it = server.channels.begin(); it != server.channels.end(); it++)
 		{
-			std::vector<std::string>::iterator ite = it->members.end();
-			for (std::vector<std::string>::iterator iter = it->members.begin(); iter != ite; iter++)
+			if (it->name == targets[i])
 			{
-				sendToUser(server, *iter, message);
+				std::vector<std::string>::iterator ite = it->members.end();
+				for (std::vector<std::string>::iterator iter = it->members.begin(); iter != ite; iter++)
+				{
+					sendToUser(server, *iter, message);
+				}
+				found = true;
+				break;
 			}
-			return ;
 		}
+		if (!found)
+			sendToUser(server, targets[i], message);
 	}
-	sendToUser(server, target, message);
 	(void)client;
 }

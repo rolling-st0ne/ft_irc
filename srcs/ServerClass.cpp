@@ -6,7 +6,7 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 01:58:30 by casteria          #+#    #+#             */
-/*   Updated: 2020/12/02 21:59:31 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/03 07:37:08 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,8 +170,6 @@ void							Server::sendDataToClient(Client& client)
 void							Server::addClient(Client client)
 {
 	clients.push_back(client);
-	for (size_t i = 0; i < clients.size(); i++)
-		std::cerr << "Client " << i << ": " << clients[i].name << std::endl;
 }
 
 void							Server::rmClient(Client client) // to finalize;
