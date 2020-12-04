@@ -6,7 +6,7 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/23 23:36:15 by casteria          #+#    #+#             */
-/*   Updated: 2020/12/03 08:16:27 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/04 04:45:51 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,12 @@ private:
 
     static void				cmd_nick(COMMANDS_PARAM_LIST);
 	static bool				nick_in_use(Server& server, const std::string& nickname);
-
+	static std::string		user_by_nick(Server&, const std::string&);
 
 	static void				cmd_user(COMMANDS_PARAM_LIST);
 
 	static void				cmd_join(COMMANDS_PARAM_LIST);
+	static Channel*			channel_by_name(Server&, const std::string&);
 
 	static void				cmd_part(COMMANDS_PARAM_LIST);
 
