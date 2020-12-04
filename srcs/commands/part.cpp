@@ -6,7 +6,7 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/03 08:14:22 by gwynton           #+#    #+#             */
-/*   Updated: 2020/12/03 09:04:13 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/04 06:27:24 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,11 @@ void        IrcAPI::cmd_part(Server& server, Client& client, const t_command& co
 		{
 			if (it->name == channels[i])
 			{
+				std::string message = user_by_nick(server, client.name) + " " + "PART " + channels[i];
+				for (size_t i = 0; i < it->members.size(); i++)
+				{
+					sendToUser(server, it->members[i], message);
+				}
 				it->removeUser(client.name);
 				if (it->members.size() == 0)
 				{

@@ -6,7 +6,7 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/23 23:36:15 by casteria          #+#    #+#             */
-/*   Updated: 2020/12/04 04:45:51 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/04 06:34:55 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ private:
 	static Channel*			channel_by_name(Server&, const std::string&);
 
 	static void				cmd_part(COMMANDS_PARAM_LIST);
+
+	static void				cmd_topic(COMMANDS_PARAM_LIST);
 
 	static void				cmd_privmsg(COMMANDS_PARAM_LIST);
 	static void				sendToUser(Server&, std::string&, std::string&);
