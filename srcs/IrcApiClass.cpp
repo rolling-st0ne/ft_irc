@@ -6,7 +6,7 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 17:01:13 by gwynton           #+#    #+#             */
-/*   Updated: 2020/12/03 08:17:10 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/04 02:20:53 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,9 @@ void IrcAPI::process_query(Server &server, Client &client, const t_command& comm
 {
 	if (command.command == "BAD")
 	{
-		client.response = ERR_UNKNOWNCOMMAND;
+		client.response += ":localhost ";
+		client.response += ERR_UNKNOWNCOMMAND;
+		client.response += " " + client.name;
 		client.response += "\r\n";
 	}
 	else
