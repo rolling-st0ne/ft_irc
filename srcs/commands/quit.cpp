@@ -6,7 +6,7 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/04 10:18:16 by gwynton           #+#    #+#             */
-/*   Updated: 2020/12/04 11:34:49 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/04 14:48:33 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,22 @@ void	IrcAPI::cmd_quit(Server& server, Client& client, const t_command& command)
 	{
 		if (server.users[i].nickname != client.name)
 			sendToUser(server, server.users[i].nickname, message);
+	}
+	for (std::vector<Channel>::iterator it = server.channels.begin(); it != server.channels.end(); it++)
+	{
+		for (size_t i = 0; i < it->members.size(); i++)
+		{
+			if (it->members[i] == client.name)
+			{
+				it->removeUser(client.name);
+				break;
+			}
+		}
+		if (it->members.size() == 0)
+		{
+			server.channels.erase(it);
+			break;
+		}
 	}
 	for (std::vector<User>::iterator it = server.users.begin(); it != server.users.end(); it++)
 	{
