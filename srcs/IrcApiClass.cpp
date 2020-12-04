@@ -6,7 +6,7 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 17:01:13 by gwynton           #+#    #+#             */
-/*   Updated: 2020/12/04 06:35:29 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/04 10:18:56 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ t_map IrcAPI::create_map()
 	res["PRIVMSG"] = cmd_privmsg;
 	res["PART"] = cmd_part;
 	res["TOPIC"] = cmd_topic;
+	res["QUIT"] = cmd_quit;
 	return (res);
 }
 

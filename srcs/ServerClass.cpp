@@ -6,7 +6,7 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 01:58:30 by casteria          #+#    #+#             */
-/*   Updated: 2020/12/03 07:37:08 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/04 11:30:15 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	Server::create_server(const int& port, const std::string& password)
 {
 	int					option = 1;
 
-	timeout.tv_sec = 2;
+	timeout.tv_sec = 1;
 	this->password = password;
 	sock.socket_fd = socket(AF_INET, SOCK_STREAM, 0);
 	if (sock.socket_fd == FAIL)
@@ -136,6 +136,15 @@ void							Server::processClients(fd_set &readfds, fd_set &writefds)
 		{
 			processClientRequest(clients[i]);
 		}
+		if (clients[i].sock.socket_fd == -1)
+		{
+			std::cerr << "Process: Found closed descriptor\n";
+			rmClient(clients[i]);
+			break;
+		}
+	}
+	for (size_t i = 0; i < clients.size(); i++)
+	{
 		if (FD_ISSET(clients[i].sock.socket_fd, &writefds))
 			sendDataToClient(clients[i]);
 	}
@@ -152,7 +161,7 @@ void							Server::processClientRequest(Client& client)
 	if (recv_ret < 0)
 		throw ServerException(errno);
 	else if (recv_ret == 0)
-		rmClient(client);
+		;//rmClient(client);
 #ifdef DEBUG_MODE
 	DEBUG_MES("SOMEONE SAYS: " << buffer)
 #endif

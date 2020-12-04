@@ -6,7 +6,7 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 18:10:11 by casteria          #+#    #+#             */
-/*   Updated: 2020/12/04 09:04:55 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/04 11:39:51 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void        IrcAPI::cmd_nick(Server& server, Client& client, const t_command& co
 	std::string old_nick = client.name;
 	client.name = command.params[0]; // length of name should be 9 symbols
 	//std::cerr << "Old nick: " << old_nick << std::endl;
-	//if (client.is_registered) // This gets reset somehow, I'll investigate
+	if (client.is_registered) // This gets reset somehow, I'll investigate
 	{
 		std::string message = user_by_nick(server, old_nick) + " NICK " + client.name;
 		for (size_t i = 0; i < server.users.size(); i++)

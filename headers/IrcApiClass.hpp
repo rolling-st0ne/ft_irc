@@ -6,7 +6,7 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/23 23:36:15 by casteria          #+#    #+#             */
-/*   Updated: 2020/12/04 06:34:55 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/04 10:19:20 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ private:
 
     static void             cmd_server(COMMANDS_PARAM_LIST);
 
+	static void				cmd_quit(COMMANDS_PARAM_LIST);
 
 public:
     static void            run_query(Server&, Client&, const std::string&);

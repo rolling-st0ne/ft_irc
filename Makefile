@@ -20,7 +20,7 @@ HEADERS = 			ExceptionsClasses.hpp irc.hpp ServerClass.hpp IrcApiClass.hpp \
 
 COMMANDS_F = 		commands
 COMMANDS_SRCS = 	nick.cpp pass.cpp user.cpp server.cpp join.cpp privmsg.cpp \
-					part.cpp topic.cpp
+					part.cpp topic.cpp quit.cpp
 COMMANDS_SRCS_REL =	$(addprefix $(COMMANDS_F)/, $(COMMANDS_SRCS))
 
 MAIN_SOURCES = 		main.cpp ServerClass.cpp ClientClass.cpp \
