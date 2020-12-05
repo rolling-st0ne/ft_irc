@@ -6,7 +6,7 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 18:10:11 by casteria          #+#    #+#             */
-/*   Updated: 2020/12/04 11:39:51 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/05 11:25:42 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,12 @@ std::string	IrcAPI::user_by_nick(Server& server, const std::string& nickname)
 void        IrcAPI::cmd_nick(Server& server, Client& client, const t_command& command)
 {
     if (command.params.size() == 0)
-		throw IrcException(ERR_NONICKNAMEGIVEN);
+	{
+		client.response += ":localhost ";
+		client.response += ERR_NONICKNAMEGIVEN;
+		client.response += " " + client.name + " No nickname given\r\n";
+		return ;
+	}
 	if (client.is_registered && nick_in_use(server, command.params[0]))
 		throw IrcException(ERR_NICKNAMEINUSE);
 	if (!client.is_registered && nick_in_use(server, command.params[0]))

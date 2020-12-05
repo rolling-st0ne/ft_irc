@@ -6,7 +6,7 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/02 05:35:28 by gwynton           #+#    #+#             */
-/*   Updated: 2020/12/04 06:52:10 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/05 11:24:23 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,13 @@ Channel*	IrcAPI::channel_by_name(Server& server, const std::string& name)
 
 void        IrcAPI::cmd_join(Server& server, Client& client, const t_command& command)
 {
+	if (command.amount_of_params < 1)
+	{
+		client.response += ":localhost ";
+		client.response += ERR_NEEDMOREPARAMS;
+		client.response += " " + client.name + " JOIN :Not enough parameters\r\n";
+		return ;
+	}
 	std::vector<std::string> channels = strsplit(command.params[0], ',');
 	for (size_t i = 0; i < channels.size(); i++)
 	{
