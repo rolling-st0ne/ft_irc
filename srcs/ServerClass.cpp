@@ -6,7 +6,7 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 01:58:30 by casteria          #+#    #+#             */
-/*   Updated: 2020/12/04 11:30:15 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/05 23:25:30 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,7 @@ void							Server::processClients(fd_set &readfds, fd_set &writefds)
 		}
 		if (clients[i].sock.socket_fd == -1)
 		{
-			std::cerr << "Process: Found closed descriptor\n";
+			std::cerr << "Found closed descriptor\n";
 			rmClient(clients[i]);
 			break;
 		}
@@ -161,7 +161,40 @@ void							Server::processClientRequest(Client& client)
 	if (recv_ret < 0)
 		throw ServerException(errno);
 	else if (recv_ret == 0)
-		;//rmClient(client);
+	{
+		std::string message = IrcAPI::user_by_nick(*this, client.name) + " QUIT " + "Disconnected";
+		for (size_t i = 0; i < users.size(); i++)
+		{
+			if (users[i].nickname != client.name)
+				IrcAPI::sendToUser(*this, users[i].nickname, message);
+		}
+		for (std::vector<Channel>::iterator it = channels.begin(); it != channels.end(); it++)
+		{
+			for (size_t i = 0; i < it->members.size(); i++)
+			{
+				if (it->members[i] == client.name)
+				{
+					it->removeUser(client.name);
+					break;
+				}
+			}
+			if (it->members.size() == 0)
+			{
+				channels.erase(it);
+				break;
+			}
+		}
+		for (std::vector<User>::iterator it = users.begin(); it != users.end(); it++)
+		{
+			if (it->nickname == client.name)
+			{
+				users.erase(it);
+				break;
+			}
+		}
+		close(client.sock.socket_fd);
+		rmClient(client);
+	}
 #ifdef DEBUG_MODE
 	DEBUG_MES("SOMEONE SAYS: " << buffer)
 #endif

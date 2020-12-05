@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   IrcApiClass.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
+/*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 17:01:13 by gwynton           #+#    #+#             */
-/*   Updated: 2020/12/05 18:10:50 by casteria         ###   ########.fr       */
+/*   Updated: 2020/12/06 00:52:56 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,8 @@ t_command IrcAPI::parse_query(const std::string& query)
 	int command_index = 0;
     if (size < 1)
     {
-        result.command = "BAD";
+        result.command = "<Empty>";
+		result.valid = false;
         return result;
     }
     if (after_split[0][0] == ':')
@@ -73,13 +74,19 @@ t_command IrcAPI::parse_query(const std::string& query)
         result.prefix = after_split[0];
 		command_index++;
     }
-	if (size > command_index && commands.find(after_split[command_index]) != commands.end())
+	if (size > command_index)
 	{
 		result.command = after_split[command_index];
+		if (commands.find(after_split[command_index]) != commands.end())
+			result.valid = true;
+		else
+			result.valid = false;
 	}
     else
     {
-        result.command = "BAD";
+        result.command = "<Empty>";
+		result.valid = false;
+        return result;
     }
 	for (int i = 1; i < size - command_index; i++)
 	{
@@ -98,23 +105,17 @@ t_command IrcAPI::parse_query(const std::string& query)
 
 void IrcAPI::process_query(Server &server, Client &client, const t_command& command)
 {
-	if (command.command == "BAD")
-	{
-		client.response += ":localhost ";
-		client.response += ERR_UNKNOWNCOMMAND;
-		client.response += " " + client.name;
-		client.response += "\r\n";
-	}
+	if (!command.valid)
+		sendReply(ERR_UNKNOWNCOMMAND, command.command + " :Unknown command", client);
 	else
     	commands[command.command](server, client, command);
 }
 
-void IrcAPI::sendReply(const std::string& host, const std::string& numericReply,
-                                        const std::string& textReply, Client& client)
+void IrcAPI::sendReply(const std::string& numericReply, const std::string& textReply, Client& client)
 {
-	client.response += ':' + host;
+	client.response += ":localhost "; //To be replaced with server name
 	client.response += numericReply;
+	client.response += " " + client.name;
 	client.response += " " + textReply;
 	client.response += "\r\n";
 }
-

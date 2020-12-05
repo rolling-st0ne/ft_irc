@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   join.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
+/*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/02 05:35:28 by gwynton           #+#    #+#             */
-/*   Updated: 2020/12/05 18:13:36 by casteria         ###   ########.fr       */
+/*   Updated: 2020/12/06 00:56:18 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,7 @@ void        IrcAPI::cmd_join(Server& server, Client& client, const t_command& co
 {
 	if (command.amount_of_params < 1)
 	{
-		client.response += ":localhost ";
-		client.response += ERR_NEEDMOREPARAMS;
-		client.response += " " + client.name + " JOIN :Not enough parameters\r\n";
+		sendReply(ERR_NEEDMOREPARAMS, "JOIN :Not enough parameters", client);
 		return ;
 	}
 	std::vector<std::string> channels = strsplit(command.params[0], ',');
