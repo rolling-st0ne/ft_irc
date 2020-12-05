@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   join.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
+/*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/02 05:35:28 by gwynton           #+#    #+#             */
-/*   Updated: 2020/12/05 11:24:23 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/05 18:13:36 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ Channel*	IrcAPI::channel_by_name(Server& server, const std::string& name)
 		if (it->name == name)
 			return (&*it);
 	}
-	return nullptr;
+	return NULL;
 }
 
 void        IrcAPI::cmd_join(Server& server, Client& client, const t_command& command)
