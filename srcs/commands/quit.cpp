@@ -6,7 +6,7 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/04 10:18:16 by gwynton           #+#    #+#             */
-/*   Updated: 2020/12/04 23:12:23 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/06 03:16:08 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,5 +52,4 @@ void	IrcAPI::cmd_quit(Server& server, Client& client, const t_command& command)
 	close(client.sock.socket_fd);
 	client.sock.socket_fd = -1;
 	client.response.clear();
-	//std::cerr << "Changing descriptor\n";
 }

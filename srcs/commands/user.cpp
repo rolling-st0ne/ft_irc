@@ -6,7 +6,7 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 22:06:19 by casteria          #+#    #+#             */
-/*   Updated: 2020/12/05 02:19:59 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/06 08:01:58 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,23 +15,11 @@
 void            IrcAPI::cmd_user(Server& server, Client& client, const t_command& command)
 {
 	if (client.is_registered)
-	{
-		client.response += ":localhost ";
-		client.response += ERR_ALREADYREGISTRED;
-		client.response += " " + client.name + " :Unauthorized command (already registered)\r\n";
-	}
+		sendReply(ERR_ALREADYREGISTRED, ":Unauthorized command (already registered)", client);
 	else if (client.password != server.password)
-	{
-		client.response += ":localhost ";
-		client.response += ERR_PASSWDMISMATCH;
-		client.response += " " + client.name + " :Password incorrect\r\n";
-	}
+		sendReply(ERR_PASSWDMISMATCH, ":Password incorrect", client);
 	else if (command.amount_of_params != 4)
-	{
-		client.response += ":localhost ";
-		client.response += ERR_NEEDMOREPARAMS;
-		client.response += " " + client.name + " USER :Not enough parameters\r\n";
-	}
+		sendReply(ERR_NEEDMOREPARAMS, "USER :Not enough parameters", client);
 	else
 	{
 		server.users.push_back(User(client.name, command.params[1], command.params[2], command.params[3]));

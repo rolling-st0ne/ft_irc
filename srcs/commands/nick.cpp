@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   nick.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
+/*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 18:10:11 by casteria          #+#    #+#             */
-/*   Updated: 2020/12/05 18:08:38 by casteria         ###   ########.fr       */
+/*   Updated: 2020/12/06 01:30:59 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,18 +40,19 @@ void        IrcAPI::cmd_nick(Server& server, Client& client, const t_command& co
 {
     if (command.params.size() == 0)
 	{
-		client.response += ":localhost ";
-		client.response += ERR_NONICKNAMEGIVEN;
-		client.response += " " + client.name + " No nickname given\r\n";
+		sendReply(ERR_NONICKNAMEGIVEN, ":No nickname given", client);
 		return ;
 	}
-	if (client.is_registered && nick_in_use(server, command.params[0]))
-		throw IrcException(ERR_NICKNAMEINUSE);
-	if (!client.is_registered && nick_in_use(server, command.params[0]))
-		throw IrcException(ERR_NICKCOLLISION);
+	if (nick_in_use(server, command.params[0]))
+	{
+		if (client.is_registered)
+			sendReply(ERR_NICKNAMEINUSE, command.params[0] + " :Nickname is already in use", client);
+		else
+			sendReply(ERR_NICKCOLLISION, command.params[0] + " :Nickname collision", client); // TODO: add KILL
+		return ;
+	}
 	std::string old_nick = client.name;
 	client.name = command.params[0]; // length of name should be 9 symbols
-	//std::cerr << "Old nick: " << old_nick << std::endl;
 	if (client.is_registered) // This gets reset somehow, I'll investigate
 	{
 		std::string message = user_by_nick(server, old_nick) + " NICK " + client.name;

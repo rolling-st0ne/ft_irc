@@ -6,7 +6,7 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/02 05:35:28 by gwynton           #+#    #+#             */
-/*   Updated: 2020/12/06 00:56:18 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/06 01:18:31 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,27 +44,16 @@ void        IrcAPI::cmd_join(Server& server, Client& client, const t_command& co
 			}
 			channel_ptr->addUser(client.name);
 		}
-		std::string prefix = ":localhost ";
 		channel_ptr = channel_by_name(server, channels[i]);
 		client.response += user_by_nick(server, client.name) + " " + "JOIN " + channels[i] + "\r\n";
 		if (channel_ptr->topic == "")
-		{
-			client.response += prefix + RPL_NOTOPIC;
-			client.response += " " + client.name + " " + channels[i] + " :No topic is set\r\n";
-		}
+			sendReply(RPL_NOTOPIC, channels[i] + " :No topic is set", client);
 		else
-		{
-			client.response += prefix + RPL_TOPIC;
-			client.response += " " + client.name + " " + channels[i] + " :" + channel_ptr->topic + "\r\n";
-		}
-		client.response += prefix + RPL_NAMREPLY;
-		client.response += " " + client.name + " = " + channels[i] + " :";
+			sendReply(RPL_TOPIC, channels[i] + " :" + channel_ptr->topic, client);
+		std::string member_list = "";
 		for (size_t i = 0; i < channel_ptr->members.size(); i++)
-		{
-			client.response += channel_ptr->members[i] + " ";
-		}
-		client.response += "\r\n";
-		client.response += prefix + RPL_ENDOFNAMES;
-		client.response += " " + client.name + " " + channels[i] + " :End of NAMES list\r\n";
+			member_list += channel_ptr->members[i] + " ";
+		sendReply(RPL_NAMREPLY, " = " + channels[i] + " :" + member_list, client);
+		sendReply(RPL_ENDOFNAMES, channels[i] + " :End of NAMES list", client);
 	}
 }
