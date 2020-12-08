@@ -6,7 +6,7 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/04 06:34:10 by gwynton           #+#    #+#             */
-/*   Updated: 2020/12/06 07:53:51 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/08 07:48:59 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,9 @@ void        IrcAPI::cmd_topic(Server& server, Client& client, const t_command& c
 			if (topic == "___show topic___")
 			{
 				if (it->topic == "")
-				sendReply(RPL_NOTOPIC, channel + " :No topic is set", client);
-			else
-				sendReply(RPL_TOPIC, channel + " :" + it->topic, client);
+					sendReply(RPL_NOTOPIC, channel + " :No topic is set", client);
+				else
+					sendReply(RPL_TOPIC, channel + " :" + it->topic, client);
 				break;
 			}
 			it->topic = topic;

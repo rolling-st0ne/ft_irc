@@ -6,7 +6,7 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 17:01:13 by gwynton           #+#    #+#             */
-/*   Updated: 2020/12/06 00:52:56 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/08 07:47:08 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ void IrcAPI::run_query(Server &server, Client& client, const std::string& query)
 		message += query;
 		while (getNextQuery(message, currentQuery))
 		{
-			//std::cerr << "Current query: " << currentQuery << "\n";
 			command = parse_query(currentQuery);
 			process_query(server, client, command);
 		}
