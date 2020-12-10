@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ClientClass.hpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
+/*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/22 01:18:18 by casteria          #+#    #+#             */
-/*   Updated: 2020/12/02 21:46:20 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/10 18:53:27 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ public:
 	socket_info		sock;
 	std::string		name;
 	std::string		password;
-	bool			is_registered;
+	short int		status;
 
 	std::string response;
 	std::string input;

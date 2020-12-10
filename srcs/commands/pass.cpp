@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pass.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
+/*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 21:50:57 by casteria          #+#    #+#             */
-/*   Updated: 2020/12/06 02:30:57 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/10 19:08:11 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void        IrcAPI::cmd_pass(Server& server, Client& client, const t_command& command)
 {
-	if (client.is_registered)
+	if (client.status)
 		sendReply(ERR_ALREADYREGISTRED, ":Unauthorized command (already registered)", client);
 	else if (command.amount_of_params < 1)
 		sendReply(ERR_NEEDMOREPARAMS, "PASS :Not enough parameters", client);

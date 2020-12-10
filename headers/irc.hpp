@@ -6,7 +6,7 @@
 /*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 02:02:32 by casteria          #+#    #+#             */
-/*   Updated: 2020/12/01 03:47:13 by casteria         ###   ########.fr       */
+/*   Updated: 2020/12/10 20:32:30 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define IRC_HPP
 
 // __classes declarations
+class Host;
 class Server;
 class IrcAPI;
 class Client;
@@ -32,10 +33,10 @@ class Channel;
 
 # include <cerrno>
 # include <cstring>
-# include <algorithm>
 # include <iterator>
 # include <sys/time.h>
 # include <sstream>
+# include <cstdlib>
 
 // _networking
 # include <sys/socket.h>
@@ -69,6 +70,7 @@ typedef struct	s_message // to_delete
 # include "ChannelClass.hpp"
 # include "ExceptionsClasses.hpp"
 # include "IrcApiClass.hpp"
+# include "HostClass.hpp"
 # include "utils.hpp"
 
 // ___defines
@@ -77,7 +79,7 @@ typedef struct	s_message // to_delete
 # define SERVER_RUNS 1
 # define DEBUG_MES(str) std::cerr << "\x1b[1;31m" << str << "\x1b[0m";
 
-# define UNKNOWN 0
+# define CLIENT 0
 # define USER 1
 # define SERVER 2
 

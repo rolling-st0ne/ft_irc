@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
+/*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 17:41:24 by gwynton           #+#    #+#             */
-/*   Updated: 2020/12/03 00:11:01 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/10 20:34:24 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,4 +41,11 @@ bool getNextQuery(std::string& message, std::string& query)
 	query = message.substr(0, position);
 	message = message.substr(position + 1);
 	return true;
+}
+
+std::string					getHostName(const sockaddr_in& sock)
+{
+	std::ostringstream	os;
+	os << sock.sin_port;
+	return (inet_ntoa(sock.sin_addr) + os.str());
 }

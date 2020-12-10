@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   user.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
+/*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 22:06:19 by casteria          #+#    #+#             */
-/*   Updated: 2020/12/06 08:01:58 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/10 18:57:03 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void            IrcAPI::cmd_user(Server& server, Client& client, const t_command& command)
 {
-	if (client.is_registered)
+	if (client.status)
 		sendReply(ERR_ALREADYREGISTRED, ":Unauthorized command (already registered)", client);
 	else if (client.password != server.password)
 		sendReply(ERR_PASSWDMISMATCH, ":Password incorrect", client);
@@ -23,7 +23,7 @@ void            IrcAPI::cmd_user(Server& server, Client& client, const t_command
 	else
 	{
 		server.users.push_back(User(client.name, command.params[1], command.params[2], command.params[3]));
-		client.is_registered = true;
+		client.status = USER;
 	#ifdef DEBUG_MODE
 		std::cerr << "User " << client.name << " has been registered, real name: " << command.params[3] << std::endl;
 	#endif

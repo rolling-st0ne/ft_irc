@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ClientClass.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
+/*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/22 01:18:00 by casteria          #+#    #+#             */
-/*   Updated: 2020/12/04 11:24:04 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/10 18:55:07 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 Client::Client()
 {
-	is_registered = false;
+	status = CLIENT;
 }
 
 Client::Client(const Client& other)
 	:	sock(other.sock),
 		name(other.name),
-		is_registered(other.is_registered)
+		status(other.status)
 {
 }
 

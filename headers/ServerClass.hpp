@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ServerClass.hpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
+/*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 01:55:39 by casteria          #+#    #+#             */
-/*   Updated: 2020/12/02 16:20:22 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/10 19:05:28 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ private:
 	std::string						password;
 	std::vector<Client>				clients;
 	std::vector<User>				users;
-	std::vector<Server>				servers;
+	std::vector<Host>				hosts;
 	std::vector<Channel>			channels;
 	std::vector<socket_info>		connected_servers;
 
@@ -41,6 +41,7 @@ private:
 	void							sendDataToClient(Client&);
 	void							addClient(Client);
 	void							addUser(User); // check with reference
+	void							addHost(Host);
 	void							rmClient(Client);
 	void							create_server(const int&, const std::string&);
 public:
