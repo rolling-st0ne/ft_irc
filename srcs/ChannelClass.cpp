@@ -6,7 +6,7 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 18:45:07 by gwynton           #+#    #+#             */
-/*   Updated: 2020/12/03 08:59:15 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/11 01:34:49 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ Channel::Channel(std::string name, std::string creator)
 	: name(name), creator(creator)
 {
 	members.push_back(creator);
+	operators.push_back(creator);
 	std::cerr << "Channel " << name << " created by " << creator << std::endl;
 }
 
@@ -37,7 +38,25 @@ void	Channel::removeUser(std::string user)
 		if (*it == user)
 		{
 			members.erase(it);
+			removeOperator(user);
 			return;
 		}
+	}
+}
+
+void	Channel::removeOperator(std::string oper)
+{
+	for (std::vector<std::string>::iterator it = operators.begin(); it != operators.end(); it++)
+	{
+		if (*it == oper)
+		{
+			operators.erase(it);
+			break;
+		}
+	}
+	if (operators.size() == 0 && members.size() > 0)
+	{
+		operators.push_back(members[0]);
+		// notify others about op change?
 	}
 }

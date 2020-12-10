@@ -6,7 +6,7 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/02 05:35:28 by gwynton           #+#    #+#             */
-/*   Updated: 2020/12/06 01:18:31 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/11 01:45:46 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,17 @@ void        IrcAPI::cmd_join(Server& server, Client& client, const t_command& co
 			sendReply(RPL_TOPIC, channels[i] + " :" + channel_ptr->topic, client);
 		std::string member_list = "";
 		for (size_t i = 0; i < channel_ptr->members.size(); i++)
+		{
+			for (size_t j = 0; j < channel_ptr->operators.size(); j++)
+			{
+				if (channel_ptr->members[i] == channel_ptr->operators[j])
+				{
+					member_list += "@";
+					break;
+				}
+			}
 			member_list += channel_ptr->members[i] + " ";
+		}
 		sendReply(RPL_NAMREPLY, " = " + channels[i] + " :" + member_list, client);
 		sendReply(RPL_ENDOFNAMES, channels[i] + " :End of NAMES list", client);
 	}
