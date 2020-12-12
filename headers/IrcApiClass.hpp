@@ -6,7 +6,7 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/23 23:36:15 by casteria          #+#    #+#             */
-/*   Updated: 2020/12/06 00:44:06 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/12 03:45:31 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ private:
 	static void				cmd_topic(COMMANDS_PARAM_LIST);
 
 	static void				cmd_privmsg(COMMANDS_PARAM_LIST);
+
+	static void				cmd_notice(COMMANDS_PARAM_LIST);
 
     static void             cmd_server(COMMANDS_PARAM_LIST);
 
