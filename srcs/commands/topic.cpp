@@ -6,7 +6,7 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/04 06:34:10 by gwynton           #+#    #+#             */
-/*   Updated: 2020/12/08 07:48:59 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/12 06:08:20 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,16 +29,7 @@ void        IrcAPI::cmd_topic(Server& server, Client& client, const t_command& c
 	{
 		if (it->name == channel)
 		{
-			bool user_found = false;
-			for (size_t i = 0; i < it->members.size(); i++)
-			{
-				if (it->members[i] == client.name)
-				{
-					user_found = true;
-					break;
-				}
-			}
-			if (!user_found)
+			if (!it->isUser(client.name))
 			{
 				sendReply(ERR_NOTONCHANNEL, channel + " :You're not on that channel", client);
 				break;
@@ -50,6 +41,11 @@ void        IrcAPI::cmd_topic(Server& server, Client& client, const t_command& c
 				else
 					sendReply(RPL_TOPIC, channel + " :" + it->topic, client);
 				break;
+			}
+			if (!it->isOperator(client.name))
+			{
+				sendReply(ERR_CHANOPRIVSNEEDED, it->name + " :You're not channel operator", client);
+				return;
 			}
 			it->topic = topic;
 			std::string message = user_by_nick(server, client.name) + " " + "TOPIC " + channel + " " + topic;

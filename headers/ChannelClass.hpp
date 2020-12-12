@@ -6,7 +6,7 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 18:43:31 by gwynton           #+#    #+#             */
-/*   Updated: 2020/12/11 01:28:54 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/12 05:10:32 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,11 @@ public:
 
 	Channel(std::string, std::string);
 	bool						addUser(std::string);
+	void						addOperator(std::string);
 	void						removeUser(std::string);
 	void						removeOperator(std::string);
+	bool						isUser(std::string);
+	bool						isOperator(std::string);
 };
 
 #endif
