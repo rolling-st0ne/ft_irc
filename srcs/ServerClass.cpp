@@ -6,7 +6,7 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 01:58:30 by casteria          #+#    #+#             */
-/*   Updated: 2020/12/13 06:05:17 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/13 11:35:56 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,11 +77,11 @@ void	Server::connect_server(const std::string& host, const std::string& port, co
 	freeaddrinfo(result);
 	Client new_server;
 	new_server.sock.socket_fd = uplink;
-	new_server.status = CLIENT;
+	new_server.status = SERVER; // perhaps this should be set elsewhere
 	addClient(new_server);
 	fcntl(uplink, F_SETFL, O_NONBLOCK);
 	std::string start = "PASS " + pass + " 0210 IRC|\r\n";
-	start += "SERVER localhost 1\r\n";
+	start += "SERVER " + this->name + " 1 info\r\n";
 	send(uplink, start.c_str(), start.size(), 0);
 }
 
@@ -103,6 +103,9 @@ void	Server::create_server(const int& port, const std::string& password)
 	if (listen(sock.socket_fd, QUEUE_LEN_MAX) == FAIL)
 		throw ServerException(errno);
 	addHost(Host(getHostName(sock.addr), 0, 0, "mb add some info later"));
+	std::ostringstream	os;
+	os << "localhost/" << port;
+	name = os.str();
 }
 
 void	Server::start()
@@ -158,7 +161,6 @@ void							Server::acceptNewClient()
 	if (new_client.sock.socket_fd < 0)
 		throw ServerException(errno);
 	fcntl(new_client.sock.socket_fd, F_SETFL, O_NONBLOCK);
-	//new_client.name = "<unknown>";
 	addClient(new_client);
 }
 
@@ -260,6 +262,25 @@ void							Server::rmClient(Client client) // to finalize;
 		{
 			clients.erase(it);
 			break;
+		}
+	}
+}
+
+void							Server::propagate(const std::string& message, const std::string& source)
+{
+	for (size_t i = 0; i < connected_servers.size(); i++)
+	{
+		if (connected_servers[i] == source)
+			continue;
+		std::vector<Client>::iterator ite = clients.end();
+		for (std::vector<Client>::iterator it = clients.begin(); it != ite; it++)
+		{
+			if (it->name == connected_servers[i])
+			{
+				it->response += message + "\r\n";
+				std::cerr << "Propagating to " + connected_servers[i] << std::endl;
+				break;
+			}
 		}
 	}
 }

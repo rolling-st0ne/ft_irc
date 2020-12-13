@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   nick.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
+/*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 18:10:11 by casteria          #+#    #+#             */
-/*   Updated: 2020/12/10 20:34:59 by casteria         ###   ########.fr       */
+/*   Updated: 2020/12/13 11:44:50 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,17 +38,23 @@ std::string	IrcAPI::user_by_nick(Server& server, const std::string& nickname)
 
 void        IrcAPI::cmd_nick(Server& server, Client& client, const t_command& command)
 {
+	if (client.status == SERVER)
+	{
+		std::cerr << "A user has connected to another server\n";
+		server.propagate("NICK", client.name);
+		return ;
+	}
     if (command.params.size() == 0)
 	{
-		sendReply(ERR_NONICKNAMEGIVEN, ":No nickname given", client);
+		sendReply(server, ERR_NONICKNAMEGIVEN, ":No nickname given", client);
 		return ;
 	}
 	if (nick_in_use(server, command.params[0]))
 	{
 		if (client.status)
-			sendReply(ERR_NICKNAMEINUSE, command.params[0] + " :Nickname is already in use", client);
+			sendReply(server, ERR_NICKNAMEINUSE, command.params[0] + " :Nickname is already in use", client);
 		else
-			sendReply(ERR_NICKCOLLISION, command.params[0] + " :Nickname collision", client); // TODO: add KILL
+			sendReply(server, ERR_NICKCOLLISION, command.params[0] + " :Nickname collision", client); // TODO: add KILL
 		return ;
 	}
 	std::string old_nick = client.name;
@@ -58,10 +64,8 @@ void        IrcAPI::cmd_nick(Server& server, Client& client, const t_command& co
 		std::string message = user_by_nick(server, old_nick) + " NICK " + client.name;
 		for (size_t i = 0; i < server.users.size(); i++)
 		{
-			//std::cerr << "Checking nick: " << server.users[i].nickname << std::endl;
 			if (server.users[i].nickname == old_nick)
 			{
-				//std::cerr << "Changing " << old_nick << " to " << client.name << std::endl;
 				server.users[i].nickname = client.name;
 				break;
 			}

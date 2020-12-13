@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   UserClass.hpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
+/*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/22 01:15:28 by casteria          #+#    #+#             */
-/*   Updated: 2020/12/01 03:11:52 by casteria         ###   ########.fr       */
+/*   Updated: 2020/12/13 09:20:23 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ public:
     std::string     hostname;
     std::string     servername;
     std::string     realname;
-    std::vector<t_message> buffer;
 public:
     User(const Client &);
     User(const std::string& nickname, const std::string& hostname, \

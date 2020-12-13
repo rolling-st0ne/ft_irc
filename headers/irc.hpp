@@ -6,7 +6,7 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 02:02:32 by casteria          #+#    #+#             */
-/*   Updated: 2020/12/13 04:42:19 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/13 09:19:24 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,11 @@ typedef struct	s_socket_info
 	socklen_t			socklen;
 }				socket_info;
 
-typedef struct	s_message // to_delete
-{
-	std::string	command;
-	std::string content;
-}				t_message;
+// typedef struct	s_message // to_delete
+// {
+// 	std::string	command;
+// 	std::string content;
+// }				t_message;
 
 // ___our classes
 # include "Errors.hpp"

@@ -6,7 +6,7 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/03 08:14:22 by gwynton           #+#    #+#             */
-/*   Updated: 2020/12/12 04:43:15 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/13 11:49:57 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void        IrcAPI::cmd_part(Server& server, Client& client, const t_command& co
 {
 	if (command.amount_of_params < 1)
 	{
-		sendReply(ERR_NEEDMOREPARAMS, "PART :Not enough parameters", client);
+		sendReply(server, ERR_NEEDMOREPARAMS, "PART :Not enough parameters", client);
 		return ;
 	}
 
@@ -45,7 +45,7 @@ void        IrcAPI::cmd_part(Server& server, Client& client, const t_command& co
 				}
 				if (!user_found)
 				{
-					sendReply(ERR_NOTONCHANNEL, channels[i] + " :You're not on that channel", client);
+					sendReply(server, ERR_NOTONCHANNEL, channels[i] + " :You're not on that channel", client);
 					break;
 				}
 				std::string message = user_by_nick(server, client.name) + " " + "PART " + channels[i];
@@ -60,6 +60,6 @@ void        IrcAPI::cmd_part(Server& server, Client& client, const t_command& co
 			}
 		}
 		if (!channel_found)
-			sendReply(ERR_NOSUCHCHANNEL, channels[i] + " :No such channel", client);
+			sendReply(server, ERR_NOSUCHCHANNEL, channels[i] + " :No such channel", client);
 	}
 }

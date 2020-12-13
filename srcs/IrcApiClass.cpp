@@ -6,7 +6,7 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 17:01:13 by gwynton           #+#    #+#             */
-/*   Updated: 2020/12/13 07:09:29 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/13 11:57:49 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ t_map IrcAPI::create_map()
 	res["QUIT"] = cmd_quit;
 	res["NOTICE"] = cmd_notice;
 	res["MODE"] = cmd_mode;
+	res["KICK"] = cmd_kick;
+	res["NJOIN"] = cmd_njoin;
 	return (res);
 }
 
@@ -107,15 +109,15 @@ t_command IrcAPI::parse_query(const std::string& query)
 
 void IrcAPI::process_query(Server &server, Client &client, const t_command& command)
 {
-	if (!command.valid)
-		sendReply(ERR_UNKNOWNCOMMAND, command.command + " :Unknown command", client);
-	else
+	if (!command.valid && atoi(command.command.c_str()) < 100)
+		sendReply(server, ERR_UNKNOWNCOMMAND, command.command + " :Unknown command", client);
+	else if (command.valid)
     	commands[command.command](server, client, command);
 }
 
-void IrcAPI::sendReply(const std::string& numericReply, const std::string& textReply, Client& client)
+void IrcAPI::sendReply(Server& server, const std::string& numericReply, const std::string& textReply, Client& client)
 {
-	client.response += ":localhost "; //To be replaced with server name
+	client.response += server.name + " "; //To be replaced with server name
 	client.response += numericReply;
 	client.response += " " + client.name;
 	client.response += " " + textReply;

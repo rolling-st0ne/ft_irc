@@ -6,7 +6,7 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/23 23:36:15 by casteria          #+#    #+#             */
-/*   Updated: 2020/12/12 04:42:14 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/13 11:57:10 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ private:
     static t_map            create_map();
     static t_command        parse_query(const std::string&);
     static void             process_query(COMMANDS_PARAM_LIST);
-    static void             sendReply(const std::string&, const std::string&, Client&);
+    static void             sendReply(Server&, const std::string&, const std::string&, Client&);
 
     // COMMANDS
     static void				cmd_pass(COMMANDS_PARAM_LIST);	
@@ -56,9 +56,9 @@ private:
 	static void				cmd_part(COMMANDS_PARAM_LIST);
 
 	static void				cmd_topic(COMMANDS_PARAM_LIST);
-
+    static void             cmd_kick(COMMANDS_PARAM_LIST);             
 	static void				cmd_mode(COMMANDS_PARAM_LIST);
-
+    static void             cmd_njoin(COMMANDS_PARAM_LIST);
 	static void				cmd_privmsg(COMMANDS_PARAM_LIST);
 
 	static void				cmd_notice(COMMANDS_PARAM_LIST);

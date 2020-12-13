@@ -6,7 +6,7 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/02 05:35:28 by gwynton           #+#    #+#             */
-/*   Updated: 2020/12/11 01:45:46 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/13 11:46:48 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void        IrcAPI::cmd_join(Server& server, Client& client, const t_command& co
 {
 	if (command.amount_of_params < 1)
 	{
-		sendReply(ERR_NEEDMOREPARAMS, "JOIN :Not enough parameters", client);
+		sendReply(server, ERR_NEEDMOREPARAMS, "JOIN :Not enough parameters", client);
 		return ;
 	}
 	std::vector<std::string> channels = strsplit(command.params[0], ',');
@@ -47,9 +47,9 @@ void        IrcAPI::cmd_join(Server& server, Client& client, const t_command& co
 		channel_ptr = channel_by_name(server, channels[i]);
 		client.response += user_by_nick(server, client.name) + " " + "JOIN " + channels[i] + "\r\n";
 		if (channel_ptr->topic == "")
-			sendReply(RPL_NOTOPIC, channels[i] + " :No topic is set", client);
+			sendReply(server, RPL_NOTOPIC, channels[i] + " :No topic is set", client);
 		else
-			sendReply(RPL_TOPIC, channels[i] + " :" + channel_ptr->topic, client);
+			sendReply(server, RPL_TOPIC, channels[i] + " :" + channel_ptr->topic, client);
 		std::string member_list = "";
 		for (size_t i = 0; i < channel_ptr->members.size(); i++)
 		{
@@ -63,7 +63,7 @@ void        IrcAPI::cmd_join(Server& server, Client& client, const t_command& co
 			}
 			member_list += channel_ptr->members[i] + " ";
 		}
-		sendReply(RPL_NAMREPLY, " = " + channels[i] + " :" + member_list, client);
-		sendReply(RPL_ENDOFNAMES, channels[i] + " :End of NAMES list", client);
+		sendReply(server, RPL_NAMREPLY, " = " + channels[i] + " :" + member_list, client);
+		sendReply(server, RPL_ENDOFNAMES, channels[i] + " :End of NAMES list", client);
 	}
 }

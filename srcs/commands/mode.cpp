@@ -6,7 +6,7 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/12 04:42:43 by gwynton           #+#    #+#             */
-/*   Updated: 2020/12/12 05:53:27 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/13 11:47:18 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void        IrcAPI::cmd_mode(Server& server, Client& client, const t_command& co
 {
 	if (command.amount_of_params < 1)
 	{
-		sendReply(ERR_NEEDMOREPARAMS, "MODE :Not enough parameters", client);
+		sendReply(server, ERR_NEEDMOREPARAMS, "MODE :Not enough parameters", client);
 		return;
 	}
 
@@ -30,19 +30,19 @@ void        IrcAPI::cmd_mode(Server& server, Client& client, const t_command& co
 			channel_found = true;
 			if (!it->isOperator(client.name))
 			{
-				sendReply(ERR_CHANOPRIVSNEEDED, it->name + " :You're not channel operator", client);
+				sendReply(server, ERR_CHANOPRIVSNEEDED, it->name + " :You're not channel operator", client);
 				return;
 			}
 			if (modes == "+o" || modes == "-o")
 			{
 				if (command.amount_of_params < 3)
 				{
-					sendReply(ERR_NEEDMOREPARAMS, "MODE :Not enough parameters", client);
+					sendReply(server, ERR_NEEDMOREPARAMS, "MODE :Not enough parameters", client);
 					return;
 				}
 				if (!it->isUser(command.params[2]))
 				{
-					sendReply(ERR_USERNOTINCHANNEL, command.params[2] + " " + it->name + " :They aren't on that channel", client);
+					sendReply(server, ERR_USERNOTINCHANNEL, command.params[2] + " " + it->name + " :They aren't on that channel", client);
 					return;
 				}
 				if (modes[0] == '+')

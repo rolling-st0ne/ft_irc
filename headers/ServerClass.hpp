@@ -6,7 +6,7 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 01:55:39 by casteria          #+#    #+#             */
-/*   Updated: 2020/12/13 05:26:39 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/13 11:22:05 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,13 @@ class		Server
 	friend class IrcAPI;
 private:
 	socket_info						sock;
-	std::string						name[SERVER_NAME_LENGTH];	
+	std::string						name;	
 	std::string						password;
 	std::vector<Client>				clients;
 	std::vector<User>				users;
 	std::vector<Host>				hosts;
 	std::vector<Channel>			channels;
-	std::vector<socket_info>		connected_servers;
+	std::vector<std::string>		connected_servers;
 	int								uplink;
 
 	timeval							timeout;
@@ -46,6 +46,7 @@ private:
 	void							rmClient(Client);
 	void							create_server(const int&, const std::string&);
 	void							connect_server(const std::string&, const std::string&, const std::string);
+	void							propagate(const std::string&, const std::string&);
 public:
 	Server();
 	Server(const Server&);
