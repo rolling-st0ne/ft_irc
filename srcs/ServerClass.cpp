@@ -6,7 +6,7 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 01:58:30 by casteria          #+#    #+#             */
-/*   Updated: 2020/12/13 11:35:56 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/14 02:17:01 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	Server::connect_server(const std::string& host, const std::string& port, co
 	freeaddrinfo(result);
 	Client new_server;
 	new_server.sock.socket_fd = uplink;
-	new_server.status = SERVER; // perhaps this should be set elsewhere
+	new_server.status = CLIENT;
 	addClient(new_server);
 	fcntl(uplink, F_SETFL, O_NONBLOCK);
 	std::string start = "PASS " + pass + " 0210 IRC|\r\n";

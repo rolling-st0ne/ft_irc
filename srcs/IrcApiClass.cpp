@@ -6,7 +6,7 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 17:01:13 by gwynton           #+#    #+#             */
-/*   Updated: 2020/12/13 11:57:49 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/14 01:40:18 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ void IrcAPI::process_query(Server &server, Client &client, const t_command& comm
 
 void IrcAPI::sendReply(Server& server, const std::string& numericReply, const std::string& textReply, Client& client)
 {
-	client.response += server.name + " "; //To be replaced with server name
+	client.response += ":" + server.name + " "; //To be replaced with server name
 	client.response += numericReply;
 	client.response += " " + client.name;
 	client.response += " " + textReply;

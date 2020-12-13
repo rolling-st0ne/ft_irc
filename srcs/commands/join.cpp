@@ -6,7 +6,7 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/02 05:35:28 by gwynton           #+#    #+#             */
-/*   Updated: 2020/12/13 11:46:48 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/14 02:28:36 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,10 @@ Channel*	IrcAPI::channel_by_name(Server& server, const std::string& name)
 
 void        IrcAPI::cmd_join(Server& server, Client& client, const t_command& command)
 {
+	if (client.status == SERVER)
+	{
+		return;
+	}
 	if (command.amount_of_params < 1)
 	{
 		sendReply(server, ERR_NEEDMOREPARAMS, "JOIN :Not enough parameters", client);

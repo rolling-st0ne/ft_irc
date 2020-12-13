@@ -6,7 +6,7 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/04 10:18:16 by gwynton           #+#    #+#             */
-/*   Updated: 2020/12/08 03:36:44 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/14 02:40:06 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,13 @@
 
 void	IrcAPI::cmd_quit(Server& server, Client& client, const t_command& command)
 {
+	if (client.status == SERVER)
+	{
+		std::string away_message = command.amount_of_params > 0 ? command.params[0] : "";
+		std::string message = command.prefix + " QUIT " + away_message;
+		server.propagate(message, client.name);
+		return;
+	}
 	std::string away_message;
 	if (command.amount_of_params > 0)
 		away_message = command.params[0];
