@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ServerClass.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
+/*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 01:58:30 by casteria          #+#    #+#             */
-/*   Updated: 2020/12/10 20:25:15 by casteria         ###   ########.fr       */
+/*   Updated: 2020/12/13 06:05:17 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,25 @@ Server::Server(const Server &other)
 Server::Server(const int& port, const std::string& password) // creation of server
 	:	password(password)
 {
+	uplink = 0;
 	create_server(port, password);
 }
 
 Server::Server(const char *another_server, const int& port, const std::string& password)
 {
+	this->password = password;
 	create_server(port, password);
-	(void)another_server;
-	// . . .
-	// here will be implemented connection to host (other server)
+	const std::string glued_params(another_server);
+	std::vector<std::string> params = strsplit(glued_params, ':');
+	if (params.size() != 3)
+		throw ServerException("Bad arguments");
+	std::string target_host = params[0];
+	int target_port = atoi(params[1].c_str());
+	if (target_port < 1024 || target_port > 65535)
+		throw ServerException("Bad target port");
+	std::string target_pass = params[2];
+	std::cerr << "Connecting to " << target_host << ":" << target_port << " (" << target_pass << ")\n";
+	connect_server(target_host, params[1], target_pass);
 }
 
 // __DESTRUCTOR
@@ -51,6 +61,29 @@ Server &Server::operator=(const Server &other)
 }
 
 // __FUNCTIONS
+
+void	Server::connect_server(const std::string& host, const std::string& port, const std::string pass)
+{
+	struct addrinfo *result;
+	if (getaddrinfo(host.c_str(), port.c_str(), NULL, &result))
+		throw ServerException(errno);
+	while (result->ai_next)
+		result = result->ai_next;
+	uplink = socket(result->ai_family, result->ai_socktype, result->ai_protocol);
+	if (uplink < 0)
+		throw ServerException(errno);
+	if (connect(uplink, result->ai_addr, result->ai_addrlen) < 0)
+		throw ServerException(errno);
+	freeaddrinfo(result);
+	Client new_server;
+	new_server.sock.socket_fd = uplink;
+	new_server.status = CLIENT;
+	addClient(new_server);
+	fcntl(uplink, F_SETFL, O_NONBLOCK);
+	std::string start = "PASS " + pass + " 0210 IRC|\r\n";
+	start += "SERVER localhost 1\r\n";
+	send(uplink, start.c_str(), start.size(), 0);
+}
 
 void	Server::create_server(const int& port, const std::string& password)
 {
@@ -200,7 +233,6 @@ void							Server::processClientRequest(Client& client)
 	DEBUG_MES("SOMEONE SAYS: " << buffer)
 #endif
 	IrcAPI::run_query(*this, client, buffer);
-	//std::cerr << clients.size() << ' ' << users.size() << std::endl;
 }
 
 void							Server::sendDataToClient(Client& client)

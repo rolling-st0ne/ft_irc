@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   irc.hpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
+/*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 02:02:32 by casteria          #+#    #+#             */
-/*   Updated: 2020/12/10 20:32:30 by casteria         ###   ########.fr       */
+/*   Updated: 2020/12/13 04:42:19 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ class Channel;
 // _networking
 # include <sys/socket.h>
 # include <netinet/in.h>
+# include <netdb.h>
 # include <arpa/inet.h>
 # include <sys/select.h>
 # include <stdlib.h>

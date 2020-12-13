@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ServerClass.hpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
+/*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 01:55:39 by casteria          #+#    #+#             */
-/*   Updated: 2020/12/10 19:05:28 by casteria         ###   ########.fr       */
+/*   Updated: 2020/12/13 05:26:39 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ private:
 	std::vector<Host>				hosts;
 	std::vector<Channel>			channels;
 	std::vector<socket_info>		connected_servers;
+	int								uplink;
 
 	timeval							timeout;
 	static const int				BUFFER_SIZE = 1024;
@@ -44,6 +45,7 @@ private:
 	void							addHost(Host);
 	void							rmClient(Client);
 	void							create_server(const int&, const std::string&);
+	void							connect_server(const std::string&, const std::string&, const std::string);
 public:
 	Server();
 	Server(const Server&);
