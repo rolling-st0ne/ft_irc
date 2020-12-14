@@ -6,7 +6,7 @@
 /*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 19:07:05 by gwynton           #+#    #+#             */
-/*   Updated: 2020/12/14 04:42:57 by casteria         ###   ########.fr       */
+/*   Updated: 2020/12/14 04:43:40 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ void            IrcAPI::cmd_server(Server& server, Client& client, const t_comma
 		sendReply(server, ERR_NEEDMOREPARAMS, "SERVER :Not enough parameters", client);
 	else
 	{
-		/*
 		unsigned int hopcount = atoi(command.params[1].c_str());
+		/*
 		if (client.status == CLIENT)
 			introduceHostToNet(client, command);
 		else
