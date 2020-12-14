@@ -6,7 +6,7 @@
 /*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 19:07:05 by gwynton           #+#    #+#             */
-/*   Updated: 2020/12/14 20:13:45 by casteria         ###   ########.fr       */
+/*   Updated: 2020/12/15 00:50:19 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,16 @@ static void			incHopcount(t_command& command)
 
 std::string			IrcAPI::buildMessage(const t_command& command)
 {
-	std::string		message;
+	std::string		message = command.command + ' ';
 
 	for (std::vector<std::string>::const_iterator it = command.params.begin(); it != command.params.end(); it++)
 	{
-		message += *it + ' ';
+		message += *it;
+		if (it != command.params.end() - 1)
+			message += ' ';
 	}
 #ifdef DEBUG_MODE
-	std::cerr << message << std::endl;
+	std::cerr << "Builded message: " << message << std::endl;
 #endif
 	return (message);
 }
@@ -39,12 +41,12 @@ void				IrcAPI::broadcastMessage(Server& server, Client& client, const t_command
 	std::string			message;
 
 	incHopcount(to_broadcast);
-	for (std::vector<Host>::iterator it = server.hosts.begin(); it != server.hosts.end(); it++)
+	for (std::vector<std::string>::iterator it = server.connected_servers.begin(); it != server.connected_servers.end(); it++)
 	{
-		if (it->servername != client.name)
+		if (*it != client.name)
 		{
 			message = buildMessage(to_broadcast);
-			sendToUser(server, it->servername, message);
+			sendToUser(server, *it, message);
 		}
 	}
 }
@@ -60,17 +62,19 @@ void				IrcAPI::introduceHostToNet(Server& server, Client& client, const t_comma
 {
 	unsigned int hopcount = atoi(command.params[1].c_str());
 	client.status = SERVER;
-	server.addHost(Host(command.params[0], hopcount, 0, command.params[2]));
+	server.addHost(Host(command.params[0], hopcount, command.params[2]));
 	client.name = command.params[0];
+	server.connected_servers.push_back(client.name);
 	dataExchange(server, client, command);
 	broadcastMessage(server, client, command);
+	server.connected_servers.push_back(client.name);
 	(void)command;
 	
 }
 void				IrcAPI::addHostToList(Server &server, Client& client, const t_command& command)
 {
 	unsigned int hopcount = atoi(command.params[1].c_str());
-	server.addHost(Host(command.params[0], hopcount, 0, command.params[2]));
+	server.addHost(Host(command.params[0], hopcount, command.params[2]));
 	hopcount++;
 	broadcastMessage(server, client, command);
 	(void)client;
@@ -79,9 +83,9 @@ void				IrcAPI::addHostToList(Server &server, Client& client, const t_command& c
 
 void            IrcAPI::cmd_server(Server& server, Client& client, const t_command& command)
 {
-	if (client.status)
-		sendReply(server, ERR_ALREADYREGISTRED, ":Unauthorized command (already registered)", client);
-	else if (client.password != server.password)
+//	if (client.status)
+//		sendReply(server, ERR_ALREADYREGISTRED, ":Unauthorized command (already registered)", client);
+	if (client.password != server.password)
 		sendReply(server, ERR_PASSWDMISMATCH, ":Password incorrect", client);
 	else if (command.amount_of_params < 3)
 		sendReply(server, ERR_NEEDMOREPARAMS, "SERVER :Not enough parameters", client);

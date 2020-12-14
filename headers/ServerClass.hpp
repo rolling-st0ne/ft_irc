@@ -6,7 +6,7 @@
 /*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 01:55:39 by casteria          #+#    #+#             */
-/*   Updated: 2020/12/14 19:17:53 by casteria         ###   ########.fr       */
+/*   Updated: 2020/12/15 00:20:50 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ private:
 	std::vector<User>				users;
 	std::vector<Host>				hosts;
 	std::vector<Channel>			channels;
-	std::vector<std::string>		connected_servers; //
+	std::vector<std::string>		connected_servers;
 	int								uplink;
 
 	timeval							timeout;

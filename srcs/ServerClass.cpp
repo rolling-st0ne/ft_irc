@@ -6,7 +6,7 @@
 /*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 01:58:30 by casteria          #+#    #+#             */
-/*   Updated: 2020/12/14 21:01:21 by casteria         ###   ########.fr       */
+/*   Updated: 2020/12/15 00:34:14 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,14 +65,20 @@ Server &Server::operator=(const Server &other)
 void	Server::connect_server(const std::string& host, const std::string& port, const std::string pass)
 {
 	struct addrinfo *result;
+	sockaddr_in		connect_info;
+
+	connect_info.sin_addr.s_addr = htonl(INADDR_ANY);
+	connect_info.sin_family = AF_INET;
+	connect_info.sin_port = htons(atoi(port.c_str()));
+
 	if (getaddrinfo(host.c_str(), port.c_str(), NULL, &result))
 		throw ServerException(errno);
 	while (result->ai_next)
 		result = result->ai_next;
-	uplink = socket(result->ai_family, result->ai_socktype, result->ai_protocol);
+	uplink = socket(AF_INET, SOCK_STREAM, 0);
 	if (uplink < 0)
 		throw ServerException(errno);
-	if (connect(uplink, result->ai_addr, result->ai_addrlen) < 0)
+	if (connect(uplink, (sockaddr *)&connect_info, sizeof(sockaddr_in)) < 0)
 		throw ServerException(errno);
 	freeaddrinfo(result);
 	
@@ -103,7 +109,7 @@ void	Server::create_server(const int& port, const std::string& password)
 		throw ServerException(errno);
 	if (listen(sock.socket_fd, QUEUE_LEN_MAX) == FAIL)
 		throw ServerException(errno);
-	addHost(Host(getHostName(sock.addr), 0, 0, "mb add some info later"));
+	addHost(Host(getHostName(sock.addr), 0, "mb add some info later"));
 	std::ostringstream	os;
 	os << "localhost/" << port;
 	name = os.str();
@@ -162,6 +168,7 @@ void							Server::acceptNewClient()
 	if (new_client.sock.socket_fd < 0)
 		throw ServerException(errno);
 	fcntl(new_client.sock.socket_fd, F_SETFL, O_NONBLOCK);
+	new_client.name = getHostName(new_client.sock.addr);
 	addClient(new_client);
 }
 
