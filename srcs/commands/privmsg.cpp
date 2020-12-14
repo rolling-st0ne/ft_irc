@@ -6,29 +6,25 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/02 05:37:24 by gwynton           #+#    #+#             */
-/*   Updated: 2020/12/13 11:43:47 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/14 06:06:37 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "IrcApiClass.hpp"
 
-void		IrcAPI::sendToUser(Server& server, std::string& target, std::string& message)
+bool		IrcAPI::sendToUser(Server& server, std::string& target, std::string& message)
 {
-	bool sent_ok = false;
 	std::vector<Client>::iterator ite = server.clients.end();
 	for (std::vector<Client>::iterator it = server.clients.begin(); it != ite; it++)
 	{
 		if (it->name == target)
 		{
 			it->response += message + "\r\n";
-			sent_ok = true;
-			break;
+			return true;
 		}
 	}
-	if (!sent_ok)
-	{
-		std::cerr << "Not delivered to " + target <<  std::endl;
-	}
+	std::cerr << "Not delivered to " + target <<  std::endl;
+	return false;
 }
 
 void        IrcAPI::cmd_privmsg(Server& server, Client& client, const t_command& command)
@@ -55,14 +51,14 @@ void        IrcAPI::cmd_privmsg(Server& server, Client& client, const t_command&
 				std::vector<std::string>::iterator ite = it->members.end();
 				for (std::vector<std::string>::iterator iter = it->members.begin(); iter != ite; iter++)
 				{
-					if (*iter != client.name)
-						sendToUser(server, *iter, message);
+					if (*iter != client.name && !sendToUser(server, *iter, message))
+						server.propagate(message, client.name);
 				}
 				found = true;
 				break;
 			}
 		}
-		if (!found)
-			sendToUser(server, targets[i], message);
+		if (!found && !sendToUser(server, targets[i], message))
+			server.propagate(message, client.name);
 	}
 }

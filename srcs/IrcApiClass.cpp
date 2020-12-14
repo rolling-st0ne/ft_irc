@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   IrcApiClass.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
+/*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 17:01:13 by gwynton           #+#    #+#             */
-/*   Updated: 2020/12/14 04:38:10 by casteria         ###   ########.fr       */
+/*   Updated: 2020/12/14 05:42:58 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,9 +127,11 @@ void IrcAPI::sendReply(Server& server, const std::string& numericReply, const st
 void				introduceHostToNet(Client& client, t_command& command)
 {
 	client.status = SERVER;
+	(void)command;
 	
 }
 void				addHostToList(Client& client, t_command& command)
 {
-
+	(void)client;
+	(void)command;
 }
