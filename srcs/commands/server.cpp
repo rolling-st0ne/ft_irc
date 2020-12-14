@@ -6,7 +6,7 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 19:07:05 by gwynton           #+#    #+#             */
-/*   Updated: 2020/12/13 11:44:03 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/14 04:01:03 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,12 @@ void            IrcAPI::cmd_server(Server& server, Client& client, const t_comma
 	{
 		unsigned int hopcount = atoi(command.params[1].c_str());
 		server.addHost(Host(command.params[0], hopcount, 0, command.params[2]));
-		if (hopcount == 1)
-			server.connected_servers.push_back(command.params[0]);
 		client.status = SERVER;
 		client.name = command.params[0];
+		if (hopcount == 1)
+		{
+			server.connected_servers.push_back(command.params[0]);
+		}
 	#ifdef DEBUG_MODE
 		std::cerr << "Server " << client.name << " has been registered\n";
 	#endif
