@@ -6,7 +6,7 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 01:58:30 by casteria          #+#    #+#             */
-/*   Updated: 2020/12/14 02:17:01 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/14 03:32:59 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ void	Server::connect_server(const std::string& host, const std::string& port, co
 	if (connect(uplink, result->ai_addr, result->ai_addrlen) < 0)
 		throw ServerException(errno);
 	freeaddrinfo(result);
+	
 	Client new_server;
 	new_server.sock.socket_fd = uplink;
 	new_server.status = CLIENT;
