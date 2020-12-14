@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   IrcApiClass.hpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
+/*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/23 23:36:15 by casteria          #+#    #+#             */
-/*   Updated: 2020/12/13 11:57:10 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/14 04:38:51 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@ private:
 	static void				cmd_notice(COMMANDS_PARAM_LIST);
 
     static void             cmd_server(COMMANDS_PARAM_LIST);
+	static void				introduceHostToNet(Client&, const t_command&);
+	static void				addHostToList(Client&, const t_command&);
 
 	static void				cmd_quit(COMMANDS_PARAM_LIST);
 
