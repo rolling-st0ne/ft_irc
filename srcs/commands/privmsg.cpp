@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   privmsg.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
+/*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/02 05:37:24 by gwynton           #+#    #+#             */
-/*   Updated: 2020/12/14 06:06:37 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/14 19:30:58 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,9 @@ bool		IrcAPI::sendToUser(Server& server, std::string& target, std::string& messa
 			return true;
 		}
 	}
+#ifdef DEBUG_MODE
 	std::cerr << "Not delivered to " + target <<  std::endl;
+#endif
 	return false;
 }
 

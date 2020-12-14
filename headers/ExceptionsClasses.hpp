@@ -6,7 +6,7 @@
 /*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/17 10:27:53 by casteria          #+#    #+#             */
-/*   Updated: 2020/12/01 04:00:38 by casteria         ###   ########.fr       */
+/*   Updated: 2020/12/14 20:56:19 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,11 @@ private:
 public:
 	ServerException(const std::string &str)
 	{
-		err_message += "Error: " + str;
+		err_message += "ServerException: Error: " + str;
 	}
 	ServerException(const int &err)
 	{
-		err_message += "Error: " + std::string(strerror(err));
+		err_message += "ServerException: Error: " + std::string(strerror(err));
 	}
 	virtual const char* what() const throw()
 	{

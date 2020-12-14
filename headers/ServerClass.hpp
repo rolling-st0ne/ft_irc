@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ServerClass.hpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
+/*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 01:55:39 by casteria          #+#    #+#             */
-/*   Updated: 2020/12/13 11:22:05 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/14 19:17:53 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ private:
 	std::vector<User>				users;
 	std::vector<Host>				hosts;
 	std::vector<Channel>			channels;
-	std::vector<std::string>		connected_servers;
+	std::vector<std::string>		connected_servers; //
 	int								uplink;
 
 	timeval							timeout;
