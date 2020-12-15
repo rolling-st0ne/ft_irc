@@ -6,7 +6,7 @@
 /*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 19:07:05 by gwynton           #+#    #+#             */
-/*   Updated: 2020/12/15 23:46:05 by casteria         ###   ########.fr       */
+/*   Updated: 2020/12/16 00:09:20 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,20 @@ void				IrcAPI::throwUsers(Server& server, Client& client, const t_command& comm
 
 void				IrcAPI::throwChannels(Server& server, Client& client, const t_command& command)
 {
-	(void)server;
-	(void)client;
+	std::string		message;
+
+	for (std::vector<Channel>::iterator it = server.channels.begin(); it != server.channels.end(); it++)
+	{
+		message.clear();
+		message = "NJOIN " + it->name + ' ';
+		for (std::vector<std::string>::iterator it1 = it->members.begin(); it1 != it->members.end(); it1++)
+		{
+			message += *it1 + ',';
+		}
+		message = message.substr(0, message.size() - 1);
+		message += "\r\n";
+		send(client.sock.socket_fd, message.c_str(), message.size(), 0);
+	}
 	(void)command;
 }
 
