@@ -6,7 +6,7 @@
 /*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 19:07:05 by gwynton           #+#    #+#             */
-/*   Updated: 2020/12/15 18:49:49 by casteria         ###   ########.fr       */
+/*   Updated: 2020/12/15 18:51:48 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ void            IrcAPI::cmd_server(Server& server, Client& client, const t_comma
 		else if (client.status == SERVER)
 			addHostToList(server, client, command);
 	#ifdef DEBUG_MODE
-		std::cerr << "Server " << client.name << " has been registered\n";
+		std::cerr << "Server " << command.params[0] << " has been registered\n";
 	#endif
 	}
 }
