@@ -6,7 +6,7 @@
 /*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 01:58:30 by casteria          #+#    #+#             */
-/*   Updated: 2020/12/15 01:19:47 by casteria         ###   ########.fr       */
+/*   Updated: 2020/12/15 15:21:49 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void	Server::connect_server(const std::string& host, const std::string& port, co
 	
 	Client new_server;
 	new_server.sock.socket_fd = uplink;
-	new_server.status = CLIENT;
+	new_server.status = SERVER;
 	addClient(new_server);
 	fcntl(uplink, F_SETFL, O_NONBLOCK);
 	std::string start = "PASS " + pass + " 0210 IRC|\r\n";

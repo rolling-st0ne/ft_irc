@@ -6,7 +6,7 @@
 /*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 19:07:05 by gwynton           #+#    #+#             */
-/*   Updated: 2020/12/15 15:05:21 by casteria         ###   ########.fr       */
+/*   Updated: 2020/12/15 15:25:44 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,18 +65,21 @@ void				IrcAPI::introduceHostToNet(Server& server, Client& client, const t_comma
 	server.addHost(Host(command.params[0], hopcount, command.params[2]));
 	client.name = command.params[0];
 	server.connected_servers.push_back(client.name);
+
+	std::string	reply;
+//	reply = "PASS " + server.password + " 0210 IRC|\r\n";
+//	reply += "SERVER " + server.name + " 1 info\r\n";
+	send(client.sock.socket_fd, reply.c_str(), reply.size(), 0);
 	dataExchange(server, client, command);
 	broadcastMessage(server, client, command);
-	(void)command;
-	
 }
 void				IrcAPI::addHostToList(Server &server, Client& client, const t_command& command)
 {
 	unsigned int hopcount = atoi(command.params[1].c_str());
 	server.addHost(Host(command.params[0], hopcount, command.params[2]));
 	broadcastMessage(server, client, command);
-	if (hopcount == 0)
-		server.connected_servers.push_back(client.name);
+//	if (hopcount == 1)
+//		server.connected_servers.push_back(client.name);
 }
 
 void            IrcAPI::cmd_server(Server& server, Client& client, const t_command& command)
