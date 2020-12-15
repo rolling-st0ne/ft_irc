@@ -6,11 +6,49 @@
 /*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 19:07:05 by gwynton           #+#    #+#             */
-/*   Updated: 2020/12/15 19:49:21 by casteria         ###   ########.fr       */
+/*   Updated: 2020/12/15 21:14:08 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "IrcApiClass.hpp"
+
+void				IrcAPI::throwServers(Server& server, Client& client, const t_command& command)
+{
+	std::string		message;
+	for (std::vector<Host>::iterator it = server.hosts.begin(); it != server.hosts.end(); it++)
+	{
+		if (it->servername != server.name && it->servername != client.name)
+		{
+			message = "SERVER " + it->servername + ' ' + toString(it->hopcount) + ' ' + it->info + "\r\n";
+			send(client.sock.socket_fd, message.c_str(), message.size(), 0);
+		}
+	}
+	(void)command;
+}
+
+void				IrcAPI::throwUsers(Server& server, Client& client, const t_command& command)
+{
+	std::string		message;
+	for (std::vector<User>::const_iterator it = server.users.begin(); it != server.users.end(); it++)
+	{
+		if (it->servername != server.name && it->servername != client.name)
+		{
+			message = "SERVER " + it->servername + ' ' + toString(it->hopcount) + ' ' + it->info + "\r\n";
+			message += 
+			send(client.sock.socket_fd, message.c_str(), message.size(), 0);
+		}
+	}
+	(void)server;
+	(void)client;
+	(void)command;
+}
+
+void				IrcAPI::throwChannels(Server& server, Client& client, const t_command& command)
+{
+	(void)server;
+	(void)client;
+	(void)command;
+}
 
 static void			incHopcount(t_command& command)
 {
@@ -50,18 +88,9 @@ void				IrcAPI::broadcastMessage(Server& server, Client& client, const t_command
 
 void				IrcAPI::dataExchange(Server& server, Client& client, const t_command& command)
 {
-	std::string		message;
-	for (std::vector<Host>::iterator it = server.hosts.begin(); it != server.hosts.end(); it++)
-	{
-		if (it->servername != server.name && it->servername != client.name)
-		{
-			message = "SERVER " + it->servername + ' ' + toString(it->hopcount) + ' ' + it->info;
-			send(client.sock.socket_fd, message.c_str(), message.size(), 0);
-		}
-	}
-	(void)server;
-	(void)client;
-	(void)command;
+	throwServers(server, client, command);
+	throwUsers(server, client, command);
+	throwChannels(server,client, command);
 }
 
 void				IrcAPI::introduceHostToNet(Server& server, Client& client, const t_command& command)

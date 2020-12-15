@@ -6,7 +6,7 @@
 /*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/23 23:36:15 by casteria          #+#    #+#             */
-/*   Updated: 2020/12/14 19:53:52 by casteria         ###   ########.fr       */
+/*   Updated: 2020/12/15 20:35:35 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,9 @@ private:
 	static void				broadcastMessage(COMMANDS_PARAM_LIST);
 	static void				dataExchange(COMMANDS_PARAM_LIST);
 	static std::string		buildMessage(const t_command&);
+	static void				throwServers(COMMANDS_PARAM_LIST);
+	static void				throwUsers(COMMANDS_PARAM_LIST);
+	static void				throwChannels(COMMANDS_PARAM_LIST);
 
 	static void				cmd_quit(COMMANDS_PARAM_LIST);
 
