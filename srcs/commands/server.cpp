@@ -6,7 +6,7 @@
 /*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 19:07:05 by gwynton           #+#    #+#             */
-/*   Updated: 2020/12/15 19:11:06 by casteria         ###   ########.fr       */
+/*   Updated: 2020/12/15 19:49:21 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void				IrcAPI::introduceHostToNet(Server& server, Client& client, const t_comma
 	}
 	client.status = SERVER;
 	broadcastMessage(server, client, command);
-//	dataExchange(server, client, command);
+	dataExchange(server, client, command);
 }
 void				IrcAPI::addHostToList(Server &server, Client& client, const t_command& command)
 {

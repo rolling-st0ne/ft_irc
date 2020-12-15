@@ -6,7 +6,7 @@
 /*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 17:41:24 by gwynton           #+#    #+#             */
-/*   Updated: 2020/12/15 19:01:41 by casteria         ###   ########.fr       */
+/*   Updated: 2020/12/15 19:58:57 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ std::string					getHostName(const sockaddr_in& sock)
 	std::string			to_return = inet_ntoa(sock.sin_addr);
 
 	to_return += '/';
-	os << sock.sin_port;
+	os << ntohs(sock.sin_port);
 	to_return += os.str();
 	return (to_return);
 }
