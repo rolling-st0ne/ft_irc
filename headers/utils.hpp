@@ -6,7 +6,7 @@
 /*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 17:39:39 by gwynton           #+#    #+#             */
-/*   Updated: 2020/12/10 20:20:39 by casteria         ###   ########.fr       */
+/*   Updated: 2020/12/15 18:43:40 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,5 +18,6 @@
 std::vector<std::string>	strsplit(const std::string&, char);
 bool						getNextQuery(std::string&, std::string&);
 std::string					getHostName(const sockaddr_in&);
+bool						is_registered(const Client&);
 
 #endif

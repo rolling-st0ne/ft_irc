@@ -6,7 +6,7 @@
 /*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 19:07:05 by gwynton           #+#    #+#             */
-/*   Updated: 2020/12/15 15:25:44 by casteria         ###   ########.fr       */
+/*   Updated: 2020/12/15 18:49:49 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,6 @@ std::string			IrcAPI::buildMessage(const t_command& command)
 		if (it != command.params.end() - 1)
 			message += ' ';
 	}
-#ifdef DEBUG_MODE
-	std::cerr << "Builded message: " << message << std::endl;
-#endif
 	return (message);
 }
 
@@ -61,17 +58,20 @@ void				IrcAPI::dataExchange(Server& server, Client& client, const t_command& co
 void				IrcAPI::introduceHostToNet(Server& server, Client& client, const t_command& command)
 {
 	unsigned int hopcount = atoi(command.params[1].c_str());
-	client.status = SERVER;
 	server.addHost(Host(command.params[0], hopcount, command.params[2]));
 	client.name = command.params[0];
 	server.connected_servers.push_back(client.name);
 
 	std::string	reply;
-//	reply = "PASS " + server.password + " 0210 IRC|\r\n";
-//	reply += "SERVER " + server.name + " 1 info\r\n";
-	send(client.sock.socket_fd, reply.c_str(), reply.size(), 0);
-	dataExchange(server, client, command);
+	if (client.status != WAITING_FOR_CONNECTION)
+	{
+		reply = "PASS " + server.password + " 0210 IRC|\r\n";
+		reply += "SERVER " + server.name + " 1 info\r\n";
+		send(client.sock.socket_fd, reply.c_str(), reply.size(), 0);
+	}
+	client.status = SERVER;
 	broadcastMessage(server, client, command);
+	dataExchange(server, client, command);
 }
 void				IrcAPI::addHostToList(Server &server, Client& client, const t_command& command)
 {
@@ -92,9 +92,9 @@ void            IrcAPI::cmd_server(Server& server, Client& client, const t_comma
 		sendReply(server, ERR_NEEDMOREPARAMS, "SERVER :Not enough parameters", client);
 	else
 	{
-		if (client.status == CLIENT)
+		if (client.status == CLIENT || client.status == WAITING_FOR_CONNECTION)
 			introduceHostToNet(server, client, command);
-		else
+		else if (client.status == SERVER)
 			addHostToList(server, client, command);
 	#ifdef DEBUG_MODE
 		std::cerr << "Server " << client.name << " has been registered\n";

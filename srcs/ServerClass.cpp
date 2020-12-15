@@ -6,7 +6,7 @@
 /*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 01:58:30 by casteria          #+#    #+#             */
-/*   Updated: 2020/12/15 15:21:49 by casteria         ###   ########.fr       */
+/*   Updated: 2020/12/15 18:36:38 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void	Server::connect_server(const std::string& host, const std::string& port, co
 	
 	Client new_server;
 	new_server.sock.socket_fd = uplink;
-	new_server.status = SERVER;
+	new_server.status = WAITING_FOR_CONNECTION;
 	addClient(new_server);
 	fcntl(uplink, F_SETFL, O_NONBLOCK);
 	std::string start = "PASS " + pass + " 0210 IRC|\r\n";
@@ -240,7 +240,7 @@ void							Server::processClientRequest(Client& client)
 		rmClient(client);
 	}
 #ifdef DEBUG_MODE
-	DEBUG_MES("SOMEONE SAYS: " << buffer)
+	DEBUG_MES(client.sock.socket_fd << " SAYS: " << buffer)
 #endif
 	IrcAPI::run_query(*this, client, buffer);
 }

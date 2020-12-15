@@ -6,7 +6,7 @@
 /*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 17:41:24 by gwynton           #+#    #+#             */
-/*   Updated: 2020/12/15 00:26:32 by casteria         ###   ########.fr       */
+/*   Updated: 2020/12/15 18:42:38 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,4 +52,9 @@ std::string					getHostName(const sockaddr_in& sock)
 	os << sock.sin_port;
 	to_return += os.str();
 	return (to_return);
+}
+
+bool						is_registered(const Client& client)
+{
+	return (client.status != CLIENT && client.status != WAITING_FOR_CONNECTION);
 }
