@@ -6,7 +6,7 @@
 /*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 19:07:05 by gwynton           #+#    #+#             */
-/*   Updated: 2020/12/15 00:50:19 by casteria         ###   ########.fr       */
+/*   Updated: 2020/12/15 15:04:36 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void				IrcAPI::introduceHostToNet(Server& server, Client& client, const t_comma
 	server.connected_servers.push_back(client.name);
 	dataExchange(server, client, command);
 	broadcastMessage(server, client, command);
-	server.connected_servers.push_back(client.name);
+	send(client., start.c_str(), start.size(), 0);
 	(void)command;
 	
 }
@@ -75,10 +75,9 @@ void				IrcAPI::addHostToList(Server &server, Client& client, const t_command& c
 {
 	unsigned int hopcount = atoi(command.params[1].c_str());
 	server.addHost(Host(command.params[0], hopcount, command.params[2]));
-	hopcount++;
 	broadcastMessage(server, client, command);
-	(void)client;
-	(void)command;
+	if (hopcount == 0)
+		server.connected_servers.push_back(client.name);
 }
 
 void            IrcAPI::cmd_server(Server& server, Client& client, const t_command& command)
