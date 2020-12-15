@@ -6,7 +6,7 @@
 /*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 19:07:05 by gwynton           #+#    #+#             */
-/*   Updated: 2020/12/15 21:14:08 by casteria         ###   ########.fr       */
+/*   Updated: 2020/12/15 23:46:05 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void				IrcAPI::throwServers(Server& server, Client& client, const t_command& co
 
 void				IrcAPI::throwUsers(Server& server, Client& client, const t_command& command)
 {
+	/*
 	std::string		message;
 	for (std::vector<User>::const_iterator it = server.users.begin(); it != server.users.end(); it++)
 	{
@@ -38,6 +39,7 @@ void				IrcAPI::throwUsers(Server& server, Client& client, const t_command& comm
 			send(client.sock.socket_fd, message.c_str(), message.size(), 0);
 		}
 	}
+	*/
 	(void)server;
 	(void)client;
 	(void)command;
