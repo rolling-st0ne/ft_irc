@@ -6,7 +6,7 @@
 /*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 19:07:05 by gwynton           #+#    #+#             */
-/*   Updated: 2020/12/15 18:51:48 by casteria         ###   ########.fr       */
+/*   Updated: 2020/12/15 19:11:06 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,15 @@ void				IrcAPI::broadcastMessage(Server& server, Client& client, const t_command
 
 void				IrcAPI::dataExchange(Server& server, Client& client, const t_command& command)
 {
+	std::string		message;
+	for (std::vector<Host>::iterator it = server.hosts.begin(); it != server.hosts.end(); it++)
+	{
+		if (it->servername != server.name && it->servername != client.name)
+		{
+			message = "SERVER " + it->servername + ' ' + toString(it->hopcount) + ' ' + it->info;
+			send(client.sock.socket_fd, message.c_str(), message.size(), 0);
+		}
+	}
 	(void)server;
 	(void)client;
 	(void)command;
@@ -71,7 +80,7 @@ void				IrcAPI::introduceHostToNet(Server& server, Client& client, const t_comma
 	}
 	client.status = SERVER;
 	broadcastMessage(server, client, command);
-	dataExchange(server, client, command);
+//	dataExchange(server, client, command);
 }
 void				IrcAPI::addHostToList(Server &server, Client& client, const t_command& command)
 {
@@ -92,7 +101,7 @@ void            IrcAPI::cmd_server(Server& server, Client& client, const t_comma
 		sendReply(server, ERR_NEEDMOREPARAMS, "SERVER :Not enough parameters", client);
 	else
 	{
-		if (client.status == CLIENT || client.status == WAITING_FOR_CONNECTION)
+		if (client.status == CLIENT || client.status == WAITING_FOR_CONNECTION) // add !is_registered
 			introduceHostToNet(server, client, command);
 		else if (client.status == SERVER)
 			addHostToList(server, client, command);
