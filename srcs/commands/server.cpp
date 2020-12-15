@@ -6,7 +6,7 @@
 /*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 19:07:05 by gwynton           #+#    #+#             */
-/*   Updated: 2020/12/16 00:09:20 by casteria         ###   ########.fr       */
+/*   Updated: 2020/12/16 00:21:57 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,18 +28,18 @@ void				IrcAPI::throwServers(Server& server, Client& client, const t_command& co
 
 void				IrcAPI::throwUsers(Server& server, Client& client, const t_command& command)
 {
-	/*
 	std::string		message;
 	for (std::vector<User>::const_iterator it = server.users.begin(); it != server.users.end(); it++)
 	{
+		message.clear();
 		if (it->servername != server.name && it->servername != client.name)
 		{
-			message = "SERVER " + it->servername + ' ' + toString(it->hopcount) + ' ' + it->info + "\r\n";
-			message += 
+			message = "NICK " + it->nickname + ' ' + toString(it->hopcount) + ' ' + it->username + \
+			' ' + it->hostname + ' ' + '0' + ' ' + '+' + ' ' + it->realname;
+			message += "\r\n";
 			send(client.sock.socket_fd, message.c_str(), message.size(), 0);
 		}
 	}
-	*/
 	(void)server;
 	(void)client;
 	(void)command;
