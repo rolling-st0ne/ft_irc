@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
+/*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 19:07:05 by gwynton           #+#    #+#             */
-/*   Updated: 2020/12/16 00:21:57 by casteria         ###   ########.fr       */
+/*   Updated: 2020/12/16 04:17:21 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void				IrcAPI::throwServers(Server& server, Client& client, const t_command& co
 	{
 		if (it->servername != server.name && it->servername != client.name)
 		{
-			message = "SERVER " + it->servername + ' ' + toString(it->hopcount) + ' ' + it->info + "\r\n";
+			message = ":" + server.name + " SERVER " + it->servername + ' ' + toString(it->hopcount) + ' ' + it->info + "\r\n";
 			send(client.sock.socket_fd, message.c_str(), message.size(), 0);
 		}
 	}
@@ -32,16 +32,12 @@ void				IrcAPI::throwUsers(Server& server, Client& client, const t_command& comm
 	for (std::vector<User>::const_iterator it = server.users.begin(); it != server.users.end(); it++)
 	{
 		message.clear();
-		if (it->servername != server.name && it->servername != client.name)
-		{
-			message = "NICK " + it->nickname + ' ' + toString(it->hopcount) + ' ' + it->username + \
-			' ' + it->hostname + ' ' + '0' + ' ' + '+' + ' ' + it->realname;
-			message += "\r\n";
-			send(client.sock.socket_fd, message.c_str(), message.size(), 0);
-		}
+		message = ":" + server.name;
+		message += " NICK " + it->nickname + ' ' + toString(it->hopcount) + ' ' + it->username +
+				  ' ' + it->hostname + ' ' + '0' + ' ' + '+' + ' ' + it->realname;
+		message += "\r\n";
+		send(client.sock.socket_fd, message.c_str(), message.size(), 0);
 	}
-	(void)server;
-	(void)client;
 	(void)command;
 }
 
@@ -52,9 +48,11 @@ void				IrcAPI::throwChannels(Server& server, Client& client, const t_command& c
 	for (std::vector<Channel>::iterator it = server.channels.begin(); it != server.channels.end(); it++)
 	{
 		message.clear();
-		message = "NJOIN " + it->name + ' ';
+		message = ":" + server.name + " NJOIN " + it->name + ' ';
 		for (std::vector<std::string>::iterator it1 = it->members.begin(); it1 != it->members.end(); it1++)
 		{
+			if (it->isOperator(*it1))
+				message += '@';
 			message += *it1 + ',';
 		}
 		message = message.substr(0, message.size() - 1);
@@ -125,6 +123,7 @@ void				IrcAPI::introduceHostToNet(Server& server, Client& client, const t_comma
 	broadcastMessage(server, client, command);
 	dataExchange(server, client, command);
 }
+
 void				IrcAPI::addHostToList(Server &server, Client& client, const t_command& command)
 {
 	unsigned int hopcount = atoi(command.params[1].c_str());

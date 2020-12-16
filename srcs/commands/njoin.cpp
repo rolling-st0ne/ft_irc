@@ -6,7 +6,7 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/13 11:59:32 by gwynton           #+#    #+#             */
-/*   Updated: 2020/12/15 08:30:32 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/16 02:26:18 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,4 @@ void            IrcAPI::cmd_njoin(Server& server, Client& client, const t_comman
 		sendReply(server, ERR_NEEDMOREPARAMS, "NJOIN :Not enough parameters", client);
 		return ;
 	}
-    (void)server;
-    (void)command;
 }

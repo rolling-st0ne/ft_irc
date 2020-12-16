@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   user.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
+/*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 22:06:19 by casteria          #+#    #+#             */
-/*   Updated: 2020/12/16 00:25:15 by casteria         ###   ########.fr       */
+/*   Updated: 2020/12/16 04:06:38 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ void            IrcAPI::cmd_user(Server& server, Client& client, const t_command
 	#ifdef DEBUG_MODE
 		std::cerr << "User " << client.name << " has been registered, real name: " << command.params[3] << std::endl;
 	#endif
-		server.propagate("NICK", ""); // To check with ngircd output
+		std::string toPropagate = ":" + server.name + " NICK " + client.name + " 1 " + command.params[0];
+		toPropagate += " " + command.params[1] + " 1 + " + command.params[3];
+		server.propagate(toPropagate, "");
 	}
 }
