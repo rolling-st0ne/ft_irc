@@ -6,7 +6,7 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/02 05:37:24 by gwynton           #+#    #+#             */
-/*   Updated: 2020/12/16 05:51:33 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/16 08:48:47 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,15 +47,18 @@ void        IrcAPI::cmd_privmsg(Server& server, Client& client, const t_command&
 		bool found = false;
 		std::string prefix;
 		std::string toPropagate;
+		std::string source;
 		if (client.status == USER)
 		{
 			prefix = user_by_nick(server, client.name);
 			toPropagate = ":" + client.name;
+			source = client.name;
 		}
 		else
 		{
-			prefix = user_by_nick(server, command.prefix.substr(1));
+			prefix = command.prefix;
 			toPropagate = prefix;
+			source = command.prefix.substr(1);
 		}
 		std::string message = " PRIVMSG " + targets[i] + " " + command.params[1];
 		for (std::vector<Channel>::iterator it = server.channels.begin(); it != server.channels.end(); it++)
@@ -65,7 +68,7 @@ void        IrcAPI::cmd_privmsg(Server& server, Client& client, const t_command&
 				std::vector<std::string>::iterator ite = it->members.end();
 				for (std::vector<std::string>::iterator iter = it->members.begin(); iter != ite; iter++)
 				{
-					if (*iter != client.name && !sendToUser(server, *iter, prefix + message))
+					if (*iter != source && !sendToUser(server, *iter, prefix + message))
 						server.propagate(toPropagate + message, client.name);
 				}
 				found = true;

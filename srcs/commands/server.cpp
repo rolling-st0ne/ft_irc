@@ -6,7 +6,7 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 19:07:05 by gwynton           #+#    #+#             */
-/*   Updated: 2020/12/16 04:17:21 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/16 08:27:42 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void				IrcAPI::broadcastMessage(Server& server, Client& client, const t_command
 	{
 		if (*it != client.name)
 		{
-			message = buildMessage(to_broadcast);
+			message = ":" + server.name + buildMessage(to_broadcast);
 			sendToUser(server, *it, message);
 		}
 	}
