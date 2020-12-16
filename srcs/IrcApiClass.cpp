@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   IrcApiClass.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
+/*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 17:01:13 by gwynton           #+#    #+#             */
-/*   Updated: 2020/12/14 19:18:01 by casteria         ###   ########.fr       */
+/*   Updated: 2020/12/16 04:44:50 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ t_command IrcAPI::parse_query(const std::string& query)
 		if (after_split[i + command_index][0] == ':')
 		{
 			size_t position = query.find_last_of(':');
-			std::string temp = query.substr(position + 1);
+			std::string temp = query.substr(position);
 			result.params.push_back(temp);
 			break;
 		}

@@ -6,7 +6,7 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/12 03:46:17 by gwynton           #+#    #+#             */
-/*   Updated: 2020/12/13 11:46:17 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/16 05:51:14 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,19 @@ void        IrcAPI::cmd_notice(Server& server, Client& client, const t_command& 
 	for (size_t i = 0; i < targets.size(); i++)
 	{
 		bool found = false;
-		std::string message = user_by_nick(server, client.name) + " NOTICE " + targets[i] + " " + command.params[1];
+		std::string prefix;
+		std::string toPropagate;
+		if (client.status == USER)
+		{
+			prefix = user_by_nick(server, client.name);
+			toPropagate = ":" + client.name;
+		}
+		else
+		{
+			prefix = user_by_nick(server, command.prefix.substr(1));
+			toPropagate = prefix;
+		}
+		std::string message = " NOTICE " + targets[i] + " " + command.params[1];
 		for (std::vector<Channel>::iterator it = server.channels.begin(); it != server.channels.end(); it++)
 		{
 			if (it->name == targets[i])
@@ -36,14 +48,14 @@ void        IrcAPI::cmd_notice(Server& server, Client& client, const t_command& 
 				std::vector<std::string>::iterator ite = it->members.end();
 				for (std::vector<std::string>::iterator iter = it->members.begin(); iter != ite; iter++)
 				{
-					if (*iter != client.name)
-						sendToUser(server, *iter, message);
+					if (*iter != client.name && !sendToUser(server, *iter, prefix + message))
+						server.propagate(toPropagate + message, client.name);
 				}
 				found = true;
 				break;
 			}
 		}
-		if (!found)
-			sendToUser(server, targets[i], message);
+		if (!found && !sendToUser(server, targets[i], prefix + message))
+			server.propagate(toPropagate + message, client.name);
 	}
 }

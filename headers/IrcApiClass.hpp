@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   IrcApiClass.hpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
+/*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/23 23:36:15 by casteria          #+#    #+#             */
-/*   Updated: 2020/12/15 20:35:35 by casteria         ###   ########.fr       */
+/*   Updated: 2020/12/16 05:20:28 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ private:
 public:
     static void				run_query(Server&, Client&, const std::string&);
 	static std::string		user_by_nick(Server&, const std::string&);
-	static bool				sendToUser(Server&, std::string&, std::string&);
+	static bool				sendToUser(Server&, std::string&, std::string);
 
 };
 
