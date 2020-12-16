@@ -6,7 +6,7 @@
 /*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 01:58:30 by casteria          #+#    #+#             */
-/*   Updated: 2020/12/15 20:04:42 by casteria         ###   ########.fr       */
+/*   Updated: 2020/12/16 20:25:20 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,8 @@ void	Server::create_server(const int& port, const std::string& password)
 {
 	int					option = 1;
 
+	SSL_library_init();
+	OpenSSL_add_all_algorithms();
 	timeout.tv_sec = 1;
 	this->password = password;
 	sock.socket_fd = socket(AF_INET, SOCK_STREAM, 0);

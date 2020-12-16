@@ -6,7 +6,7 @@
 #    By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/16 01:48:02 by casteria          #+#    #+#              #
-#    Updated: 2020/12/16 15:40:52 by casteria         ###   ########.fr        #
+#    Updated: 2020/12/16 20:26:43 by casteria         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,12 +36,12 @@ OBJECTS_REL =		$(ALL_SOURCES_REL:.cpp=.o)
 COMPILER =			clang++
 STD_FLAG = 			-std=c++98
 SSL_LIB = 			-L/usr/lib -lssl -lcrypto
-FLAGS = 			-Wall -Wextra -Werror $(STD_FLAG) $(SSL_LIB) -I $(HEADER_F) -D DEBUG_MODE=1
+FLAGS = 			-Wall -Wextra -Werror $(STD_FLAG) -I $(HEADER_F) -D DEBUG_MODE=1
 
 all: $(NAME)
 
 $(NAME): $(OBJECTS_REL)
-	$(COMPILER) $(FLAGS) $(OBJECTS_REL) -o $(NAME)
+	$(COMPILER) $(FLAGS) $(SSL_LIB) $(OBJECTS_REL) -o $(NAME)
 
 %.o: %.cpp $(HEADERS_REL)
 	$(COMPILER) $(FLAGS) -c $< -o $@
