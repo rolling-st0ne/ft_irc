@@ -6,7 +6,7 @@
 /*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 02:02:32 by casteria          #+#    #+#             */
-/*   Updated: 2020/12/15 17:07:46 by casteria         ###   ########.fr       */
+/*   Updated: 2020/12/16 03:28:33 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,6 @@ typedef struct	s_socket_info
 	struct sockaddr_in	addr;
 	socklen_t			socklen;
 }				socket_info;
-
-// typedef struct	s_message // to_delete
-// {
-// 	std::string	command;
-// 	std::string content;
-// }				t_message;
 
 // ___our classes
 # include "Errors.hpp"
