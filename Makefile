@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+         #
+#    By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/16 01:48:02 by casteria          #+#    #+#              #
-#    Updated: 2020/12/13 11:58:14 by gwynton          ###   ########.fr        #
+#    Updated: 2020/12/16 15:40:52 by casteria         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,8 @@ OBJECTS_REL =		$(ALL_SOURCES_REL:.cpp=.o)
 
 COMPILER =			clang++
 STD_FLAG = 			-std=c++98
-FLAGS = 			-Wall -Wextra -Werror $(STD_FLAG) -I $(HEADER_F) -D DEBUG_MODE=1
+SSL_LIB = 			-L/usr/lib -lssl -lcrypto
+FLAGS = 			-Wall -Wextra -Werror $(STD_FLAG) $(SSL_LIB) -I $(HEADER_F) -D DEBUG_MODE=1
 
 all: $(NAME)
 

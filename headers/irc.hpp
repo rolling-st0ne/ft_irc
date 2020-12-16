@@ -6,7 +6,7 @@
 /*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 02:02:32 by casteria          #+#    #+#             */
-/*   Updated: 2020/12/16 03:28:33 by casteria         ###   ########.fr       */
+/*   Updated: 2020/12/16 15:38:50 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ class Channel;
 # include <stdlib.h>
 # include <fcntl.h>
 # include <unistd.h>
+# include <openssl/ssl.h>
 
 // ___structs
 typedef struct	s_socket_info
