@@ -6,7 +6,7 @@
 /*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 01:58:30 by casteria          #+#    #+#             */
-/*   Updated: 2020/12/16 20:25:20 by casteria         ###   ########.fr       */
+/*   Updated: 2020/12/17 03:05:41 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -291,4 +291,20 @@ void							Server::propagate(const std::string& message, const std::string& sour
 			}
 		}
 	}
+}
+
+SSL_CTX* 						Server::InitCTX(void)
+{
+    const SSL_METHOD *method;
+    SSL_CTX *ctx;
+    OpenSSL_add_all_algorithms();  /* Load cryptos, et.al. */
+    SSL_load_error_strings();   /* Bring in and register error messages */
+    method = SSLv23_client_method();  /* Create new client-method instance */
+    ctx = SSL_CTX_new(method);   /* Create new context */
+    if ( ctx == NULL )
+    {
+        ERR_print_errors_fp(stderr);
+        throw ServerException(errno);
+    }
+    return ctx;
 }

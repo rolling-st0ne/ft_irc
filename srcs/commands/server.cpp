@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
+/*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 19:07:05 by gwynton           #+#    #+#             */
-/*   Updated: 2020/12/16 08:27:42 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/17 04:20:16 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void				IrcAPI::broadcastMessage(Server& server, Client& client, const t_command
 	{
 		if (*it != client.name)
 		{
-			message = ":" + server.name + buildMessage(to_broadcast);
+			message = ":" + server.name + ' ' + buildMessage(to_broadcast);
 			sendToUser(server, *it, message);
 		}
 	}

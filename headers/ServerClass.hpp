@@ -6,7 +6,7 @@
 /*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 01:55:39 by casteria          #+#    #+#             */
-/*   Updated: 2020/12/15 00:20:50 by casteria         ###   ########.fr       */
+/*   Updated: 2020/12/17 02:06:13 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,13 @@ private:
 	void							processClientRequest(Client&);
 	void							sendDataToClient(Client&);
 	void							addClient(Client);
-	void							addUser(User); // check with reference
+	void							addUser(User);
 	void							addHost(Host);
 	void							rmClient(Client);
 	void							create_server(const int&, const std::string&);
 	void							connect_server(const std::string&, const std::string&, const std::string);
 	void							propagate(const std::string&, const std::string&);
+	SSL_CTX*						InitCTX(void);
 public:
 	Server();
 	Server(const Server&);
