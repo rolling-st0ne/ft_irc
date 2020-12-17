@@ -6,7 +6,7 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 18:43:31 by gwynton           #+#    #+#             */
-/*   Updated: 2020/12/12 05:10:32 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/17 05:31:53 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ public:
 	std::string					topic;
 
 	Channel(std::string, std::string);
+	Channel(std::string);
 	bool						addUser(std::string);
 	void						addOperator(std::string);
 	void						removeUser(std::string);

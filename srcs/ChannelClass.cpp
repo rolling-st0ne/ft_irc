@@ -6,7 +6,7 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 18:45:07 by gwynton           #+#    #+#             */
-/*   Updated: 2020/12/12 05:17:48 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/17 05:38:49 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,12 @@ Channel::Channel(std::string name, std::string creator)
 	members.push_back(creator);
 	operators.push_back(creator);
 	std::cerr << "Channel " << name << " created by " << creator << std::endl;
+}
+
+Channel::Channel(std::string name)
+	: name(name)
+{
+	
 }
 
 bool	Channel::addUser(std::string user)
