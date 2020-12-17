@@ -6,7 +6,7 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/02 05:37:24 by gwynton           #+#    #+#             */
-/*   Updated: 2020/12/16 08:48:47 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/17 06:59:08 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,10 @@ void        IrcAPI::cmd_privmsg(Server& server, Client& client, const t_command&
 				for (std::vector<std::string>::iterator iter = it->members.begin(); iter != ite; iter++)
 				{
 					if (*iter != source && !sendToUser(server, *iter, prefix + message))
+					{
+						message = " PRIVMSG " + *iter + " " + command.params[1];
 						server.propagate(toPropagate + message, client.name);
+					}
 				}
 				found = true;
 				break;
