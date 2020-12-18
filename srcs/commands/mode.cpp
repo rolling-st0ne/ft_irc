@@ -6,7 +6,7 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/12 04:42:43 by gwynton           #+#    #+#             */
-/*   Updated: 2020/12/13 11:47:18 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/18 06:24:46 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void        IrcAPI::cmd_mode(Server& server, Client& client, const t_command& co
 					it->removeOperator(command.params[2]);
 				for (size_t i = 0; i < it->members.size(); i++)
 				{
-					std::string message = ":localhost ";
+					std::string message = ":" + server.name + " ";
 					message += RPL_CHANNELMODEIS;
 					message += " " + it->members[i] + " " + it->name + " " + modes + " " + command.params[2];
 					sendToUser(server, it->members[i], message);

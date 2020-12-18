@@ -6,7 +6,7 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/04 06:34:10 by gwynton           #+#    #+#             */
-/*   Updated: 2020/12/13 11:47:59 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/18 06:14:55 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,19 @@ void        IrcAPI::cmd_topic(Server& server, Client& client, const t_command& c
 		topic = command.params[1];
 	else
 		topic = "___show topic___";
+	if (client.status == SERVER)
+	{
+		Channel* channel_ptr = channel_by_name(server, channel);
+		if (!channel_ptr)
+			return;
+		channel_ptr->topic = topic;
+		std::string notification = user_by_nick(server, command.prefix.substr(1)) + " TOPIC " + channel + " " + topic;
+		for (size_t i = 0; i < channel_ptr->members.size(); i++)
+			sendToUser(server, channel_ptr->members[i], notification);
+		std::string toPropagate = command.prefix + " TOPIC " + channel + " " + topic;
+		server.propagate(toPropagate, client.name);
+		return;
+	}
 	for (std::vector<Channel>::iterator it = server.channels.begin(); it != server.channels.end(); it++)
 	{
 		if (it->name == channel)
@@ -39,7 +52,7 @@ void        IrcAPI::cmd_topic(Server& server, Client& client, const t_command& c
 				if (it->topic == "")
 					sendReply(server, RPL_NOTOPIC, channel + " :No topic is set", client);
 				else
-					sendReply(server, RPL_TOPIC, channel + " :" + it->topic, client);
+					sendReply(server, RPL_TOPIC, channel + " " + it->topic, client);
 				break;
 			}
 			if (!it->isOperator(client.name))
@@ -48,11 +61,14 @@ void        IrcAPI::cmd_topic(Server& server, Client& client, const t_command& c
 				return;
 			}
 			it->topic = topic;
-			std::string message = user_by_nick(server, client.name) + " " + "TOPIC " + channel + " " + topic;
+			std::string message = user_by_nick(server, client.name) + " TOPIC " + channel + " " + topic;
 			for (size_t i = 0; i < it->members.size(); i++)
 			{
 				sendToUser(server, it->members[i], message);
 			}
+
+			std::string toPropagate = ":" + client.name + " TOPIC " + channel + " " + topic;
+			server.propagate(toPropagate, client.name);
 			break;
 		}
 	}	
