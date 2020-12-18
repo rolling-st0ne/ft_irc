@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   UserClass.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
+/*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/22 01:15:11 by casteria          #+#    #+#             */
-/*   Updated: 2020/12/16 00:23:20 by casteria         ###   ########.fr       */
+/*   Updated: 2020/12/18 17:27:38 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ User::User(const std::string& nickname, const std::string& username, const std::
 		hostname(hostname),
 		servername(servername),
 		realname(realname),
-		hopcount(0)
+		hopcount(0),
+		ircOp(false)
 {
 }

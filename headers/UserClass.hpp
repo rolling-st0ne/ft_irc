@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   UserClass.hpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
+/*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/22 01:15:28 by casteria          #+#    #+#             */
-/*   Updated: 2020/12/16 00:24:43 by casteria         ###   ########.fr       */
+/*   Updated: 2020/12/18 17:26:52 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ public:
     std::string     servername;
     std::string     realname;
     unsigned int	hopcount;
+    bool            ircOp;
 public:
     User(const Client &);
     User(const std::string& nickname, const std::string& username, const std::string& hostname, \
