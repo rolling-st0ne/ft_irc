@@ -6,7 +6,7 @@
 /*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/22 01:18:00 by casteria          #+#    #+#             */
-/*   Updated: 2020/12/10 18:55:07 by casteria         ###   ########.fr       */
+/*   Updated: 2020/12/18 02:27:45 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,21 @@
 Client::Client()
 {
 	status = CLIENT;
+	ssl_connected = false;
 }
 
-Client::Client(const Client& other)
+Client::Client(const Client& other) // MB
 	:	sock(other.sock),
 		name(other.name),
-		status(other.status)
+		password(other.password),
+		status(other.status),
+		ssl_connected(other.ssl_connected),
+		response(other.response)
 {
 }
 
 Client::~Client()
 {
 //	close(this->sock.socket_fd);
+//	SSL_free(this->ssl);
 }

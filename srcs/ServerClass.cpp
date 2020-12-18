@@ -6,7 +6,7 @@
 /*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 01:58:30 by casteria          #+#    #+#             */
-/*   Updated: 2020/12/17 03:05:41 by casteria         ###   ########.fr       */
+/*   Updated: 2020/12/18 02:56:21 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,21 +85,17 @@ void	Server::connect_server(const std::string& host, const std::string& port, co
 	Client new_server;
 	new_server.sock.socket_fd = uplink;
 	new_server.status = WAITING_FOR_CONNECTION;
-	addClient(new_server);
 	fcntl(uplink, F_SETFL, O_NONBLOCK);
 	std::string start = "PASS " + pass + " 0210 IRC|\r\n";
 	start += "SERVER " + this->name + " 1 info\r\n";
-	send(uplink, start.c_str(), start.size(), 0);
+	sendMessage(new_server, start);
+	addClient(new_server);
 }
 
-void	Server::create_server(const int& port, const std::string& password)
+void	Server::create_socket(const int& port, socket_info& sock)
 {
 	int					option = 1;
 
-	SSL_library_init();
-	OpenSSL_add_all_algorithms();
-	timeout.tv_sec = 1;
-	this->password = password;
 	sock.socket_fd = socket(AF_INET, SOCK_STREAM, 0);
 	if (sock.socket_fd == FAIL)
 		throw ServerException(errno);
@@ -111,6 +107,19 @@ void	Server::create_server(const int& port, const std::string& password)
 		throw ServerException(errno);
 	if (listen(sock.socket_fd, QUEUE_LEN_MAX) == FAIL)
 		throw ServerException(errno);
+
+}
+
+void	Server::create_server(const int& port, const std::string& password)
+{
+	timeout.tv_sec = 1;
+	this->password = password;
+	std::string		cert_file = "cert/mycert.pem";
+
+	ssl_ctx = InitCTX();
+	LoadCertificates(ssl_ctx, cert_file.c_str(), cert_file.c_str());
+	create_socket(port, this->sock);
+	create_socket(port + 1, this->ssl_sock);
 	addHost(Host(getHostName(sock.addr), 0, "mb add some info later"));
 	this->name = getHostName(sock.addr);
 }
@@ -137,8 +146,8 @@ void	Server::server_loop()
 #endif
 		if (select_result < 0)
 			throw ServerException(errno); // need signal handle (errno: EINTR)
-		if (FD_ISSET(sock.socket_fd, &readfds))
-			acceptNewClient();
+		if (FD_ISSET(sock.socket_fd, &readfds) || FD_ISSET(ssl_sock.socket_fd, &readfds))
+			acceptNewClient(readfds);
 		processClients(readfds, writefds);
 		FD_ZERO(&readfds);
 		FD_ZERO(&writefds);
@@ -150,23 +159,33 @@ void							Server::initFds(int& max_d, fd_set& readfds, fd_set& writefds)
 	FD_ZERO(&readfds);
 	FD_ZERO(&writefds);
 	FD_SET(this->sock.socket_fd, &readfds);
+	FD_SET(this->ssl_sock.socket_fd, &readfds);
 	for (std::vector<Client>::iterator it = clients.begin(); it != clients.end(); it++)
 	{
 		FD_SET(it->sock.socket_fd, &readfds);
 		if (!it->response.empty())
+		{
 			FD_SET(it->sock.socket_fd, &writefds);
+		}
 		if (it->sock.socket_fd > max_d)
 			max_d = it->sock.socket_fd;
 	}
 }
 
-void							Server::acceptNewClient()
+void							Server::acceptNewClient(fd_set& readfds)
 {
 	Client						new_client;
 
+	if (FD_ISSET(ssl_sock.socket_fd, &readfds))
+		new_client.ssl_connected = true;
 	new_client.sock.socket_fd = accept(sock.socket_fd, (sockaddr *)&new_client.sock.addr, &new_client.sock.socklen);
 	if (new_client.sock.socket_fd < 0)
 		throw ServerException(errno);
+	if (new_client.ssl_connected)
+	{
+		new_client.ssl = SSL_new(ssl_ctx);
+		SSL_set_fd(new_client.ssl, new_client.sock.socket_fd);
+	}
 	fcntl(new_client.sock.socket_fd, F_SETFL, O_NONBLOCK);
 	new_client.name = getHostName(new_client.sock.addr);
 	addClient(new_client);
@@ -190,7 +209,9 @@ void							Server::processClients(fd_set &readfds, fd_set &writefds)
 	for (size_t i = 0; i < clients.size(); i++)
 	{
 		if (FD_ISSET(clients[i].sock.socket_fd, &writefds))
+		{
 			sendDataToClient(clients[i]);
+		}
 	}
 }
 
@@ -201,7 +222,7 @@ void							Server::processClientRequest(Client& client)
 	std::string	received_message;
 
 	bzero(buffer, BUFFER_SIZE);
-	recv_ret = recv(client.sock.socket_fd, buffer, BUFFER_SIZE, 0);
+	recv_ret = recvMsg(client, &buffer, BUFFER_SIZE);
 	if (recv_ret < 0)
 		throw ServerException(errno);
 	else if (recv_ret == 0)
@@ -248,7 +269,10 @@ void							Server::processClientRequest(Client& client)
 void							Server::sendDataToClient(Client& client)
 {
 	std::string		response = client.response;
-	send(client.sock.socket_fd, response.c_str(), response.size(), 0);
+	if (!client.ssl_connected)
+		send(client.sock.socket_fd, response.c_str(), response.size(), 0);
+	else
+		SSL_write(client.ssl, (void *)response.c_str(), response.size());
 	client.response.clear();
 }
 
@@ -299,12 +323,48 @@ SSL_CTX* 						Server::InitCTX(void)
     SSL_CTX *ctx;
     OpenSSL_add_all_algorithms();  /* Load cryptos, et.al. */
     SSL_load_error_strings();   /* Bring in and register error messages */
-    method = SSLv23_client_method();  /* Create new client-method instance */
+    method = SSLv23_server_method();  /* Create new client-method instance */
     ctx = SSL_CTX_new(method);   /* Create new context */
     if ( ctx == NULL )
     {
         ERR_print_errors_fp(stderr);
-        throw ServerException(errno);
+        throw ServerException("SSL_ERROR");
     }
     return ctx;
 }
+
+void							Server::LoadCertificates(SSL_CTX* ctx, const char* CertFile, const char* KeyFile)
+{
+    /* set the local certificate from CertFile */
+    if (SSL_CTX_use_certificate_file(ctx, CertFile, SSL_FILETYPE_PEM) <= 0)
+    {
+        ERR_print_errors_fp(stderr);
+        throw ServerException("SSL_ERROR");
+    }
+    /* set the private key from KeyFile (may be the same as CertFile) */
+    if (SSL_CTX_use_PrivateKey_file(ctx, KeyFile, SSL_FILETYPE_PEM) <= 0)
+    {
+        ERR_print_errors_fp(stderr);
+        throw ServerException("SSL_ERROR");
+    }
+    /* verify private key */
+    if (!SSL_CTX_check_private_key(ctx))
+        throw ServerException("Private key does not match the public certificate");
+}
+
+int							Server::recvMsg(Client& client, void *buffer, int buf_size)
+{
+	int		to_return;
+
+	if (client.ssl_connected == false)
+		to_return = recv(client.sock.socket_fd, buffer, buf_size, 0);
+	else
+		to_return = SSL_read(client.ssl, buffer, buf_size);
+	return (to_return);
+}
+
+void Server::sendMessage(Client& client, std::string message)
+{
+	client.response += message;
+}
+

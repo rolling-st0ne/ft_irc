@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ClientClass.hpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
+/*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/22 01:18:18 by casteria          #+#    #+#             */
-/*   Updated: 2020/12/13 03:04:09 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/18 00:23:27 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ public:
 	std::string		name;
 	std::string		password;
 	short int		status;
+	SSL*			ssl;
+	bool			ssl_connected;
 
 	std::string response;
 	std::string input;

@@ -6,7 +6,7 @@
 /*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 19:07:05 by gwynton           #+#    #+#             */
-/*   Updated: 2020/12/17 04:20:16 by casteria         ###   ########.fr       */
+/*   Updated: 2020/12/18 03:00:15 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,9 @@ void				IrcAPI::throwServers(Server& server, Client& client, const t_command& co
 	{
 		if (it->servername != server.name && it->servername != client.name)
 		{
-			message = ":" + server.name + " SERVER " + it->servername + ' ' + toString(it->hopcount) + ' ' + it->info + "\r\n";
-			send(client.sock.socket_fd, message.c_str(), message.size(), 0);
+			message = ":" + server.name + " SERVER " + it->servername + ' ' + toString(it->hopcount) + ' ' + it->info;
+			message += "\r\n";
+			Server::sendMessage(client, message);
 		}
 	}
 	(void)command;
@@ -34,9 +35,8 @@ void				IrcAPI::throwUsers(Server& server, Client& client, const t_command& comm
 		message.clear();
 		message = ":" + server.name;
 		message += " NICK " + it->nickname + ' ' + toString(it->hopcount) + ' ' + it->username +
-				  ' ' + it->hostname + ' ' + '0' + ' ' + '+' + ' ' + it->realname;
-		message += "\r\n";
-		send(client.sock.socket_fd, message.c_str(), message.size(), 0);
+				  ' ' + it->hostname + ' ' + '0' + ' ' + '+' + ' ' + it->realname + "\r\n";
+		Server::sendMessage(client, message);
 	}
 	(void)command;
 }
@@ -57,7 +57,7 @@ void				IrcAPI::throwChannels(Server& server, Client& client, const t_command& c
 		}
 		message = message.substr(0, message.size() - 1);
 		message += "\r\n";
-		send(client.sock.socket_fd, message.c_str(), message.size(), 0);
+		Server::sendMessage(client, message);
 	}
 	(void)command;
 }
@@ -117,7 +117,7 @@ void				IrcAPI::introduceHostToNet(Server& server, Client& client, const t_comma
 	{
 		reply = "PASS " + server.password + " 0210 IRC|\r\n";
 		reply += "SERVER " + server.name + " 1 info\r\n";
-		send(client.sock.socket_fd, reply.c_str(), reply.size(), 0);
+		Server::sendMessage(client, reply);
 	}
 	client.status = SERVER;
 	broadcastMessage(server, client, command);
@@ -143,7 +143,8 @@ void            IrcAPI::cmd_server(Server& server, Client& client, const t_comma
 		sendReply(server, ERR_NEEDMOREPARAMS, "SERVER :Not enough parameters", client);
 	else
 	{
-		if (client.status == CLIENT || client.status == WAITING_FOR_CONNECTION) // add !is_registered
+		std::cerr << client.status;
+		if (!is_registered(client)) // add !is_registered
 			introduceHostToNet(server, client, command);
 		else if (client.status == SERVER)
 			addHostToList(server, client, command);

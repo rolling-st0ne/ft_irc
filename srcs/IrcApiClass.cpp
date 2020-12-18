@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   IrcApiClass.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
+/*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 17:01:13 by gwynton           #+#    #+#             */
-/*   Updated: 2020/12/16 04:44:50 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/18 02:56:37 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void IrcAPI::run_query(Server &server, Client& client, const std::string& query)
     }
     catch (const std::exception& ex)
     {
-        client.response = std::string(ex.what()).append("\r\n");
+        client.response = std::string(ex.what());
     }
 }
 

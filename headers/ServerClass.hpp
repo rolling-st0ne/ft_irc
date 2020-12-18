@@ -6,7 +6,7 @@
 /*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 01:55:39 by casteria          #+#    #+#             */
-/*   Updated: 2020/12/17 02:06:13 by casteria         ###   ########.fr       */
+/*   Updated: 2020/12/18 02:29:33 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ class		Server
 	friend class IrcAPI;
 private:
 	socket_info						sock;
+	socket_info						ssl_sock;
 	std::string						name;	
 	std::string						password;
 	std::vector<Client>				clients;
@@ -29,6 +30,7 @@ private:
 	std::vector<Host>				hosts;
 	std::vector<Channel>			channels;
 	std::vector<std::string>		connected_servers;
+	SSL_CTX							*ssl_ctx;
 	int								uplink;
 
 	timeval							timeout;
@@ -36,24 +38,28 @@ private:
 
 	void							initFds(int &, fd_set&, fd_set&);
 	void							server_loop();
-	void							acceptNewClient();
+	void							acceptNewClient(fd_set&);
 	void							processClients(fd_set&, fd_set&);
 	void							processClientRequest(Client&);
 	void							sendDataToClient(Client&);
+	int								recvMsg(Client&, void *, int);
+	static void						sendMessage(Client&, std::string);
 	void							addClient(Client);
 	void							addUser(User);
 	void							addHost(Host);
 	void							rmClient(Client);
+	void							create_socket(const int&, socket_info&);
 	void							create_server(const int&, const std::string&);
 	void							connect_server(const std::string&, const std::string&, const std::string);
 	void							propagate(const std::string&, const std::string&);
 	SSL_CTX*						InitCTX(void);
+	void							LoadCertificates(SSL_CTX*, const char*, const char*);
 public:
 	Server();
 	Server(const Server&);
 	Server(const int&, const std::string&);
 	Server(const char *, const int&, const std::string&);
-	~Server();
+	~Server(); // add it
 
 	// _operators
 	Server &operator=(const Server&);
