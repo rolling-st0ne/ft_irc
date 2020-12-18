@@ -6,7 +6,7 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/12 03:46:17 by gwynton           #+#    #+#             */
-/*   Updated: 2020/12/16 08:49:55 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/18 05:42:47 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,21 @@ void        IrcAPI::cmd_notice(Server& server, Client& client, const t_command& 
 		std::string message = " NOTICE " + targets[i] + " " + command.params[1];
 		for (std::vector<Channel>::iterator it = server.channels.begin(); it != server.channels.end(); it++)
 		{
+			bool sent_to_channel = false;
 			if (it->name == targets[i])
 			{
 				std::vector<std::string>::iterator ite = it->members.end();
 				for (std::vector<std::string>::iterator iter = it->members.begin(); iter != ite; iter++)
 				{
 					if (*iter != source && !sendToUser(server, *iter, prefix + message))
-						server.propagate(toPropagate + message, client.name);
+					{
+						if (!sent_to_channel)
+						{
+							message = " NOTICE " + targets[i] + " " + command.params[1];
+							server.propagate(toPropagate + message, client.name);
+							sent_to_channel = true;
+						}
+					}
 				}
 				found = true;
 				break;

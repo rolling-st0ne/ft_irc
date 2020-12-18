@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
+/*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 19:07:05 by gwynton           #+#    #+#             */
-/*   Updated: 2020/12/18 03:38:59 by casteria         ###   ########.fr       */
+/*   Updated: 2020/12/18 04:25:33 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,13 +71,13 @@ static void			incHopcount(t_command& command)
 
 std::string			IrcAPI::buildMessage(const t_command& command)
 {
-	std::string		message = command.command + ' ';
+	std::string		message = command.command;
 
 	for (std::vector<std::string>::const_iterator it = command.params.begin(); it != command.params.end(); it++)
 	{
-		message += *it;
-		if (it != command.params.end() - 1)
-			message += ' ';
+		message += ' ' + *it;
+		// if (it != command.params.end() - 1)
+		// 	message += ' ';
 	}
 	return (message);
 }
@@ -120,7 +120,7 @@ void				IrcAPI::introduceHostToNet(Server& server, Client& client, const t_comma
 		Server::sendMessage(client, reply);
 	}
 	client.status = SERVER;
-	broadcastMessage(server, client, command);
+	//broadcastMessage(server, client, command);
 	dataExchange(server, client, command);
 }
 
@@ -129,8 +129,6 @@ void				IrcAPI::addHostToList(Server &server, Client& client, const t_command& c
 	unsigned int hopcount = atoi(command.params[1].c_str());
 	server.addHost(Host(command.params[0], hopcount, command.params[2]));
 	broadcastMessage(server, client, command);
-//	if (hopcount == 1)
-//		server.connected_servers.push_back(client.name);
 }
 
 void            IrcAPI::cmd_server(Server& server, Client& client, const t_command& command)

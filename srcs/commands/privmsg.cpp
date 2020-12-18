@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   privmsg.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
+/*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/02 05:37:24 by gwynton           #+#    #+#             */
-/*   Updated: 2020/12/18 02:57:57 by casteria         ###   ########.fr       */
+/*   Updated: 2020/12/18 05:40:47 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ void        IrcAPI::cmd_privmsg(Server& server, Client& client, const t_command&
 		std::string message = " PRIVMSG " + targets[i] + " " + command.params[1];
 		for (std::vector<Channel>::iterator it = server.channels.begin(); it != server.channels.end(); it++)
 		{
+			bool sent_to_channel = false;
 			if (it->name == targets[i])
 			{
 				std::vector<std::string>::iterator ite = it->members.end();
@@ -71,8 +72,12 @@ void        IrcAPI::cmd_privmsg(Server& server, Client& client, const t_command&
 				{
 					if (*iter != source && !sendToUser(server, *iter, prefix + message))
 					{
-						message = " PRIVMSG " + *iter + " " + command.params[1];
-						server.propagate(toPropagate + message, client.name);
+						if (!sent_to_channel)
+						{
+							message = " PRIVMSG " + targets[i] + " " + command.params[1];
+							server.propagate(toPropagate + message, client.name);
+							sent_to_channel = true;
+						}
 					}
 				}
 				found = true;
