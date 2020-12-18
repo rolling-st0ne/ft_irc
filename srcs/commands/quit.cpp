@@ -6,7 +6,7 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/04 10:18:16 by gwynton           #+#    #+#             */
-/*   Updated: 2020/12/18 06:46:22 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/18 16:37:57 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,5 +92,5 @@ void	IrcAPI::cmd_quit(Server& server, Client& client, const t_command& command)
 	server.propagate(toPropagate, client.name);
 	close(client.sock.socket_fd);
 	client.sock.socket_fd = -1;
-	client.response.clear();
+	// client.response.clear();
 }

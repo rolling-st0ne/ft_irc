@@ -6,7 +6,7 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 01:58:30 by casteria          #+#    #+#             */
-/*   Updated: 2020/12/18 06:58:45 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/18 16:38:41 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,13 +195,19 @@ void							Server::processClients(fd_set &readfds, fd_set &writefds)
 {
 	for (size_t i = 0; i < clients.size(); i++)
 	{
+		if (clients[i].sock.socket_fd == -1)
+		{
+			//std::cerr << "Found closed descriptor before\n";
+			rmClient(clients[i]);
+			break;
+		}
 		if (FD_ISSET(clients[i].sock.socket_fd, &readfds))
 		{
 			processClientRequest(clients[i]);
 		}
 		if (clients[i].sock.socket_fd == -1)
 		{
-			std::cerr << "Found closed descriptor\n";
+			//std::cerr << "Found closed descriptor after\n";
 			rmClient(clients[i]);
 			break;
 		}
