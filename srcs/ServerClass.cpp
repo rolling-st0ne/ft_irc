@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ServerClass.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
+/*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 01:58:30 by casteria          #+#    #+#             */
-/*   Updated: 2020/12/18 02:56:21 by casteria         ###   ########.fr       */
+/*   Updated: 2020/12/18 06:58:45 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -227,7 +227,7 @@ void							Server::processClientRequest(Client& client)
 		throw ServerException(errno);
 	else if (recv_ret == 0)
 	{
-		std::string message = IrcAPI::user_by_nick(*this, client.name) + " QUIT " + "Disconnected";
+		std::string message = IrcAPI::user_by_nick(*this, client.name) + " QUIT " + ":Disconnected";
 		for (size_t i = 0; i < users.size(); i++)
 		{
 			if (users[i].nickname != client.name)
@@ -259,6 +259,9 @@ void							Server::processClientRequest(Client& client)
 		}
 		close(client.sock.socket_fd);
 		rmClient(client);
+		std::string toPropagate = ":" + client.name + " QUIT :Disconnected";
+		propagate(toPropagate, client.name);
+		return;
 	}
 #ifdef DEBUG_MODE
 	DEBUG_MES(client.sock.socket_fd << " SAYS: " << buffer)
