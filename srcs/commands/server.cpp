@@ -6,7 +6,7 @@
 /*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 19:07:05 by gwynton           #+#    #+#             */
-/*   Updated: 2020/12/18 03:00:15 by casteria         ###   ########.fr       */
+/*   Updated: 2020/12/18 03:38:59 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,6 @@ void            IrcAPI::cmd_server(Server& server, Client& client, const t_comma
 		sendReply(server, ERR_NEEDMOREPARAMS, "SERVER :Not enough parameters", client);
 	else
 	{
-		std::cerr << client.status;
 		if (!is_registered(client)) // add !is_registered
 			introduceHostToNet(server, client, command);
 		else if (client.status == SERVER)
