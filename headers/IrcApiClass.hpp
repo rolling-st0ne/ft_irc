@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   IrcApiClass.hpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
+/*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/23 23:36:15 by casteria          #+#    #+#             */
-/*   Updated: 2020/12/18 01:29:47 by casteria         ###   ########.fr       */
+/*   Updated: 2020/12/18 14:43:36 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ private:
 	static Channel*			channel_by_name(Server&, const std::string&);
 
 	static void				cmd_part(COMMANDS_PARAM_LIST);
-
+	static void				cmd_kill(COMMANDS_PARAM_LIST);
 	static void				cmd_topic(COMMANDS_PARAM_LIST);
     static void             cmd_kick(COMMANDS_PARAM_LIST);             
 	static void				cmd_mode(COMMANDS_PARAM_LIST);

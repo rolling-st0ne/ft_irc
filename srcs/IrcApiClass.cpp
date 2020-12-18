@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   IrcApiClass.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
+/*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 17:01:13 by gwynton           #+#    #+#             */
-/*   Updated: 2020/12/18 02:56:37 by casteria         ###   ########.fr       */
+/*   Updated: 2020/12/18 14:43:07 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ t_map IrcAPI::create_map()
 	res["MODE"] = cmd_mode;
 	res["KICK"] = cmd_kick;
 	res["NJOIN"] = cmd_njoin;
+	res["KILL"] = cmd_kill;
 	return (res);
 }
 
