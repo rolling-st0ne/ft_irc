@@ -6,7 +6,7 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/13 11:58:29 by gwynton           #+#    #+#             */
-/*   Updated: 2020/12/18 09:03:49 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/19 05:49:16 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ void            IrcAPI::cmd_kick(Server& server, Client& client, const t_command
 				sendToUser(server, it->members[i], message);
 			}
 			it->removeUser(user);
+			if (it->members.size() == 0)
+				server.channels.erase(it);
 			std::string toPropagate = ":" + kicker + " KICK " + channel + " " + user + " " + reason;
 			server.propagate(toPropagate, client.name);
 			break;
