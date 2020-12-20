@@ -6,7 +6,7 @@
 #    By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/16 01:48:02 by casteria          #+#    #+#              #
-#    Updated: 2020/12/20 10:02:03 by gwynton          ###   ########.fr        #
+#    Updated: 2020/12/20 17:48:01 by gwynton          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,8 @@ HEADERS = 			ExceptionsClasses.hpp irc.hpp ServerClass.hpp IrcApiClass.hpp \
 COMMANDS_F = 		commands
 COMMANDS_SRCS = 	nick.cpp pass.cpp user.cpp server.cpp join.cpp privmsg.cpp \
 					part.cpp topic.cpp quit.cpp notice.cpp mode.cpp kick.cpp \
-					njoin.cpp kill.cpp oper.cpp
+					njoin.cpp kill.cpp oper.cpp motd.cpp version.cpp time.cpp \
+					info.cpp
 COMMANDS_SRCS_REL =	$(addprefix $(COMMANDS_F)/, $(COMMANDS_SRCS))
 
 MAIN_SOURCES = 		main.cpp ServerClass.cpp ClientClass.cpp \
