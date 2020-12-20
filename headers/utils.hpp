@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
+/*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 17:39:39 by gwynton           #+#    #+#             */
-/*   Updated: 2020/12/15 18:58:30 by casteria         ###   ########.fr       */
+/*   Updated: 2020/12/20 09:57:41 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,5 +20,6 @@ bool						getNextQuery(std::string&, std::string&);
 std::string					getHostName(const sockaddr_in&);
 bool						is_registered(const Client&);
 std::string					toString(const int&);
+bool                        compareLower(const std::string&, const std::string&);
 
 #endif

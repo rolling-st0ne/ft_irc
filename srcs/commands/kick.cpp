@@ -6,7 +6,7 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/13 11:58:29 by gwynton           #+#    #+#             */
-/*   Updated: 2020/12/19 05:49:16 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/20 10:21:36 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void            IrcAPI::cmd_kick(Server& server, Client& client, const t_command
 	std::string reason = command.amount_of_params == 3 ? command.params[2] : kicker;
 	for (std::vector<Channel>::iterator it = server.channels.begin(); it != server.channels.end(); it++)
 	{
-		if (it->name == channel)
+		if (compareLower(it->name, channel))
 		{
 			if (!it->isOperator(kicker))
 			{

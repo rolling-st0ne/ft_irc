@@ -6,7 +6,7 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/12 04:42:43 by gwynton           #+#    #+#             */
-/*   Updated: 2020/12/19 06:31:31 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/20 10:23:38 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void        IrcAPI::cmd_mode(Server& server, Client& client, const t_command& co
 			std::string modes = command.params[1];
 			for (std::vector<Channel>::iterator it = server.channels.begin(); it != server.channels.end(); it++)
 			{
-				if (it->name == target)
+				if (compareLower(it->name, target))
 				{
 					if (modes == "+o" || modes == "-o")
 					{
@@ -76,7 +76,7 @@ void        IrcAPI::cmd_mode(Server& server, Client& client, const t_command& co
 	bool channel_found = false;
 	for (std::vector<Channel>::iterator it = server.channels.begin(); it != server.channels.end(); it++)
 	{
-		if (it->name == target)
+		if (compareLower(it->name, target))
 		{
 			channel_found = true;
 			if (!it->isOperator(client.name))

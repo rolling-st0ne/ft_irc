@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   join.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
+/*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/02 05:35:28 by gwynton           #+#    #+#             */
-/*   Updated: 2020/12/18 02:57:34 by casteria         ###   ########.fr       */
+/*   Updated: 2020/12/20 10:02:37 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ Channel*	IrcAPI::channel_by_name(Server& server, const std::string& name)
 {
 	for (std::vector<Channel>::iterator it = server.channels.begin(); it != server.channels.end(); it++)
 	{
-		if (it->name == name)
+		if (compareLower(it->name, name))
 		{
 			return (&*it);
 		}
@@ -26,6 +26,11 @@ Channel*	IrcAPI::channel_by_name(Server& server, const std::string& name)
 
 void        IrcAPI::cmd_join(Server& server, Client& client, const t_command& command)
 {
+	if (command.amount_of_params < 1)
+	{
+		sendReply(server, ERR_NEEDMOREPARAMS, "JOIN :Not enough parameters", client);
+		return ;
+	}
 	if (client.status == SERVER)
 	{
 		bool new_operator = false;
@@ -57,11 +62,6 @@ void        IrcAPI::cmd_join(Server& server, Client& client, const t_command& co
 			toPropagate += "\7o";
 		server.propagate(toPropagate, client.name);
 		return;
-	}
-	if (command.amount_of_params < 1)
-	{
-		sendReply(server, ERR_NEEDMOREPARAMS, "JOIN :Not enough parameters", client);
-		return ;
 	}
 	std::vector<std::string> channels = strsplit(command.params[0], ',');
 	for (size_t i = 0; i < channels.size(); i++)

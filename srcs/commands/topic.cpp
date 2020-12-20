@@ -6,7 +6,7 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/04 06:34:10 by gwynton           #+#    #+#             */
-/*   Updated: 2020/12/18 06:14:55 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/20 10:20:16 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void        IrcAPI::cmd_topic(Server& server, Client& client, const t_command& c
 	}
 	for (std::vector<Channel>::iterator it = server.channels.begin(); it != server.channels.end(); it++)
 	{
-		if (it->name == channel)
+		if (compareLower(it->name, channel))
 		{
 			if (!it->isUser(client.name))
 			{

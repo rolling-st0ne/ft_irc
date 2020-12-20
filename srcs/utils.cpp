@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
+/*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 17:41:24 by gwynton           #+#    #+#             */
-/*   Updated: 2020/12/17 04:11:12 by casteria         ###   ########.fr       */
+/*   Updated: 2020/12/20 10:08:35 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,4 +64,17 @@ std::string					toString(const int& val)
 	std::stringstream is;
 	is << val;
 	return (is.str());
+}
+
+bool						compareLower(const std::string& a, const std::string& b)
+{
+	size_t size = a.size();
+	if (size != b.size())
+		return false;
+	for (size_t i = 0; i < size; i++)
+	{
+		if (tolower(a[i]) != tolower(b[i]))
+			return false;
+	}
+	return true;
 }
