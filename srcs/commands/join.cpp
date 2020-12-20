@@ -6,7 +6,7 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/02 05:35:28 by gwynton           #+#    #+#             */
-/*   Updated: 2020/12/20 10:02:37 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/20 15:13:16 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,12 @@ void        IrcAPI::cmd_join(Server& server, Client& client, const t_command& co
 	std::vector<std::string> channels = strsplit(command.params[0], ',');
 	for (size_t i = 0; i < channels.size(); i++)
 	{
+		char first = channels[i][0];
+		if (first != '#' && first != '!' && first != '&' && first != '+')
+		{
+			sendReply(server, ERR_NOSUCHCHANNEL, channels[i] + " :No such channel", client);
+			continue;
+		}
 		Channel* channel_ptr = channel_by_name(server, channels[i]);
 		if (!channel_ptr)
 		{
@@ -101,6 +107,8 @@ void        IrcAPI::cmd_join(Server& server, Client& client, const t_command& co
 		}
 		sendReply(server, RPL_NAMREPLY, " = " + channels[i] + " :" + member_list, client);
 		sendReply(server, RPL_ENDOFNAMES, channels[i] + " :End of NAMES list", client);
+		if (first == '&')
+			continue;
 		std::string toPropagate = ":" + client.name + " JOIN " + channels[i];
 		if (channel_ptr->isOperator(client.name))
 			toPropagate += "\7o";

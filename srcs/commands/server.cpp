@@ -6,7 +6,7 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 19:07:05 by gwynton           #+#    #+#             */
-/*   Updated: 2020/12/18 04:25:33 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/20 15:19:06 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ void				IrcAPI::throwChannels(Server& server, Client& client, const t_command& c
 
 	for (std::vector<Channel>::iterator it = server.channels.begin(); it != server.channels.end(); it++)
 	{
+		if (it->name[0] == '&')
+			continue;
 		message.clear();
 		message = ":" + server.name + " NJOIN " + it->name + ' ';
 		for (std::vector<std::string>::iterator it1 = it->members.begin(); it1 != it->members.end(); it1++)
