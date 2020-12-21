@@ -6,7 +6,7 @@
 /*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/22 01:18:00 by casteria          #+#    #+#             */
-/*   Updated: 2020/12/18 02:27:45 by casteria         ###   ########.fr       */
+/*   Updated: 2020/12/21 05:46:21 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ Client::Client(const Client& other) // MB
 		name(other.name),
 		password(other.password),
 		status(other.status),
+		ssl(other.ssl),
 		ssl_connected(other.ssl_connected),
 		response(other.response)
 {

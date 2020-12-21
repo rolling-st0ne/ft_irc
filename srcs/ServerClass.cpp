@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ServerClass.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
+/*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 01:58:30 by casteria          #+#    #+#             */
-/*   Updated: 2020/12/18 16:38:41 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/21 05:57:55 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ void	Server::connect_server(const std::string& host, const std::string& port, co
 	Client new_server;
 	new_server.sock.socket_fd = uplink;
 	new_server.status = WAITING_FOR_CONNECTION;
+//	new_server.ssl_connected = true;
 	fcntl(uplink, F_SETFL, O_NONBLOCK);
 	std::string start = "PASS " + pass + " 0210 IRC|\r\n";
 	start += "SERVER " + this->name + " 1 info\r\n";
@@ -118,8 +119,8 @@ void	Server::create_server(const int& port, const std::string& password)
 
 	ssl_ctx = InitCTX();
 	LoadCertificates(ssl_ctx, cert_file.c_str(), cert_file.c_str());
-	create_socket(port, this->sock);
 	create_socket(port + 1, this->ssl_sock);
+	create_socket(port, this->sock);
 	addHost(Host(getHostName(sock.addr), 0, "mb add some info later"));
 	this->name = getHostName(sock.addr);
 }
@@ -147,7 +148,9 @@ void	Server::server_loop()
 		if (select_result < 0)
 			throw ServerException(errno); // need signal handle (errno: EINTR)
 		if (FD_ISSET(sock.socket_fd, &readfds) || FD_ISSET(ssl_sock.socket_fd, &readfds))
+		{
 			acceptNewClient(readfds);
+		}
 		processClients(readfds, writefds);
 		FD_ZERO(&readfds);
 		FD_ZERO(&writefds);
@@ -177,8 +180,12 @@ void							Server::acceptNewClient(fd_set& readfds)
 	Client						new_client;
 
 	if (FD_ISSET(ssl_sock.socket_fd, &readfds))
+	{
 		new_client.ssl_connected = true;
-	new_client.sock.socket_fd = accept(sock.socket_fd, (sockaddr *)&new_client.sock.addr, &new_client.sock.socklen);
+		new_client.sock.socket_fd = accept(ssl_sock.socket_fd, (sockaddr *)&new_client.sock.addr, &new_client.sock.socklen);
+	}
+	else
+		new_client.sock.socket_fd = accept(sock.socket_fd, (sockaddr *)&new_client.sock.addr, &new_client.sock.socklen);
 	if (new_client.sock.socket_fd < 0)
 		throw ServerException(errno);
 	if (new_client.ssl_connected)
@@ -224,7 +231,7 @@ void							Server::processClients(fd_set &readfds, fd_set &writefds)
 void							Server::processClientRequest(Client& client)
 {
 	char		buffer[BUFFER_SIZE];
-	int			recv_ret;
+	int			recv_ret = 0;
 	std::string	received_message;
 
 	bzero(buffer, BUFFER_SIZE);
@@ -279,9 +286,13 @@ void							Server::sendDataToClient(Client& client)
 {
 	std::string		response = client.response;
 	if (!client.ssl_connected)
+	{
 		send(client.sock.socket_fd, response.c_str(), response.size(), 0);
+	}
 	else
+	{
 		SSL_write(client.ssl, (void *)response.c_str(), response.size());
+	}
 	client.response.clear();
 }
 
