@@ -6,7 +6,7 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 19:07:05 by gwynton           #+#    #+#             */
-/*   Updated: 2020/12/20 15:19:06 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/21 06:41:35 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,37 +64,32 @@ void				IrcAPI::throwChannels(Server& server, Client& client, const t_command& c
 	(void)command;
 }
 
-static void			incHopcount(t_command& command)
-{
-	std::stringstream	ss;
-	ss << atoi(command.params[1].c_str()) + 1;
-	command.params[1] = ss.str();
-}
+// static void			incHopcount(t_command& command)
+// {
+// 	std::stringstream	ss;
+// 	ss << atoi(command.params[1].c_str()) + 1;
+// 	command.params[1] = ss.str();
+// }
 
-std::string			IrcAPI::buildMessage(const t_command& command)
-{
-	std::string		message = command.command;
+// std::string			IrcAPI::buildMessage(const t_command& command)
+// {
+// 	std::string		message = command.command;
 
-	for (std::vector<std::string>::const_iterator it = command.params.begin(); it != command.params.end(); it++)
-	{
-		message += ' ' + *it;
-		// if (it != command.params.end() - 1)
-		// 	message += ' ';
-	}
-	return (message);
-}
+// 	for (std::vector<std::string>::const_iterator it = command.params.begin(); it != command.params.end(); it++)
+// 	{
+// 		message += ' ' + *it;
+// 	}
+// 	return (message);
+// }
 
 void				IrcAPI::broadcastMessage(Server& server, Client& client, const t_command& command)
 {
-	t_command			to_broadcast = command;
-	std::string			message;
-
-	incHopcount(to_broadcast);
+	std::string message = ":" + server.name + " SERVER ";
+	message += command.params[0] + " " + toString(atoi(command.params[1].c_str()) + 1) + " 0 " + command.params[2];
 	for (std::vector<std::string>::iterator it = server.connected_servers.begin(); it != server.connected_servers.end(); it++)
 	{
 		if (*it != client.name)
 		{
-			message = ":" + server.name + ' ' + buildMessage(to_broadcast);
 			sendToUser(server, *it, message);
 		}
 	}
@@ -122,7 +117,7 @@ void				IrcAPI::introduceHostToNet(Server& server, Client& client, const t_comma
 		Server::sendMessage(client, reply);
 	}
 	client.status = SERVER;
-	//broadcastMessage(server, client, command);
+	broadcastMessage(server, client, command);
 	dataExchange(server, client, command);
 }
 
