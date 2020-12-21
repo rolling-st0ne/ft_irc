@@ -6,11 +6,28 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/20 17:51:01 by gwynton           #+#    #+#             */
-/*   Updated: 2020/12/21 05:55:18 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/21 07:04:34 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "IrcApiClass.hpp"
+
+void        IrcAPI::cmd_version_response(Server& server, Client& client, const t_command& command)
+{
+	if (command.amount_of_params < 4)
+		return;
+	std::string user = command.params[0];
+	std::string version = command.params[1];
+	std::string target = command.params[2];
+	std::string comment = command.params[3];
+	std::string version_message = ":" + server.name + " ";
+	version_message += RPL_VERSION;
+	version_message += " " + user + " " + version + " " + target + " " + comment;
+	if (sendToUser(server, user, version_message))
+		return;
+	std::string toPropagate = version_message;
+	server.propagate(toPropagate, client.name);
+}
 
 void        IrcAPI::cmd_version(Server& server, Client& client, const t_command& command)
 {
