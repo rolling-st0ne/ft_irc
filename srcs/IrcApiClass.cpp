@@ -6,7 +6,7 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 17:01:13 by gwynton           #+#    #+#             */
-/*   Updated: 2020/12/22 11:24:42 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/22 21:10:54 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,9 @@ t_map IrcAPI::create_map()
 	res["KILL"] = cmd_kill;
 	res["OPER"] = cmd_oper;
 	res["MOTD"] = cmd_motd;
+	res[RPL_MOTDSTART] = cmd_motd_start;
+	res[RPL_MOTD] = cmd_motd_response;
+	res[RPL_ENDOFMOTD] = cmd_motd_end;
 	res["VERSION"] = cmd_version;
 	res[RPL_VERSION] = cmd_version_response;
 	res["TIME"] = cmd_time;
