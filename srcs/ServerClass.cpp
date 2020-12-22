@@ -6,7 +6,7 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 01:58:30 by casteria          #+#    #+#             */
-/*   Updated: 2020/12/22 18:32:59 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/22 21:41:33 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -235,7 +235,10 @@ void							Server::processClientRequest(Client& client)
 		throw ServerException(errno);
 	else if (recv_ret == 0)
 	{
-		std::string message = IrcAPI::user_by_nick(*this, client.name) + " QUIT " + ":Disconnected";
+		std::string message = IrcAPI::user_by_nick(*this, client.name);
+		if (client.status == SERVER)
+			message = ":" + client.name;
+		message += " QUIT :Disconnected";
 		for (size_t i = 0; i < users.size(); i++)
 		{
 			if (users[i].nickname != client.name)
@@ -265,10 +268,11 @@ void							Server::processClientRequest(Client& client)
 				break;
 			}
 		}
+		std::string oldname = client.name;
 		close(client.sock.socket_fd);
 		rmClient(client);
-		std::string toPropagate = ":" + client.name + " QUIT :Disconnected";
-		propagate(toPropagate, client.name);
+		std::string toPropagate = ":" + oldname + " QUIT :Disconnected";
+		propagate(toPropagate, oldname);
 		return;
 	}
 #ifdef DEBUG_MODE
