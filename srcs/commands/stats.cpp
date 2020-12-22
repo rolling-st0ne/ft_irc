@@ -6,7 +6,7 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 07:28:25 by gwynton           #+#    #+#             */
-/*   Updated: 2020/12/22 11:01:49 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/22 18:39:02 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void        IrcAPI::cmd_stats(Server& server, Client& client, const t_command& c
 			if (letter == 'u')
 			{
 				std::string uptime = ":Server Up 0 days ";
-				uptime += "get uptime";
+				uptime += server.getUptime();
 				sendReply(server, RPL_STATSUPTIME, uptime, client);
 			}
 			std::string output = "  ";
@@ -124,6 +124,14 @@ void        IrcAPI::cmd_stats(Server& server, Client& client, const t_command& c
 		if (server.name == target)
 		{
 			//process
+			if (letter == 'u')
+			{
+				client.response += ":" + server.name + " ";
+				client.response += RPL_STATSUPTIME;
+				client.response += " " + user + " :Server Up 0 days ";
+				client.response += server.getUptime();
+				client.response += "\r\n";
+			}
 			client.response += ":" + server.name + " ";
 			client.response += RPL_ENDOFSTATS;
 			client.response += " " + user + " " + letter;

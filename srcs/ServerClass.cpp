@@ -6,7 +6,7 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 01:58:30 by casteria          #+#    #+#             */
-/*   Updated: 2020/12/22 17:48:16 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/22 18:32:59 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -348,6 +348,26 @@ std::string						Server::getStartTime()
 	std::tm* now = std::localtime(&startTime);
 	result << now->tm_mon + 1 << '/' << now->tm_mday << '/' << now->tm_year + 1900 << ' ';
 	result << now->tm_hour << ':' << now->tm_min << ":" << now->tm_sec;
+	return result.str();
+}
+
+std::string						Server::getUptime()
+{
+	std::stringstream result;
+	std::time_t current = std::time(0);
+	long difference = difftime(current, startTime);
+	difference %= 86400;
+	if (difference / 3600 < 10)
+		result << '0';
+	result << difference / 3600 << ':';
+	difference %= 3600;
+	if (difference / 60 < 10)
+		result << '0';
+	result << difference / 60 << ':';
+	difference %= 60;
+	if (difference < 10)
+		result << '0';
+	result << difference;
 	return result.str();
 }
 

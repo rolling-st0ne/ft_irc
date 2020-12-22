@@ -6,7 +6,7 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 01:55:39 by casteria          #+#    #+#             */
-/*   Updated: 2020/12/22 17:43:46 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/22 18:11:07 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ private:
 	void							propagate(const std::string&, const std::string&);
 	std::string						getTimeString();
 	std::string						getStartTime();
+	std::string						getUptime();
 
 	SSL_CTX*						InitCTX(int);
 	void							initSSL(Client&, SSL_CTX*);
