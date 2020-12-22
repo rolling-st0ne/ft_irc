@@ -6,7 +6,7 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 17:01:13 by gwynton           #+#    #+#             */
-/*   Updated: 2020/12/22 07:42:57 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/22 11:24:42 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,16 @@ t_map IrcAPI::create_map()
 	res["TIME"] = cmd_time;
 	res[RPL_TIME] = cmd_time_response;
 	res["INFO"] = cmd_info;
+	res[RPL_ENDOFINFO] = cmd_info_end;
+	res[RPL_INFO] = cmd_info_response;
 	res["ADMIN"] = cmd_admin;
 	res[RPL_ADMINME] = cmd_admin_response1;
 	res[RPL_ADMINLOC1] = cmd_admin_response2;
 	res[RPL_ADMINLOC2] = cmd_admin_response3;
 	res[RPL_ADMINEMAIL] = cmd_admin_response4;
 	res["STATS"] = cmd_stats;
+	res[RPL_ENDOFSTATS] = cmd_stats_end;
+	res[RPL_STATSUPTIME] = cmd_stats_uptime;
 	res["SQUIT"] = cmd_squit;
 	return (res);
 }

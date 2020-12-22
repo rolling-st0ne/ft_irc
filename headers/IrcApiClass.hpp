@@ -6,7 +6,7 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/23 23:36:15 by casteria          #+#    #+#             */
-/*   Updated: 2020/12/22 07:15:43 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/22 11:24:00 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ private:
 	static void				cmd_admin_response3(COMMANDS_PARAM_LIST);
 	static void				cmd_admin_response4(COMMANDS_PARAM_LIST);
 	static void				cmd_stats(COMMANDS_PARAM_LIST);
+	static void				cmd_stats_end(COMMANDS_PARAM_LIST);
+	static void				cmd_stats_uptime(COMMANDS_PARAM_LIST);
 	static void				cmd_squit(COMMANDS_PARAM_LIST);
 	static void				cmd_part(COMMANDS_PARAM_LIST);
 	static void				cmd_kill(COMMANDS_PARAM_LIST);
@@ -75,6 +77,8 @@ private:
 	static void				cmd_time(COMMANDS_PARAM_LIST);
 	static void				cmd_time_response(COMMANDS_PARAM_LIST);
 	static void				cmd_info(COMMANDS_PARAM_LIST);
+	static void				cmd_info_end(COMMANDS_PARAM_LIST);
+	static void				cmd_info_response(COMMANDS_PARAM_LIST);
     static void             cmd_server(COMMANDS_PARAM_LIST);
 	static void				introduceHostToNet(COMMANDS_PARAM_LIST);
 	static void				addHostToList(COMMANDS_PARAM_LIST);
