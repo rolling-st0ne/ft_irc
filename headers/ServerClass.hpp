@@ -6,7 +6,7 @@
 /*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 01:55:39 by casteria          #+#    #+#             */
-/*   Updated: 2020/12/18 02:29:33 by casteria         ###   ########.fr       */
+/*   Updated: 2020/12/22 04:13:13 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,12 @@ private:
 	std::vector<Host>				hosts;
 	std::vector<Channel>			channels;
 	std::vector<std::string>		connected_servers;
-	SSL_CTX							*ssl_ctx;
+	SSL_CTX							*ssl_server_ctx;
+	SSL_CTX*						ssl_client_ctx;
 	int								uplink;
 
 	timeval							timeout;
-	static const int				BUFFER_SIZE = 1024;
+	static const int				BUFFER_SIZE = 4096;
 
 	void							initFds(int &, fd_set&, fd_set&);
 	void							server_loop();
@@ -52,7 +53,8 @@ private:
 	void							create_server(const int&, const std::string&);
 	void							connect_server(const std::string&, const std::string&, const std::string);
 	void							propagate(const std::string&, const std::string&);
-	SSL_CTX*						InitCTX(void);
+	SSL_CTX*						InitCTX(int);
+	void							initSSL(Client&, SSL_CTX*);
 	void							LoadCertificates(SSL_CTX*, const char*, const char*);
 public:
 	Server();
