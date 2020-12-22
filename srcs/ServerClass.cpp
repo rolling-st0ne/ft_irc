@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ServerClass.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
+/*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 01:58:30 by casteria          #+#    #+#             */
-/*   Updated: 2020/12/22 05:48:12 by casteria         ###   ########.fr       */
+/*   Updated: 2020/12/22 08:38:16 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -329,6 +329,16 @@ void							Server::propagate(const std::string& message, const std::string& sour
 			}
 		}
 	}
+}
+
+std::string						Server::getTimeString()
+{
+	std::stringstream result;
+	std::time_t t = std::time(0);
+	std::tm* now = std::localtime(&t);
+	result << now->tm_mon + 1 << '/' << now->tm_mday << '/' << now->tm_year + 1900 << ' ';
+	result << now->tm_hour << ':' << now->tm_min;
+	return result.str();
 }
 
 SSL_CTX* 						Server::InitCTX(int type)

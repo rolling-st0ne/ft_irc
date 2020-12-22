@@ -6,7 +6,7 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 17:01:13 by gwynton           #+#    #+#             */
-/*   Updated: 2020/12/22 04:47:23 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/22 07:42:57 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ t_map IrcAPI::create_map()
 	res["VERSION"] = cmd_version;
 	res[RPL_VERSION] = cmd_version_response;
 	res["TIME"] = cmd_time;
+	res[RPL_TIME] = cmd_time_response;
 	res["INFO"] = cmd_info;
 	res["ADMIN"] = cmd_admin;
 	res[RPL_ADMINME] = cmd_admin_response1;
@@ -110,8 +111,9 @@ t_command IrcAPI::parse_query(const std::string& query)
 	{
 		if (after_split[i + command_index][0] == ':')
 		{
-			size_t position = query.find_last_of(':');
-			std::string temp = query.substr(position);
+			//size_t position = query.find_last_of(':');
+			size_t position = query.substr(1).find_first_of(':');
+			std::string temp = query.substr(position + 1);
 			result.params.push_back(temp);
 			break;
 		}

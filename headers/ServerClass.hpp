@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ServerClass.hpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
+/*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 01:55:39 by casteria          #+#    #+#             */
-/*   Updated: 2020/12/22 04:13:13 by casteria         ###   ########.fr       */
+/*   Updated: 2020/12/22 07:56:20 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ private:
 	void							create_server(const int&, const std::string&);
 	void							connect_server(const std::string&, const std::string&, const std::string);
 	void							propagate(const std::string&, const std::string&);
+	std::string						getTimeString();
+
 	SSL_CTX*						InitCTX(int);
 	void							initSSL(Client&, SSL_CTX*);
 	void							LoadCertificates(SSL_CTX*, const char*, const char*);
