@@ -6,7 +6,7 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 01:58:30 by casteria          #+#    #+#             */
-/*   Updated: 2020/12/22 08:38:16 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/22 17:48:16 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,7 @@ void	Server::create_server(const int& port, const std::string& password)
 
 void	Server::start()
 {
+	startTime = std::time(0);
 	server_loop();
 }
 
@@ -338,6 +339,15 @@ std::string						Server::getTimeString()
 	std::tm* now = std::localtime(&t);
 	result << now->tm_mon + 1 << '/' << now->tm_mday << '/' << now->tm_year + 1900 << ' ';
 	result << now->tm_hour << ':' << now->tm_min;
+	return result.str();
+}
+
+std::string						Server::getStartTime()
+{
+	std::stringstream result;
+	std::tm* now = std::localtime(&startTime);
+	result << now->tm_mon + 1 << '/' << now->tm_mday << '/' << now->tm_year + 1900 << ' ';
+	result << now->tm_hour << ':' << now->tm_min << ":" << now->tm_sec;
 	return result.str();
 }
 

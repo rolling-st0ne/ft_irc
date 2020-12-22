@@ -6,7 +6,7 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 01:55:39 by casteria          #+#    #+#             */
-/*   Updated: 2020/12/22 07:56:20 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/22 17:43:46 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ private:
 	SSL_CTX							*ssl_server_ctx;
 	SSL_CTX*						ssl_client_ctx;
 	int								uplink;
+	std::time_t						startTime;
 
 	timeval							timeout;
 	static const int				BUFFER_SIZE = 4096;
@@ -54,6 +55,7 @@ private:
 	void							connect_server(const std::string&, const std::string&, const std::string);
 	void							propagate(const std::string&, const std::string&);
 	std::string						getTimeString();
+	std::string						getStartTime();
 
 	SSL_CTX*						InitCTX(int);
 	void							initSSL(Client&, SSL_CTX*);

@@ -6,7 +6,7 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/20 17:51:31 by gwynton           #+#    #+#             */
-/*   Updated: 2020/12/22 11:26:57 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/22 17:49:11 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,11 +63,43 @@ void        IrcAPI::cmd_info(Server& server, Client& client, const t_command& co
 		}
 		if (server.name == target)
 		{
+			std::string info1 = ":This is " + target + " version 1.42";
+			sendReply(server, RPL_INFO, info1, client);
+			std::string info2 = ":Server started " + server.getStartTime();
+			sendReply(server, RPL_INFO, info2, client);
 			std::string info_end = ":End of INFO list";
 			sendReply(server, RPL_ENDOFINFO, info_end, client);
 			return ;
 		}
 		std::string toPropagate = ":" + client.name + " INFO " + target;
+		server.propagate(toPropagate, client.name);
+	}
+	else if (client.status == SERVER)
+	{
+		if (command.amount_of_params < 1)
+			return;
+		std::string target = command.params[0];
+		std::string user = command.prefix.substr(1);
+		if (server.name == target)
+		{
+			client.response += ":" + server.name + " ";
+			client.response += RPL_INFO;
+			client.response += " " + user;
+			client.response += " :This is " + target + " version 1.42";
+			client.response += "\r\n";
+			client.response += ":" + server.name + " ";
+			client.response += RPL_INFO;
+			client.response += " " + user;
+			client.response += " :Server started " + server.getStartTime();
+			client.response += "\r\n";
+			client.response += ":" + server.name + " ";
+			client.response += RPL_ENDOFINFO;
+			client.response += " " + user;
+			client.response += " :End of INFO list";
+			client.response += "\r\n";
+			return;
+		}
+		std::string toPropagate = command.prefix + " TIME " + target;
 		server.propagate(toPropagate, client.name);
 	}
 }
