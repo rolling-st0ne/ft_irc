@@ -6,7 +6,7 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 07:27:31 by gwynton           #+#    #+#             */
-/*   Updated: 2020/12/22 23:32:29 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/23 00:56:32 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,18 @@ void        IrcAPI::cmd_squit(Server& server, Client& client, const t_command& c
 	}
     std::string target = command.params[0];
     std::string comment = command.params[1];
+	bool target_found = false;
+	for (size_t i = 0; i < server.hosts.size(); i++)
+	{
+		if (server.hosts[i].servername == target)
+		{
+			target_found = true;
+			break;
+		}
+	}
+	if (!target_found)
+	{
+		sendReply(server, ERR_NOSUCHSERVER, target + " :No such server", client);
+		return;
+	}
 }
