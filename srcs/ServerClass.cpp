@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ServerClass.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
+/*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 01:58:30 by casteria          #+#    #+#             */
-/*   Updated: 2020/12/24 02:43:16 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/24 02:47:05 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ void	Server::create_server(const int& port, const std::string& password)
 	LoadCertificates(ssl_client_ctx, cert_file.c_str(), cert_file.c_str());
 	create_socket(port + 1, this->ssl_sock);
 	create_socket(port, this->sock);
-	addHost(Host(getHostName(sock.addr), 0, "mb add some info later"));
+	addHost(Host(getHostName(sock.addr), 0, "Info about this server"));
 	this->name = getHostName(sock.addr);
 }
 

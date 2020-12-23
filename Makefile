@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+         #
+#    By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/16 01:48:02 by casteria          #+#    #+#              #
-#    Updated: 2020/12/23 21:03:16 by gwynton          ###   ########.fr        #
+#    Updated: 2020/12/24 02:47:42 by casteria         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,7 +41,7 @@ SSL_LIB = 			-L/usr/lib -lssl -lcrypto
 SSL_LIB = 			-L/usr/local/Cellar/openssl@1.1/1.1.1i/lib -lssl -lcrypto
 #SSL_LIB =			-L/Users/gwynton/.brew/opt/openssl@1.1/lib -lssl -lcrypto # Gwynton's School Mac
 
-FLAGS = 			-Wall -Wextra -Werror $(STD_FLAG) -I $(HEADER_F) -D DEBUG_MODE=1
+FLAGS = 			-Wall -Wextra -Werror $(STD_FLAG) -I $(HEADER_F)
 
 SSLINCLUDE =		/usr/local/opt/openssl@1.1/include
 #SSLINCLUDE =		/Users/gwynton/.brew/opt/openssl@1.1/include # Gwynton's School Mac
