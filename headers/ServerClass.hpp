@@ -6,7 +6,7 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 01:55:39 by casteria          #+#    #+#             */
-/*   Updated: 2020/12/24 02:11:30 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/24 02:43:01 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ private:
 	std::string						getTimeString();
 	std::string						getStartTime();
 	std::string						getUptime();
-	void							final_handler(int);
 
 	SSL_CTX*						InitCTX(int);
 	void							initSSL(Client&, SSL_CTX*);
@@ -76,8 +75,6 @@ public:
 
 	// _functions
 	void							start();
-	static void						sigint_handler(int);
 };
 
-static Server					*instance;
 #endif
