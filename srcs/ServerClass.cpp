@@ -6,7 +6,7 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 01:58:30 by casteria          #+#    #+#             */
-/*   Updated: 2020/12/22 21:41:33 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/23 06:40:40 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,10 +124,13 @@ void	Server::start()
 {
 	startTime = std::time(0);
 	server_loop();
+	stop_server();
 }
 
 void	Server::server_loop()
 {
+	forcedQuit = false;
+	bool lastRun = false;
 	while (SERVER_RUNS)
 	{
 		fd_set readfds, writefds;
@@ -152,6 +155,12 @@ void	Server::server_loop()
 		processClients(readfds, writefds);
 		FD_ZERO(&readfds);
 		FD_ZERO(&writefds);
+		if (lastRun)
+			break;
+		if (forcedQuit && !lastRun)
+		{
+			lastRun = true;
+		}
 	}
 }
 
@@ -315,6 +324,13 @@ void							Server::rmClient(Client client) // to finalize;
 			break;
 		}
 	}
+}
+
+void							Server::stop_server()
+{
+	clients.clear();
+	hosts.clear();
+	connected_servers.clear();
 }
 
 void							Server::propagate(const std::string& message, const std::string& source)

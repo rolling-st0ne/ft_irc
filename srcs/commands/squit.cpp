@@ -6,7 +6,7 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 07:27:31 by gwynton           #+#    #+#             */
-/*   Updated: 2020/12/23 00:56:32 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/23 06:57:51 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,4 +52,25 @@ void        IrcAPI::cmd_squit(Server& server, Client& client, const t_command& c
 		sendReply(server, ERR_NOSUCHSERVER, target + " :No such server", client);
 		return;
 	}
+	std::string killer = client.status == SERVER ? command.prefix.substr(1) : client.name;
+	if (server.name == target)
+	{
+		//std::cerr << "Cutting off " + target + " (" + comment + ")\n";
+		for (std::vector<Client>::iterator it = server.clients.begin(); it != server.clients.end(); it++)
+		{
+			for (size_t i = 0; i < server.users.size(); i++)
+			{
+				if (server.users[i].nickname == it->name)
+				{
+					std::string quit_message = ":" + it->name + " QUIT :Server gone";
+					server.propagate(quit_message, server.name);
+					break;
+				}
+			}
+		}
+		server.forcedQuit = true;
+		return;
+	}
+	std::string toPropagate = ":" + killer + " SQUIT " + target + " " + comment;
+	server.propagate(toPropagate, client.name);
 }
