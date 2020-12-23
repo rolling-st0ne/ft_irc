@@ -6,7 +6,7 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 17:39:39 by gwynton           #+#    #+#             */
-/*   Updated: 2020/12/20 09:57:41 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/24 01:28:55 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,5 +21,6 @@ std::string					getHostName(const sockaddr_in&);
 bool						is_registered(const Client&);
 std::string					toString(const int&);
 bool                        compareLower(const std::string&, const std::string&);
+//void						sigint_handler(int);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/23 23:36:15 by casteria          #+#    #+#             */
-/*   Updated: 2020/12/23 10:42:30 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/24 01:32:19 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ public:
     static void				run_query(Server&, Client&, const std::string&);
 	static std::string		user_by_nick(Server&, const std::string&);
 	static bool				sendToUser(Server&, std::string&, std::string);
+	//static void				sigint_handler(int);
 
 };
 
