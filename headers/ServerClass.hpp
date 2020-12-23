@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ServerClass.hpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
+/*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 01:55:39 by casteria          #+#    #+#             */
-/*   Updated: 2020/12/23 06:20:48 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/23 20:43:10 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ private:
 	SSL_CTX							*ssl_server_ctx;
 	SSL_CTX*						ssl_client_ctx;
 	int								uplink;
-	std::time_t						startTime;
+	time_t						startTime;
 	bool							forcedQuit;
 
 	timeval							timeout;

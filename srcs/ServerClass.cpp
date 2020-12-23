@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ServerClass.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
+/*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 01:58:30 by casteria          #+#    #+#             */
-/*   Updated: 2020/12/23 10:12:02 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/23 20:45:04 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ void	Server::create_server(const int& port, const std::string& password)
 
 void	Server::start()
 {
-	startTime = std::time(0);
+	startTime = time(0);
 	server_loop();
 	stop_server();
 }
@@ -357,8 +357,8 @@ void							Server::propagate(const std::string& message, const std::string& sour
 std::string						Server::getTimeString()
 {
 	std::stringstream result;
-	std::time_t t = std::time(0);
-	std::tm* now = std::localtime(&t);
+	time_t t = time(0);
+	tm* now = localtime(&t);
 	result << now->tm_mon + 1 << '/' << now->tm_mday << '/' << now->tm_year + 1900 << ' ';
 	result << now->tm_hour << ':' << now->tm_min;
 	return result.str();
@@ -367,7 +367,7 @@ std::string						Server::getTimeString()
 std::string						Server::getStartTime()
 {
 	std::stringstream result;
-	std::tm* now = std::localtime(&startTime);
+	tm* now = localtime(&startTime);
 	result << now->tm_mon + 1 << '/' << now->tm_mday << '/' << now->tm_year + 1900 << ' ';
 	result << now->tm_hour << ':' << now->tm_min << ":" << now->tm_sec;
 	return result.str();
@@ -376,7 +376,7 @@ std::string						Server::getStartTime()
 std::string						Server::getUptime()
 {
 	std::stringstream result;
-	std::time_t current = std::time(0);
+	time_t current = time(0);
 	long difference = difftime(current, startTime);
 	difference %= 86400;
 	if (difference / 3600 < 10)
