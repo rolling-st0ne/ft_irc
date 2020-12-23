@@ -6,7 +6,7 @@
 /*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 01:58:30 by casteria          #+#    #+#             */
-/*   Updated: 2020/12/23 20:45:04 by casteria         ###   ########.fr       */
+/*   Updated: 2020/12/23 20:58:50 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,11 +104,20 @@ void	Server::create_socket(const int& port, socket_info& sock)
 
 }
 
+void	Server::sigint_handler(int key)
+{
+	(void)key;
+	std::cerr << "works" << std::endl;
+	exit(0);
+}
+
 void	Server::create_server(const int& port, const std::string& password)
 {
 	timeout.tv_sec = 1;
 	this->password = password;
 	std::string		cert_file = "cert/mycert.pem";
+
+	signal(SIGINT, sigint_handler);
 
 	ssl_server_ctx = InitCTX(SERVER);
 	ssl_client_ctx = InitCTX(CLIENT);

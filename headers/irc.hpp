@@ -6,7 +6,7 @@
 /*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 02:02:32 by casteria          #+#    #+#             */
-/*   Updated: 2020/12/17 17:06:26 by casteria         ###   ########.fr       */
+/*   Updated: 2020/12/23 20:51:19 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ class Channel;
 # include <sys/time.h>
 # include <sstream>
 # include <cstdlib>
+# include <csignal>
 
 // _networking
 # include <sys/socket.h>

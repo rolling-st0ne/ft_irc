@@ -6,7 +6,7 @@
 /*   By: casteria <mskoromec@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 01:55:39 by casteria          #+#    #+#             */
-/*   Updated: 2020/12/23 20:43:10 by casteria         ###   ########.fr       */
+/*   Updated: 2020/12/23 20:57:12 by casteria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ private:
 	std::string						getTimeString();
 	std::string						getStartTime();
 	std::string						getUptime();
+	static void						sigint_handler(int);
 
 	SSL_CTX*						InitCTX(int);
 	void							initSSL(Client&, SSL_CTX*);
