@@ -6,7 +6,7 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/16 01:58:30 by casteria          #+#    #+#             */
-/*   Updated: 2020/12/23 06:40:40 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/23 10:12:02 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -331,6 +331,8 @@ void							Server::stop_server()
 	clients.clear();
 	hosts.clear();
 	connected_servers.clear();
+	users.clear();
+	channels.clear();
 }
 
 void							Server::propagate(const std::string& message, const std::string& source)

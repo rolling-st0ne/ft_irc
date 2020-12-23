@@ -6,7 +6,7 @@
 #    By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/16 01:48:02 by casteria          #+#    #+#              #
-#    Updated: 2020/12/23 08:40:26 by gwynton          ###   ########.fr        #
+#    Updated: 2020/12/23 10:13:55 by gwynton          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,8 @@ COMMANDS_F = 		commands
 COMMANDS_SRCS = 	nick.cpp pass.cpp user.cpp server.cpp join.cpp privmsg.cpp \
 					part.cpp topic.cpp quit.cpp notice.cpp mode.cpp kick.cpp \
 					njoin.cpp kill.cpp oper.cpp motd.cpp version.cpp time.cpp \
-					info.cpp admin.cpp stats.cpp squit.cpp ping.cpp pong.cpp
+					info.cpp admin.cpp stats.cpp squit.cpp ping.cpp pong.cpp \
+					cap.cpp error.cpp
 COMMANDS_SRCS_REL =	$(addprefix $(COMMANDS_F)/, $(COMMANDS_SRCS))
 
 MAIN_SOURCES = 		main.cpp ServerClass.cpp ClientClass.cpp \
