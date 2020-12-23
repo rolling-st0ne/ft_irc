@@ -6,7 +6,7 @@
 #    By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/16 01:48:02 by casteria          #+#    #+#              #
-#    Updated: 2020/12/23 00:52:41 by gwynton          ###   ########.fr        #
+#    Updated: 2020/12/23 08:40:26 by gwynton          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ COMMANDS_F = 		commands
 COMMANDS_SRCS = 	nick.cpp pass.cpp user.cpp server.cpp join.cpp privmsg.cpp \
 					part.cpp topic.cpp quit.cpp notice.cpp mode.cpp kick.cpp \
 					njoin.cpp kill.cpp oper.cpp motd.cpp version.cpp time.cpp \
-					info.cpp admin.cpp stats.cpp squit.cpp
+					info.cpp admin.cpp stats.cpp squit.cpp ping.cpp pong.cpp
 COMMANDS_SRCS_REL =	$(addprefix $(COMMANDS_F)/, $(COMMANDS_SRCS))
 
 MAIN_SOURCES = 		main.cpp ServerClass.cpp ClientClass.cpp \
@@ -38,12 +38,12 @@ COMPILER =			clang++
 STD_FLAG = 			-std=c++98
 SSL_LIB = 			-L/usr/lib -lssl -lcrypto
 SSL_LIB = 			-L/usr/local/Cellar/openssl@1.1/1.1.1i/lib -lssl -lcrypto
-#SSL_LIB =			-L/Users/gwynton/.brew/opt/openssl@1.1/lib -lssl -lcrypto # Gwynton's School Mac
+SSL_LIB =			-L/Users/gwynton/.brew/opt/openssl@1.1/lib -lssl -lcrypto # Gwynton's School Mac
 
 FLAGS = 			-Wall -Wextra -Werror $(STD_FLAG) -I $(HEADER_F) -D DEBUG_MODE=1
 
 SSLINCLUDE =		/usr/local/opt/openssl@1.1/include
-#SSLINCLUDE =		/Users/gwynton/.brew/opt/openssl@1.1/include # Gwynton's School Mac
+SSLINCLUDE =		/Users/gwynton/.brew/opt/openssl@1.1/include # Gwynton's School Mac
 
 all: $(NAME)
 
