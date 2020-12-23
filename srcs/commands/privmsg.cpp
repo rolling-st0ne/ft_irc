@@ -6,7 +6,7 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/02 05:37:24 by gwynton           #+#    #+#             */
-/*   Updated: 2020/12/20 10:12:40 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/23 12:59:45 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,6 @@ bool		IrcAPI::sendToUser(Server& server, std::string& target, std::string messag
 			return true;
 		}
 	}
-#ifdef DEBUG_MODE
-	//std::cerr << "Not delivered to " + target <<  std::endl;
-#endif
 	return false;
 }
 

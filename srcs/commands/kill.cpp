@@ -6,7 +6,7 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/18 14:42:23 by gwynton           #+#    #+#             */
-/*   Updated: 2020/12/18 17:49:03 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/23 13:01:10 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ void    IrcAPI::cmd_kill(Server& server, Client& client, const t_command& comman
             return ;
         }
     }
-    //std::cerr << "Delegating kill\n";
     std::string toPropagate = ":" + killer + " KILL " + target + " " + comment;
     server.propagate(toPropagate, client.name);
 }

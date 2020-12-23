@@ -6,7 +6,7 @@
 /*   By: gwynton <gwynton@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 18:10:11 by casteria          #+#    #+#             */
-/*   Updated: 2020/12/16 05:48:59 by gwynton          ###   ########.fr       */
+/*   Updated: 2020/12/23 13:01:20 by gwynton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ void        IrcAPI::cmd_nick(Server& server, Client& client, const t_command& co
 	{
 		if (command.amount_of_params == 1)
 		{
-			std::cerr << "Another server's user has changed their nick\n";
 			std::string message = command.prefix + " NICK " + command.params[0];
 			server.propagate(message, client.name);
 			std::string old_nick = command.prefix.substr(1);
